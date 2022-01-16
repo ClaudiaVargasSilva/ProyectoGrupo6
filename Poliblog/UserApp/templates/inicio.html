@@ -6,6 +6,7 @@
         <div class="container">
             <div class="text-center my-5">
                 <h1 class="fw-bolder">Bienvenidos a Poliblog!</h1>
+                <h3> {{mensaje}}</h3>
                 
             </div>
         </div>
@@ -15,16 +16,35 @@
         <div class="row">
             <!-- Blog entries-->
             <div class="col-lg-8">
+
+
+                
                 <!-- Featured blog post-->
                 <div class="card mb-4">
                     <a href="#!"><img class="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg" alt="..." /></a>
                     <div class="card-body">
-                        <div class="small text-muted">January 1, 2021</div>
-                        <h2 class="card-title">Featured Post Title</h2>
-                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus possimus, veniam magni quis!</p>
-                        <a class="btn btn-primary" href="#!">Read more →</a>
+                        
+                        {% if post %}
+                        
+                            {% for posteo in post  %}
+                            <div class="small text-muted">{{posteo.fecha_publicacion}}</div>
+                            <h2 class="card-title">{{posteo.titulo}}</h2>
+                            <a class="badge bg-secondary text-decoration-none link-light" href="{% url 'tematicas' %}">{{posteo.tematica}}</a>
+                            <p class="card-text">{{posteo.contenido}}</p>
+                            <a class="btn btn-primary" href="{% url 'Posteos' %}">Leer más →</a>
+                            <p class="post-meta">Escrito por {{posteo.posteador}}</p>
+                            {% endfor %}
+                        {% else %}
+                            <h2>Error, no se cargó post</h2>
+                            
+                        {% endif %}
+                            
+                        
                     </div>
                 </div>
+
+
+
                 <!-- Nested row for non-featured blog posts-->
                 <div class="row">
                     <div class="col-lg-6">
@@ -90,25 +110,29 @@
             <div class="col-lg-4">
                 <!-- Search widget-->
                 <div class="card mb-4">
-                    <div class="card-header">Search</div>
+                    <div class="card-header">Buscar</div>
                     <div class="card-body">
                         <div class="input-group">
-                            <input class="form-control" type="text" placeholder="Enter search term..." aria-label="Enter search term..." aria-describedby="button-search" />
-                            <button class="btn btn-primary" id="button-search" type="button">Go!</button>
+                            <form action="buscarTematicas" method="GET">
+                                <input class="form-control" type="text" name="tematica" id="tematica" placeholder="Igrese alguna tematica..." aria-label="Enter search term..." aria-describedby="button-search" />
+                                <input class="btn btn-primary" id="button-search" type="submit">
+                            </form>
+                            
                         </div>
                     </div>
                 </div>
                 <!-- Categories widget-->
                 <div class="card mb-4">
-                    <div class="card-header">Categories</div>
+                    <div class="card-header">Tematicas</div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm-6">
-                                <ul class="list-unstyled mb-0">
-                                    <li><a href="#!">Web Design</a></li>
-                                    <li><a href="#!">HTML</a></li>
-                                    <li><a href="#!">Freebies</a></li>
-                                </ul>
+                                                                        
+                                    {% for tematica in listaTematicas  %}
+                                        <a href="{% url 'crearTematica' %}">{{tematica.nombre}}</a>
+                                        
+                                    {% endfor %}
+                                        
                             </div>
                             <div class="col-sm-6">
                                 <ul class="list-unstyled mb-0">

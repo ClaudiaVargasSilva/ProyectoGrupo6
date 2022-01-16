@@ -1,0 +1,12 @@
+{% extends 'padre.html' %}
+{%load static%}
+{% block ContenidoQueCambia %}
+    <h2>Escribe tu Post!</h2>
+    <form method="POST" class="post-form">
+        {% csrf_token %}
+        {{miForm.as_p}}
+        <button type="submit" class="btn btn-primary">Postear</button>
+    </form>
+
+{% endblock ContenidoQueCambia %}
+    

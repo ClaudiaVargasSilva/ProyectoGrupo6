@@ -10,9 +10,10 @@
     <form action="" method="POST">
         {% csrf_token %}
         {{form.as_p}}
-        <p>Nombre de usuario/email: </p>
-        <p>Contraseña: </p>
-        <button type="submit">Iniciar sesión</button>
+        
+        <button type="submit" class="btn btn-primary">Iniciar sesión</button>
     </form>
+    <h3>¿No estas registrado?</h3>
+    <a class="navbar-brand" href="{% url 'registro' %}">Registrate!</a>
 </body>
 </html>
