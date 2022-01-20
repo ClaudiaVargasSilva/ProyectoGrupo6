@@ -13,11 +13,24 @@
                     <h1 class="fw-bolder mb-1">Posteos</h1>
                     <!-- Post meta content-->
                     <a class="btn btn-primary" href= "{% url 'crearPost' %}">Crear post</a>
-                    <div class="text-muted fst-italic mb-2">Posted on January 1, 2021 by Start Bootstrap</div>
+
+                    <h1>{{post.titulo}}</h1>
+                    <div class="text-muted fst-italic mb-2">{{post.fecha_publicacion}}</div>
                     <!-- Post categories-->
-                    <a class="badge bg-secondary text-decoration-none link-light" href="{% url 'tematicas' %}">Web Design</a>
-                    <a class="badge bg-secondary text-decoration-none link-light" href="{% url 'tematicas' %}">Freebies</a>
-                </header>
+                    
+                    {% if tematicas %}
+                        
+                        {% for tematica_post in tematicas  %}
+                        <a class="badge bg-secondary text-decoration-none link-light" href="{% url 'tematicas' %}">{{tematica_post.nombre}}</a>
+                        {% endfor %}
+                    {% else %}
+                        <p>No recibo la lista tematicas :(</p>
+    
+                    {% endif %}
+                    <p>{{post.contenido}}</p>
+
+                        
+                    </header>
                 <!-- Preview image figure-->
                 <figure class="mb-4"><img class="img-fluid rounded" src="https://dummyimage.com/900x400/ced4da/6c757d.jpg" alt="..." /></figure>
                 <!-- Post content-->
@@ -31,44 +44,76 @@
                 <div class="card bg-light">
                     <div class="card-body">
                         <!- Comment form-->
-                        <form class="mb-4"><textarea class="form-control" rows="3" placeholder="Join the discussion and leave a comment!"></textarea></form>
+                        <!-- <form method="POST" class="post-form">
+                            {% csrf_token %}
+                            {{miForm.as_p}}
+                            <button type="submit" class="save btn btn-default">Guardar tematica</button>
+                        </form> -->
+                        <form  method="POST" class="post-form">
+                            {% csrf_token %}
+                            {{miFormComentario.as_p}}
+                            
+                            <button type="submit" class="save btn btn-primary">Agregar comentario</button>
+
+                        </form> 
+                        <!-- Ese form despues tiene que ser utilizado para CREAR comentarios-->
                         <!-- Comment with nested comments-->
-                        <div class="d-flex mb-4">
+                        
+                            <!--Aparecen comentarios del post determinado-->
+                            
+                            
+
+
+
+
                             <!-- Parent comment-->
-                            <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
-                            <div class="ms-3">
-                                <div class="fw-bold">Commenter Name</div>
-                                If you're going to lead a space frontier, it has to be government; it'll never be private enterprise. Because the space frontier is dangerous, and it's expensive, and it has unquantified risks.
-                                <!-- Child comment 1-->
-                                <div class="d-flex mt-4">
-                                    <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
-                                    <div class="ms-3">
-                                        <div class="fw-bold">Commenter Name</div>
-                                        And under those conditions, you cannot establish a capital-market evaluation of that enterprise. You can't get investors.
-                                    </div>
-                                </div>
-                                <!-- Child comment 2-->
-                                <div class="d-flex mt-4">
-                                    <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
-                                    <div class="ms-3">
-                                        <div class="fw-bold">Commenter Name</div>
-                                        When you put money directly to a problem, it makes a good headline.
-                                    </div>
+                            
+                            
+                            {% if comentario %}
+                                {% for comentario_post in comentario  %}
+                                <div class="d-flex mb-4">
+
+                                <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div> <!--Acá deberia aparecer la imagen que el usuario elija...-->    
+                                <div class="ms-3">
+                                    <div class="fw-bold">{{comentario_post.comentarista}}</div>
+                                    
+                                    <p>{{comentario_post.contenido_comentario}} </p>
+                                    <!-- Child comment 1-->
+                                    <!-- <div class="d-flex mt-4">
+                                        <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
+                                        <div class="ms-3">
+                                            <div class="fw-bold">Commenter Name</div>
+                                            And under those conditions, you cannot establish a capital-market evaluation of that enterprise. You can't get investors.
+                                        </div>
+                                    </div> -->
+                                    <!-- Child comment 2-->
+                                    <!-- <div class="d-flex mt-4">
+                                        <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
+                                        <div class="ms-3">
+                                            <div class="fw-bold">Commenter Name</div>
+                                            When you put money directly to a problem, it makes a good headline.
+                                        </div>
+                                    </div> -->
                                 </div>
                             </div>
-                        </div>
+                                {% endfor %}
+                            
+                            {% endif %}
+                                
+                            
+                        
                         <!-- Single comment-->
-                        <div class="d-flex">
+                        <!-- <div class="d-flex">
                             <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
                             <div class="ms-3">
                                 <div class="fw-bold">Commenter Name</div>
                                 When I look at the universe and all the ways the universe wants to kill us, I find it hard to reconcile that with statements of beneficence.
                             </div>
-                        </div>
-                    </div>
+                        </div> -->
+                    
                 </div>
             </section>
-        </div>
+        
         <!-- Side widgets-->
        <div class="col-lg-4">
             <!-- Search widget-->
@@ -108,9 +153,10 @@
                 <div class="card-header">Side Widget</div>
                 <div class="card-body">You can put anything you want inside of these side widgets. They are easy to use, and feature the Bootstrap 5 card component!</div>
             </div>
-    </div>
+        </div>
     </div>
 </div>
+
 {% endblock ContenidoQueCambia %}
     
 

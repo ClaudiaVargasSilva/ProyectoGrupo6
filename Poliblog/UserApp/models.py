@@ -2,6 +2,7 @@ from django.utils import timezone
 from tkinter import CASCADE
 from django.db import models
 from django.conf import Settings,settings
+#from django.contrib.auth.models import AbstractUser
 
 # Una vez que hayamos decidido cuáles serán nuestros modelos y sus campos, debemos pensar en la relación que existe entre ellos. Django le permite definir relaciones de uno a uno 
 # (OneToOneField), de uno a muchos (ForeignKey) y de muchos a muchos (ManyToManyField).
@@ -11,9 +12,13 @@ class Usuario(models.Model):
     email= models.EmailField()
     temas_favoritos= models.CharField("temasFav", max_length=100)
     #tematica= models.ManyToManyField("tematicas", max_length=50)
+# class User(AbstractUser):
+#     pass
 
-#class Usuario me parece que no va pues cuando hagamos el login, logout, register ya viene un modelo 'User' en django y
-#asi evitamos otros problemas, por ahora lo dejamos pero posteriormente será eliminado
+
+##### Usamos clase abstracta User que viene en django y uso lo vinculamos con PERFIL(otro modelo)
+##eso verlo para la entrega final
+
 #Si después queremos agregar atributos o manipular el modelo User que viene por defecto en Django usamos Proxy, entre otros
 #
 
@@ -29,6 +34,7 @@ class Lenguaje(models.Model):
     nombreLenguaje=models.CharField(max_length=50)
 #Lo mismo con lenguaje, si bien de algun se podria detectar automaticamente, ahora lo ideal seria igual que tematica, lista de lenguajes y poder agregar alguno
 class Post(models.Model):
+    id= models.AutoField(primary_key=True)
     posteador= models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
     #foreingKey porque un Post tiene un solo posteador/usuario pero cada
     #usuario puede tener muchos posts
@@ -37,10 +43,10 @@ class Post(models.Model):
     fecha_publicacion=models.DateTimeField(default=timezone.now)
     #actualizacion=models.DateTimeField(auto_now=True)
     # tipoPost=models.CharField(max_length=50)
-    tematica= models.ForeignKey(Tematica, on_delete=models.CASCADE)
+    tematica= models.ManyToManyField(Tematica)
     estado= models.BooleanField('Publicado/NoPublicado', default=True)
     def __str__(self):
-        return f'Posteo:   {self.titulo} y {self.estado}'
+        return f'Posteo:   {self.titulo}, user: {self.posteador}'
     #mantyToManyField porque un post puede abarcar distintas tematicas
 
 #Posteo se agrega cuando en algun formulario de estilo posteo, cuando presione enviar se crea el posteo con cada uno de los atributos 
@@ -55,19 +61,26 @@ class ComentariosPost(models.Model):
     post= models.ForeignKey(Post, on_delete=models.CASCADE)
     #foreignKey porque un comentario está en un SOLO post pero cada Post puede tener
     #muchos comentarios
-    fecha= models.DateTimeField(auto_now_add=True)
+    fecha= models.DateTimeField(default=timezone.now)
     contenido_comentario=models.TextField()
-    comentarista= models.ForeignKey(Usuario,on_delete=models.CASCADE)
+    comentarista= models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE, related_name="comentarista")
     #ForeignKey porque un comentario tiene un solo comentarista pero 
     #cada usuario puede hacer muchos comentarios
-
+    def __str__(self):
+        return f'Comentario:   {self.contenido_comentario} user: {self.comentarista}'
 #comentarios lo mismo que Posteo
 class VistaDelPost(models.Model):
     post= models.ForeignKey(Post, on_delete=models.CASCADE)
     visto= models.DateTimeField(auto_now_add=True)
 
+#osea para agregar a favoritos o algo asi?
+class Favoritos(models.Model):
+    post=models.ForeignKey(Post, on_delete=models.CASCADE)
+    #ver que tipo de relacion tendria
 #ni idea esta
-
+class Avatar(models.Model):
+    user=models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    imagen=models.ImageField(upload_to= 'avatares', null=True, blank=True)
 
 
 

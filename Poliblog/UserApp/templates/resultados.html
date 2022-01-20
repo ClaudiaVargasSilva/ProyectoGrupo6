@@ -9,11 +9,11 @@
     <p>Resultados de la busqueda</p>
     
     
-    {% if nombreTematica %}
+    {% if tematicas %}
     <ul>
         
         {% for nombre in tematicas  %}
-            <li>{{nombre.tematicas}} </li>
+            <li>{{nombre.nombre}} </li>
             
         {% endfor %}
             

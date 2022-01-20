@@ -6,13 +6,22 @@
     <title>Inicio sesión</title>
 </head>
 <body>
+    <!-- {% if not request.user.is_authenticated  %} -->
+        <!-- <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'inicioSesion' %}">Iniciar sesion</a></li> -->
+    
+    <!-- {% else %} -->
+
+    <!-- {% endif %} -->
     <h2>Login:</h2>
+    {% if not request.user.is_authenticated  %}
+
     <form action="" method="POST">
         {% csrf_token %}
         {{form.as_p}}
-        
-        <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+
+        <a href="{% url 'inicio' %}"> <button type="submit" class="btn btn-primary" >Iniciar sesión</button> </a>
     </form>
+    {% endif %}
     <h3>¿No estas registrado?</h3>
     <a class="navbar-brand" href="{% url 'registro' %}">Registrate!</a>
 </body>

@@ -1,0 +1,8 @@
+{% extends 'padre.html' %}
+{%load static%}
+{% block ContenidoQueCambia %}
+    <h2>Comentarios del {{comentario.post.titulo}}</h2>
+    <p>{{comentario.contenido_comentario}}</p>
+
+{% endblock ContenidoQueCambia %}
+    

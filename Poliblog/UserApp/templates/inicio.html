@@ -1,3 +1,4 @@
+
 {% extends 'padre.html' %}
 {%load static%}
 {% block ContenidoQueCambia %}
@@ -6,7 +7,24 @@
         <div class="container">
             <div class="text-center my-5">
                 <h1 class="fw-bolder">Bienvenidos a Poliblog!</h1>
-                <h3> {{mensaje}}</h3>
+                {% if messages %}
+                 <ul class="messages">
+                    {% for message in messages %}
+                        <li class="{{ message.tags }}"> {{ message }}  </h2>
+                    {% endfor %}
+                 </ul> 
+                {% endif %}
+                
+                {% for message in messages %}
+  <div class="alert {{ message.tags }} alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    {{ message }}
+  </div>
+{% endfor %}
+                <!-- <h3> {{mensaje}}</h3> -->
+
                 
             </div>
         </div>
@@ -27,15 +45,27 @@
                         {% if post %}
                         
                             {% for posteo in post  %}
-                            <div class="small text-muted">{{posteo.fecha_publicacion}}</div>
+                            
                             <h2 class="card-title">{{posteo.titulo}}</h2>
+                            <div class="small text-muted">{{posteo.fecha_publicacion}}</div>
+                            
+                            
+                            {% if lista  %}
+                                {% for post in lista %}
+                            
+                                    <a class="badge bg-secondary text-decoration-none link-light" href="{% url 'tematicas' %}">{{post.nombre}}</a>
+                            
+                                {% endfor %}
+                            {% else %}
                             <a class="badge bg-secondary text-decoration-none link-light" href="{% url 'tematicas' %}">{{posteo.tematica}}</a>
-                            <p class="card-text">{{posteo.contenido}}</p>
-                            <a class="btn btn-primary" href="{% url 'Posteos' %}">Leer más →</a>
+                                <!--Tiene que aparecer cada tematica  -->
+                            {% endif %}
+                                <p class="card-text">{{posteo.contenido}}</p>
+                            <a class="btn btn-primary" href="{% url 'Posteos' posteo.pk %}">Leer más →</a>
                             <p class="post-meta">Escrito por {{posteo.posteador}}</p>
                             {% endfor %}
                         {% else %}
-                            <h2>Error, no se cargó post</h2>
+                            <h2>Error, no se cargaron post</h2>
                             
                         {% endif %}
                             
@@ -113,6 +143,8 @@
                     <div class="card-header">Buscar</div>
                     <div class="card-body">
                         <div class="input-group">
+
+
                             <form action="buscarTematicas" method="GET">
                                 <input class="form-control" type="text" name="tematica" id="tematica" placeholder="Igrese alguna tematica..." aria-label="Enter search term..." aria-describedby="button-search" />
                                 <input class="btn btn-primary" id="button-search" type="submit">
@@ -127,11 +159,19 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm-6">
-                                                                        
-                                    {% for tematica in listaTematicas  %}
-                                        <a href="{% url 'crearTematica' %}">{{tematica.nombre}}</a>
-                                        
+
+
+                                
+                                {% if lista  %}
+                                    {% for tematica in lista  %}
+                                        <p>{{tematica.nombre}}</p>
+                                
                                     {% endfor %}
+                                {% else %}
+                                    <p>no recibis lista</p>
+                                {% endif %}
+                                                                            
+                                    
                                         
                             </div>
                             <div class="col-sm-6">

@@ -1,6 +1,6 @@
 import email
 from socket import fromshare
-from UserApp.models import Post, Tematica
+from UserApp.models import Post, Tematica, ComentariosPost
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
@@ -68,3 +68,21 @@ class TematicaForm(forms.ModelForm):
             )
         }
     
+class LenguajeFormulario(forms.Form):
+    nombreLenguaje= forms.CharField()
+
+class ComentarioForm(forms.ModelForm):
+    class Meta:
+        model=ComentariosPost
+        fields=('contenido_comentario',)
+        label={
+            'contenido_comentario': 'Comentario'
+        }
+        widgets = {
+            'contenido_comentario':forms.Textarea(
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': 'Desahoguese...'
+                }
+            )
+        }
