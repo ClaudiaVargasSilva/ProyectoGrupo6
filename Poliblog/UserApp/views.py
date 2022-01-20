@@ -73,21 +73,8 @@ def Login(request):
     form = AuthenticationForm()
     return render(request,"login.html", {'form':form} )
        
-#PROBLEMA= cuando inicio sesion se sigue quedando en la pagina de , osea aparece UserApp/login, aparece la pantalla de inicio pero no aparecen los posteos ni nada
-
-# class CantViewPost(ListView):
-#     model = Post
-#     template= 'UserApp/viewPost.hmtl'
 
 
-# class CrearPost2(CreateView):
-#     model=Post
-#     form_class= PostForm
-#     template_name= 'crearPost.html'
-#     success_url= reverse_lazy('inicio.html')
-
-
-##### SECCION POST ####
 
 def idPost(id): #devuelve la id de cada POST pasandole el id del Post
     return Post.objects.get(id=id)
@@ -124,13 +111,9 @@ def inicio(request):
     if not request.user.is_authenticated:
         return render(request, 'inicio.html', {'post':post, 'lista':listaTematicas})
     else:
-        return render(request, 'inicio.html', {'post':post, 'lista':listaTematicas, 'url':avatares[0].imagen.url})
+        return render(request, 'inicio.html', {'post':post, 'lista':listaTematicas})
 
-# def verTematicasInicio(req):
-#     listaTematicas=Tematica.objects.all()
-#     return render(req,'inicio.html', {'lista':listaTematicas})
 
-    
 def verPosteos(req,id):
     post=Post.objects.get(id=id)
     #Hacer un if que verifique si el post TIENE comentarios o no, si tiene crea el objeto y el contexto si no tiene no pasa nada, ya que 
@@ -156,7 +139,6 @@ def verPosteos(req,id):
 
 
 
-##Despues seria mejor utilizadr DetailList para mostrar los POSTS y dentro de de esta clase incluir una funcion de crear comentario
 
 
 
@@ -168,7 +150,8 @@ def CrearPost(req):
             post=miForm.save(commit=False)
             post.posteador=req.user
             post.save()
-            return render(req, 'posteos.html',{"mensaje":"Tu post fue creado!"})
+            # return render(req, 'inicio.html',{"mensaje":"Tu post fue creado!"})
+            return redirect(inicio)
         else:
             return HTTPResponse('Los datos ingresados son incorrectos')
     else:
@@ -182,14 +165,7 @@ def CrearPost(req):
 
 
 
-#Es necesario hacer cada view para cada categoria? 
-#Si tenemos categorias predefinidas es más fácil, sin embargo también se tiene que poder agregar tematicas
-#Entonces...
-#1)Se crea un Post
-#2)Se elige o se crea la tematica
-#3)Se guarda el post 
-#4)Esa tematica agregada queda el template "tematicas.html"
-#5)Presionar sobre uno me lleva a los posteos que tengan esa tematica
+
 
 def buscarPosteos(req):
     return render(req, 'buscarPosteos.html')
@@ -222,13 +198,6 @@ def CrearTematica(req):
     
     return render(req, 'crearTematica.html',{'miForm': miForm})
 
-# def buscarTematicas(req):
-#     busqueda=req.GET.get("buscar")
-#     tematica= Tematica.objects.all()
-#     if busqueda:
-#         posts=Post.objects.filter(
-#             Q(nombre__icontains=busqueda)
-#         )
 
 def buscarTematicas(req):
     if req.GET['tematica']:
@@ -244,13 +213,12 @@ def buscarTematicas(req):
 
 def verComentarios(req,id):
     comentario= ComentariosPost.objects.get(id=id)
-    #me recupera los comentarios con su id_comentario o post_id???? Me recupera los comentarios con su id y si...
-    #la idea despues seria ver el post y los comentarios asociados, como con tematica
+   
     return render(req, 'comentarios.html', {'comentario':comentario})
 
 
 
-###SECCION LENGUAJES ###
+
 
 class LenguajeCreate(CreateView):
     model= Lenguaje
