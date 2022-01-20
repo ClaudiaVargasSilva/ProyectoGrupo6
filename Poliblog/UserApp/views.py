@@ -150,6 +150,7 @@ def CrearPost(req):
             post=miForm.save(commit=False)
             post.posteador=req.user
             post.save()
+            miForm.save_m2m()
             # return render(req, 'inicio.html',{"mensaje":"Tu post fue creado!"})
             return redirect(inicio)
         else:
@@ -162,6 +163,8 @@ def CrearPost(req):
 #     model=Post
 #     fields=['titulo','contenido','tematica']
 #     success_url='UserApp/inicio'
+
+# VER COMO 
 
 
 
