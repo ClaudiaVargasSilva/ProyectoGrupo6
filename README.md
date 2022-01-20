@@ -6,3 +6,6 @@
 #crear post
 #buscar tematicas en la barra lateral
 
+
+
+##Cuando creo el post y selecciono la o las tematicas no me las carga... en el admin aparecen como que no se seleccionó ninguna
