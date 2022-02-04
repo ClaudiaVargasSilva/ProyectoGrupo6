@@ -25,8 +25,8 @@
                         <li class="nav-item"><a class="nav-link active" href="{% url 'inicio' %}">Inicio</a></li>
                         <li class="nav-item"><a class="nav-link active" href="#!">Sobre nosotros</a></li>
                         <li class="nav-item"><a class="nav-link active" href="#!">Contacto</a></li>
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Blog</a></li>
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Posts</a></li>
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'listaPost' %}">Mis Posts</a></li>
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'crearPost' %}">Crear Post</a></li>
                         
                         {% if not request.user.is_authenticated  %}
                             <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'inicioSesion' %}">Iniciar sesion</a></li>

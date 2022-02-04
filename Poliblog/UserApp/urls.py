@@ -16,8 +16,11 @@ urlpatterns = [
     path('busquedaPosteos', views.busquedaPosteos, name="busquedaPosteos"),
     path('comentarios/<id>', views.verComentarios, name="comentarios"),
     path('crearPost',views.CrearPost, name ="crearPost"),
-    #path('crearPost', views.PostCreate.as_view(), name='New'),
-    
+
+    path('leerPosts/', views.leerposts, name="leerPosts"),
+    path('listaPost', views.listaPost.as_view(), name='listaPost'),
+    path('actualizaPost/<pk>/', views.actualizaPost.as_view(), name='actualizaPost'),
+    path('eliminaPost/<pk>/', views.eliminaPost.as_view(), name='eliminaPost'),
     
     path('Tematicas', views.verTematicas, name="tematicas"),
     path('crearTematica',views.CrearTematica, name="crearTematica"),
