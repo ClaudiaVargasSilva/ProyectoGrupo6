@@ -9,9 +9,9 @@ from django.contrib.auth.views import LogoutView
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView
 from django.views.generic.edit import UpdateView, DeleteView
+from django.views.generic.detail import DetailView
 from UserApp.forms import PostForm, TematicaForm, UserRegisterForm, ComentarioForm
-from UserApp.models import Avatar,Post, Tematica, ComentariosPost, Lenguaje
-from django.db.models import Q
+from UserApp.models import Avatar, Post, Tematica, ComentariosPost, Lenguaje
 from django.shortcuts import redirect
 from django.contrib import messages
 
@@ -228,3 +228,35 @@ class LenguajeCreate(CreateView):
     fields=['nombreLenguaje']
     success_url= '/UserApp/'
     template_name = "lenguaje_form.html"
+
+
+###SECCION CRUD###
+def leerposts(req):
+    post = Post.objects.all()
+    contexto = {"post": post}
+
+    return render(req, 'buscar_post.html', contexto)
+
+class listaPost(ListView):
+    model = Post
+    template_name = "buscar_post.html"
+
+class detallePost(DetailView):
+    model = Post
+    template_name = "detalle_post.html"
+
+
+class actualizaPost(UpdateView):
+    model = Post
+    success_url = "/UserApp/listaPost"
+    fields = ["titulo","contenido", "tematica"]
+
+class postCreate(CreateView):
+    model = Post
+    fields = ["posteador", "titulo","contenido", "fecha_publicacion", "tematica", "estado"]
+    success_url = '/UserApp/listaPost'
+
+class eliminaPost(DeleteView):
+    model = Post
+    success_url = '/UserApp/listaPost'
+    template_name = 'post_confirm_delete.html'

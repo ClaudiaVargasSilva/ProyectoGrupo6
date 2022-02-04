@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Publicados</title>
+</head>
+<body>
+    {% for p in object_list  %} 
+    <div class="row">
+        <div class="col-lg-6">
+            <!-- Blog post-->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h2 class="card-title h4">Titulo: {{p.titulo}}</h2>
+                    <p class="card-text">Fecha Publicación: {{p.fecha_publicacion}}</p>
+                    <a class="btn btn-primary" href="{% url 'eliminaPost' p.id %}">Eliminar</a>
+                    <a class="btn btn-primary" href="{% url 'actualizaPost' p.id %}">Editar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}        
+</body>
+</html>
