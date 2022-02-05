@@ -1,4 +1,5 @@
 from audioop import reverse
+from collections import UserDict
 from http.client import HTTPResponse
 from venv import create
 from dataclasses import fields
@@ -8,12 +9,15 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.views import LogoutView
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView
+from django.views.generic.detail import DetailView
+
 from django.views.generic.edit import UpdateView, DeleteView
-from UserApp.forms import PostForm, TematicaForm, UserRegisterForm, ComentarioForm
-from UserApp.models import Avatar,Post, Tematica, ComentariosPost, Lenguaje
+from UserApp.forms import PostForm, TematicaForm, UserRegisterForm, UserEditForm,ComentarioForm
+from UserApp.models import Avatar,Post,Perfil, Tematica, ComentariosPost, Lenguaje
 from django.db.models import Q
 from django.shortcuts import redirect
 from django.contrib import messages
+from django.urls import reverse_lazy
 
 # Create your views here.
 
@@ -72,7 +76,54 @@ def Login(request):
                 return render(request,"inicio.html" ,  {"mensaje":"Error, formulario erroneo","post":post, "lista":listaTematicas})
     form = AuthenticationForm()
     return render(request,"login.html", {'form':form} )
-       
+
+
+# def verPerfil(req):
+#     usuario= Perfil.user.get_object()
+#     return render(req, 'perfil.html',{'usuario':usuario})
+
+def verPerfil(req):
+    usuario = req.user
+    perfil = Perfil.objects.filter(user=usuario)
+    post= Post.objects.filter(posteador=usuario)
+    username= usuario.username
+    userBio= usuario.perfil.biografia
+    # perfilBio= perfil.biografia
+    print(userBio)
+    print(username)
+    print(post)
+    # print(perfilBio)
+        # avatares=Avatar.objects.filter(user=request.user.id)
+
+    return render(req, "perfil.html", {'username':username, 'biografia':userBio,'post':post})
+def perfil2(req):
+    return render(req, "perfil2.html")
+
+# class Perfil(DetailView):
+#     model= Perfil
+#     template_name="perfil.html"
+
+#     def get_object(self):
+#         return self.user
+
+def editarUsuario(req):
+    usuario= req.user #quien fue quien hizo esa req
+    if req.method== 'POST':
+        miForm= UserEditForm(req.post)
+        if miForm.is_valid:
+            informacion= miForm.cleaned_data
+            usuario.email = informacion['email']
+            usuario.password1 = informacion['password1']
+            usuario.password2 = informacion['password2']
+            usuario.save()
+            #return render(req, 'inicio.html')
+            return redirect(inicio)
+        #else 
+    else:
+        miForm= UserEditForm(initial={'email': usuario.email})
+        return render(req, 'editarPerfil.html', {'miForm': miForm, 'usuario':usuario}) 
+            
+
 
 
 
@@ -116,9 +167,6 @@ def inicio(request):
 
 def verPosteos(req,id):
     post=Post.objects.get(id=id)
-    #Hacer un if que verifique si el post TIENE comentarios o no, si tiene crea el objeto y el contexto si no tiene no pasa nada, ya que 
-    #ahora NO me deja ver un posteo si NO tiene comentarios
-    
     comentario= ComentariosPost.objects.filter(post__id=id) #si uso GET devuelve una lista? No, no devuelve una lista
     #entonces uso filter :D
     tematicas=Tematica.objects.filter(post__id=id) #tematicas asociadas al Post solicitado
@@ -186,6 +234,25 @@ def verTematicas(req):
     listaTematicas= Tematica.objects.all()
     return render(req,'tematicas.html',{"listaTematicas": listaTematicas})
 
+class TematicaCreate(CreateView):
+    model=Tematica
+class TematicaList(ListView):
+    model= Tematica
+    template_name= "tematicas_List.html"
+
+class TematicaDetail(DetailView):
+    model= Tematica
+    template_name="tematicas_detalle.html"
+
+class TematicaUpdate(UpdateView):
+    model=Tematica
+    success_url= 'UserApp/tematicasList'
+    fields= ['nombre']
+class TematicaDelete(DeleteView):
+    model= Tematica
+    success_url=  reverse_lazy('tematicasList') #Ver por qué no me lleva a la url correspondiente...
+    template_name= "tematica_delete.html"
+
 
 def CrearTematica(req):
 
@@ -211,6 +278,27 @@ def buscarTematicas(req):
     else:
         respuesta="No enviaste datos"
     return HTTPResponse(respuesta)
+
+def eliminarTematicas(req, id_tematica):
+    tematica= Tematica.objects.get(id=id_tematica)
+    tematica.delete()
+    listaTematicas= Tematica.objects.all()
+    return render(req, 'tematicas.html',{'listaTematicas': listaTematicas})
+    # return redirect(tematicas)
+
+def editarTematicas(req, id_tematica):
+    tematica= Tematica.objects.get(id=id_tematica)
+    listaTematicas= Tematica.objects.all()
+    if req.method=='POST':
+        miForm= TematicaForm(req.POST)
+        if miForm.is_valid:
+            info=miForm.cleaned_data
+            tematica.nombre= info['nombre']
+            tematica.save()
+            return render(req, 'tematicas.html',{'listaTematicas': listaTematicas}) 
+    else:
+        miForm= TematicaForm(initial={'nombre':tematica.nombre})
+    return render(req, 'editarTematicas.html',{'miForm':miForm})
 
 ###SECCION COMENTARIOS###
 

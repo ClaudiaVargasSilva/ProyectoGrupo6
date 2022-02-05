@@ -1,0 +1,27 @@
+{% extends 'padre.html' %}
+{%load static%}
+{% block ContenidoQueCambia %}
+<h2>Usuario: {{username}} </h2>
+
+<h3>Biografia:</h3>
+    <p>{{biografia}}</p>
+<h3>Tus posteos:</h3>
+    
+    {% if post %}
+    
+        {% for posteo  in post  %}
+            <h1>{{posteo.titulo}}</h1> 
+            <div class="text-muted fst-italic mb-2">{{posteo.fecha_publicacion}}</div>
+
+            <p>{{posteo.contenido}}</p>
+    
+        
+        {% endfor %}
+        
+    {% else %}
+        <p>No hay nada:(</p>   
+    {% endif %}
+   
+
+{% endblock ContenidoQueCambia %}
+    

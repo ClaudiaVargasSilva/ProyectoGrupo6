@@ -1,21 +1,31 @@
+from itertools import count
 from django.utils import timezone
 from tkinter import CASCADE
 from django.db import models
 from django.conf import Settings,settings
 #from django.contrib.auth.models import AbstractUser
-
-
-class Usuario(models.Model):
-    nombre= models.CharField("nombre", max_length=100)
-    apellido=models.CharField("apellido", max_length=100)
-    email= models.EmailField()
-    temas_favoritos= models.CharField("temasFav", max_length=100)
-    #tematica= models.ManyToManyField("tematicas", max_length=50)
+from django.contrib.auth.models import User
 
 
 
+# class Usuario(models.Model):
+#     nombre= models.CharField("nombre", max_length=100)
+#     apellido=models.CharField("apellido", max_length=100)
+#     email= models.EmailField()
+#     temas_favoritos= models.CharField("temasFav", max_length=100)
+#     #tematica= models.ManyToManyField("tematicas", max_length=50)
 
+class Avatar(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    imagen = models.ImageField(upload_to= 'avatares', null=True, blank=True)
+    
+##Ver diferencia entre auth_user_model y model User
 
+class Perfil(models.Model):
+    user = models.OneToOneField(User, on_delete= models.CASCADE)
+    avatar= models.OneToOneField(Avatar, on_delete=models.CASCADE)
+    biografia = models.TextField(max_length=500, null=True, blank=True)
+    #poner un atributo posteos? osea los posteos relacionados a cada usuario y se muestren en el perfil?
 class Tematica(models.Model):
     nombre=models.CharField(max_length=100)
 
@@ -38,11 +48,19 @@ class Post(models.Model):
     estado= models.BooleanField('Publicado/NoPublicado', default=True)
     def __str__(self):
         return f'Posteo:   {self.titulo}, user: {self.posteador}'
-
+    # @property
+    # def get_comment_count(self):
+    #     return self.ComentariosPost_set.all().count()
+    # @property
+    # def get_view_count(self):
+    #     return self.VistaDelPost_set.all().count()
+    # @property
+    # def get_like_count(self):
+    #     return self.Likes_set.all().count()
 
 class Likes(models.Model):
     post=models.ForeignKey(Post,on_delete=models.CASCADE)
-    usuario=models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    usuario=models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
 
 class ComentariosPost(models.Model):
@@ -63,9 +81,4 @@ class VistaDelPost(models.Model):
 class Favoritos(models.Model):
     post=models.ForeignKey(Post, on_delete=models.CASCADE)
     #ver que tipo de relacion tendria
-class Avatar(models.Model):
-    user=models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    imagen=models.ImageField(upload_to= 'avatares', null=True, blank=True)
-
-
 

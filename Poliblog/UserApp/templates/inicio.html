@@ -47,22 +47,23 @@
                             {% for posteo in post  %}
                             
                             <h2 class="card-title">{{posteo.titulo}}</h2>
+                            <p class="post-meta">Escrito por {{posteo.posteador}}</p>
+
                             <div class="small text-muted">{{posteo.fecha_publicacion}}</div>
                             
                             
                             {% if lista  %}
                                 {% for post in lista %}
                             
-                                    <a class="badge bg-secondary text-decoration-none link-light" href="{% url 'tematicas' %}">{{post.nombre}}</a>
+                                    <a class="badge bg-secondary text-decoration-none link-light" href="{% url 'tematicasList' %}">{{post.nombre}}</a>
                             
                                 {% endfor %}
                             {% else %}
-                            <a class="badge bg-secondary text-decoration-none link-light" href="{% url 'tematicas' %}">{{posteo.tematica}}</a>
+                            <!-- <a class="badge bg-secondary text-decoration-none link-light" href="{% url 'tematicas' %}">{{posteo.tematica}}</a> -->
                                 <!--Tiene que aparecer cada tematica  -->
                             {% endif %}
                                 <p class="card-text">{{posteo.contenido}}</p>
                             <a class="btn btn-primary" href="{% url 'Posteos' posteo.pk %}">Leer más →</a>
-                            <p class="post-meta">Escrito por {{posteo.posteador}}</p>
                             {% endfor %}
                         {% else %}
                             <h2>Error, no se cargaron post</h2>
@@ -138,6 +139,9 @@
             </div>
             <!-- Side widgets-->
             <div class="col-lg-4">
+
+
+
                 <!-- Search widget-->
                 <div class="card mb-4">
                     <div class="card-header">Buscar</div>
@@ -146,7 +150,7 @@
 
 
                             <form action="buscarTematicas" method="GET">
-                                <input class="form-control" type="text" name="tematica" id="tematica" placeholder="Igrese alguna tematica..." aria-label="Enter search term..." aria-describedby="button-search" />
+                                <input class="form-control" type="text" name="tematica" id="tematica" placeholder="Ingrese alguna tematica..." aria-label="Enter search term..." aria-describedby="button-search" />
                                 <input class="btn btn-primary" id="button-search" type="submit">
                             </form>
                             
@@ -154,6 +158,9 @@
                     </div>
                 </div>
                 <!-- Categories widget-->
+
+
+
                 <div class="card mb-4">
                     <div class="card-header">Tematicas</div>
                     <div class="card-body">

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from UserApp.models import ComentariosPost, Avatar,Lenguaje, Likes, Post, Tematica
+from UserApp.models import Perfil,ComentariosPost, Avatar,Lenguaje, Likes, Post, Tematica
 
 admin.site.register(Tematica)
 
@@ -12,3 +12,5 @@ admin.site.register(ComentariosPost)
 admin.site.register(Likes)
 
 admin.site.register(Avatar)
+
+admin.site.register(Perfil)

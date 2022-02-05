@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Blog Home - Start Bootstrap Template</title>
+        <title>Blog Home</title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="{% static 'UserApp/assets/favicon.ico'%}" />
         <!-- Core theme CSS (includes Bootstrap)-->
@@ -32,7 +32,7 @@
                             <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'inicioSesion' %}">Iniciar sesion</a></li>
                         {% endif %}
                         {% if request.user.is_authenticated  %}
-                            <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">{{user.username}}</a></li>
+                            <li class="nav-item"><a class="nav-link active" aria-current="page" href="{%url 'Perfil' %}">{{user.username}}</a></li>
                             <!-- <img class= "rounded-circle"height="35px" src="{{url}}">  -->
 
                             <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'Logout' %}">Cerrar sesion</a></li> 

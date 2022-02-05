@@ -3,11 +3,12 @@
 {% block ContenidoQueCambia %}
 <h2>Lista de tematicas disponibles: </h2>
 <ul>
-    
-    {% for tematica in listaTematicas  %}
+    {{object_list}}
+    {% for tematica in object_list  %}
         <a href="#!"><li>{{tematica.nombre}}</li></a>
-        <a class="btn btn-primary" href="{% url 'eliminarTematicas' tematica.id %}">Eliminar</a>
+        <a class="btn btn-primary" href="{% url 'tematicasDelete' tematica.id %}">Eliminar</a>
         <a class="btn btn-primary" href="{% url 'editarTematicas' tematica.id %}">Editar</a>
+        <a class="btn btn-primary" href="{% url 'tematicasDetail' tematica.id %}">Detalle</a>
 
         <!-- La idea seria que al apretar en la tematica me lleve a una pagina con los posteos de ESA tematica-->
     {% endfor %}

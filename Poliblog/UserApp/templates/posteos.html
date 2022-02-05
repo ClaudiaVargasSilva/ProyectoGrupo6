@@ -27,6 +27,11 @@
                         <p>No recibo la lista tematicas :(</p>
     
                     {% endif %}
+                    <!-- <p>
+                        <span>{{post.get_comment_count}} </span>
+                        <span>{{post.get_view_count}} </span>
+                        <span>{{post.get_like_count}} </span>
+                    </p> -->
                     <p>{{post.contenido}}</p>
 
                         
@@ -76,7 +81,8 @@
                                 <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div> <!--Acá deberia aparecer la imagen que el usuario elija...-->    
                                 <div class="ms-3">
                                     <div class="fw-bold">{{comentario_post.comentarista}}</div>
-                                    
+                                    <!-- <p>{{comentario_post.fecha}}</p> -->
+                                    <div class="text-muted fst-italic mb-2">{{comentario_post.fecha}}</div>
                                     <p>{{comentario_post.contenido_comentario}} </p>
                                     <!-- Child comment 1-->
                                     <!-- <div class="d-flex mt-4">
