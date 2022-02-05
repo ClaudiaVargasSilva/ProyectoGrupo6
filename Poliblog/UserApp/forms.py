@@ -1,8 +1,13 @@
 import email
 from UserApp.models import Post, Tematica, ComentariosPost
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth.models import User
+
+class PostFormulario(forms.Form):   
+    titulo              = forms.CharField(max_length=100)
+    contenido           = forms.CharField(max_length=100000000)
+    tematica            = forms.CharField(max_length=100)
 
 class UserRegisterForm(UserCreationForm):
     #Por qué no ponemos username=forms.text...?

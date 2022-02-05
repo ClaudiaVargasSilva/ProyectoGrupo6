@@ -8,12 +8,6 @@ from django.contrib.auth.models import User
 
 
 
-# class Usuario(models.Model):
-#     nombre= models.CharField("nombre", max_length=100)
-#     apellido=models.CharField("apellido", max_length=100)
-#     email= models.EmailField()
-#     temas_favoritos= models.CharField("temasFav", max_length=100)
-#     #tematica= models.ManyToManyField("tematicas", max_length=50)
 
 class Avatar(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
