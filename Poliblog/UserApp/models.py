@@ -40,8 +40,16 @@ class Post(models.Model):
     # tipoPost=models.CharField(max_length=50)
     tematica= models.ManyToManyField(Tematica)
     estado= models.BooleanField('Publicado/NoPublicado', default=True)
+    imagenPost= models.ImageField(null=True, blank=True, upload_to = 'imagenes', max_length = 255)
     def __str__(self):
         return f'Posteo:   {self.titulo}, user: {self.posteador}'
+    #     class A(model.Model):
+    # blah = CharField(max_length=10)
+    # profile = ImageField(
+    #     upload_to='uploads/',
+    #     default='uploads/default.jpg',
+    #     blank=True
+    # )
     # @property
     # def get_comment_count(self):
     #     return self.ComentariosPost_set.all().count()

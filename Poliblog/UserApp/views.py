@@ -195,10 +195,14 @@ def verPosteos(req,id):
 def CrearPost(req):
 
     if req.method == "POST":
-        miForm=PostForm(req.POST)
+        miForm=PostForm(req.POST, req.FILES)
+        # print(req.FILES['imagenPost'])
         if miForm.is_valid:
             post=miForm.save(commit=False)
             post.posteador=req.user
+            # post.imagenPost= req.FILES['imagenPost']
+            # post.imagenPost= miForm.cleaned_data['imagenPost']
+            # post.imagenPost= miForm[imagenPost]
             post.save()
             miForm.save_m2m()
             # return render(req, 'inicio.html',{"mensaje":"Tu post fue creado!"})

@@ -1,4 +1,6 @@
 import email
+from mimetypes import init
+from re import S
 from UserApp.models import Post, Tematica, ComentariosPost
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
@@ -30,14 +32,17 @@ class UserEditForm(UserCreationForm):
         model = User
         fields = ['email','password1', 'password2', 'first_name']
 class PostForm(forms.ModelForm):
-    
+    # def __init__(self,*args, **kwargs):
+    #     super(PostForm, self).__init__(*args, **kwargs)
+    #     self.fields['imagenPost'].required=False
     class Meta:  
         model=Post
-        fields = ('titulo','contenido','tematica')
+        fields = ('titulo','contenido','tematica','imagenPost')
         label={
             'titulo': 'Titulo del posteo',
             'contenido': 'Contenido',
             'tematica':'Tematica',
+            'imagenPost': 'Imagen', 
         }
         widgets = {
             'titulo': forms.TextInput(
@@ -57,7 +62,19 @@ class PostForm(forms.ModelForm):
                     'class': 'form-control',
                     
                 }
+            ),
+            'imagenPost': forms.FileInput(
+                attrs={
+                    'required':False
+                    # 'class': 'form-control'
+                }
             )
+            # 'imagen' : forms.ImageField(
+            #     attrs={
+            #         'class' : 'form-control'
+            #     }
+            # )
+            
             }
  
 #me muestra las tematicas disponibles cuando creo el Post, sin embargo no lo veo reflejado en la base de datossss

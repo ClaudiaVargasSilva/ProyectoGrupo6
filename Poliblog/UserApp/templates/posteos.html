@@ -27,18 +27,28 @@
                         <p>No recibo la lista tematicas :(</p>
     
                     {% endif %}
-                    <!-- <p>
-                        <span>{{post.get_comment_count}} </span>
-                        <span>{{post.get_view_count}} </span>
-                        <span>{{post.get_like_count}} </span>
-                    </p> -->
-                    <p>{{post.contenido}}</p>
+                    
+                    
+
+                    {% if post.imagenPost %}
+                    <figure class="mb-4"><img class="img-fluid rounded" src={{post.imagenPost.url}} onerror="this.onerror=null ;this.remove();"  alt="..." /></figure>
 
                         
+                    {% endif %}
                     </header>
                 <!-- Preview image figure-->
-                <figure class="mb-4"><img class="img-fluid rounded" src="https://dummyimage.com/900x400/ced4da/6c757d.jpg" alt="..." /></figure>
+                
+                
+                    
+                   
+                                           
+                      
+                        
+                
                 <!-- Post content-->
+                <div class="container">
+                    <p>{{post.contenido}}</p>
+                </div>
                 <section class="mb-5">
                     
                     <!-- seccion donde iria el contenido del post que presioné-->
