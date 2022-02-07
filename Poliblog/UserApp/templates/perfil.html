@@ -48,13 +48,21 @@
         <p>PERFIL</p>
         <!--  Acá va la imagen por defecto -->
         <h2>Hola {{username}}</h2>
+        <img class="rounded-circle" src= "{{request.user.perfil.imagenPerfil.url}}" alt="..."  height="100px" width="100px" />
+        <a href=" {% url 'editarPerfil' %}"><img class="rounded-circle" src= "..\..\media\PorDefecto\configuracion.png" alt="..."  height="20px" width="25px"/></a>
+
+        <p>Nombre: {{usuario.first_name}}</p>
+        <p>Apellido: {{usuario.last_name}}</p>
         <p>Email: {{email}}</p>
+
         <!-- {{avatar}} -->
 
         <!-- Verificar que si no tiene avatar deje el avatar por defecto y si tiene/agregó que muestre ese...-->
-        <img class="rounded-circle" src= "{{request.user.perfil.imagenPerfil.url}}" alt="..."  height="100px" width="100px" />
-        <a href=" {% url 'editarPerfil' %}"><img class="rounded-circle" src= "..\..\media\PorDefecto\configuracion.png" alt="..."  height="30px" width="30px"/></a>
-        <p>{{biografia}}</p>
+        <!-- <p>{{biografia}}</p> -->
+
+
+        <p>Sobre ti:</p>
+        <p>{{usuario.perfil.biografia}}</p>
         
     </div>
     

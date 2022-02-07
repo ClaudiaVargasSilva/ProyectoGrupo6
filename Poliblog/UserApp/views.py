@@ -85,10 +85,12 @@ def Login(request):
                     #return render(request,"inicio.html",  {"mensaje":f"Bienvenido {usuario}", "post":post, "lista":listaTematicas} )
                     return redirect(inicio)
                   else:
-                    return render(request,"inicio.html", {"mensaje":"Error, datos incorrectos","post":post, "lista":listaTematicas} )
+                    # return render(request,"inicio.html", {"mensaje":"Error, datos incorrectos","post":post, "lista":listaTematicas} )
+                    return render(request, "loginError.html",{'mensaje': "Error! Datos erróneos"})
 
             else:
-                return render(request,"inicio.html" ,  {"mensaje":"Error, formulario erroneo","post":post, "lista":listaTematicas})
+                # return render(request,"inicio.html" ,  {"mensaje":"Error, formulario erroneo","post":post, "lista":listaTematicas})
+                return render(request, "loginError.html",{'mensaje': "Error! Datos erróneos"})
     form = AuthenticationForm()
     return render(request,"login.html", {'form':form} )
 
@@ -106,7 +108,7 @@ def verPerfil(req):
     userBio= usuario.perfil.biografia
     email= usuario.email
     avatar= usuario.perfil.imagenPerfil
-
+    
     #Cuando el usuario actualice su avatar que borre el por defecto !
 
     # avatar= usuario.perfil.avatar
@@ -120,7 +122,7 @@ def verPerfil(req):
     # print(perfilBio)
         # avatares=Avatar.objects.filter(user=request.user.id)
 
-    return render(req, "perfil.html", {'username':username,'email':email,'biografia':userBio, 'post':post})
+    return render(req, "perfil.html", {'username':username,'email':email,'biografia':userBio, 'usuario':usuario,'post':post})
 
 
 def perfil2(req):
@@ -155,23 +157,6 @@ def actualizarAvatar(request):
     pass
 
 
-# def editarUsuario(req):
-#     usuario= req.user #quien fue quien hizo esa req
-#     perfil= Perfil.objects.filter(user=usuario)
-#     miForm= UserEditForm(initial={'email': usuario.email})
-#     if req.method== 'POST':
-#         miForm= UserEditForm(req.POST, req.FILES)
-#         if miForm.is_valid():
-#             informacion= miForm.cleaned_data
-#             usuario.email = informacion['email']
-#             usuario.password1 = informacion['password1']
-#             usuario.password2 = informacion['password2']
-#             usuario.perfil.imagenPerfil= informacion['imagenPerfil']
-#             usuario.save()
-#             return redirect(inicio)
-#         #else 
-#     return render(req, 'editarPerfil.html', {'miForm': miForm, 'usuario':usuario}) 
-            
 def editarUsuario(req):
     usuario = req.user
     perfil = req.user.perfil
@@ -181,12 +166,17 @@ def editarUsuario(req):
         miPerfil= PerfilForm(req.POST, req.FILES, instance=perfil)
         if miForm.is_valid() and miPerfil.is_valid():
             info= miForm.cleaned_data
+            perfil1 = miPerfil.cleaned_data
             usuario.email = info['email']
-            usuario.password1 = info['password1']
-            usuario.password2 = info['password2']
-            ##No se guardan las contraseñas D: el email si pero contraseñas no....
-
-
+            usuario.first_name= info['first_name']
+            usuario.last_name= info['last_name']
+            new_password = info['password1']
+            usuario.set_password(new_password)
+            # perfil.user= usuario
+            perfil.imagenPerfil= perfil1['imagenPerfil'] #esto no me actualiza
+            perfil.biografia = perfil1['biografia']
+            # usuario.password1 = info['password1']
+            # usuario.password2 = info['password2']
             # usuario.perfil.imagenPerfil = info['imagenPerfil']
             
             # Perfil.objects.update(
@@ -201,7 +191,7 @@ def editarUsuario(req):
             # miPerfil.save_m2m()
             return redirect(inicio)
     else:
-        miForm = UserEditForm(initial={'email': usuario.email })
+        miForm = UserEditForm(initial={'email': usuario.email,'first_name':usuario.first_name ,'last_name': usuario.last_name,'password':usuario.password})
         miPerfil = PerfilForm(instance=perfil)
         return render(req, 'editarPerfil.html',{'miForm':miForm, 'miPerfil': miPerfil,'usuario':usuario})
 

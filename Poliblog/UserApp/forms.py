@@ -16,23 +16,27 @@ class UserRegisterForm(UserCreationForm):
     email= forms.EmailField()
     password1= forms.CharField(label = 'Contraseña', widget= forms.PasswordInput)
     password2=forms.CharField(label = 'Repetir contraseña', widget= forms.PasswordInput)
-    biografia=forms.CharField(label = 'Quien es usted?')
+    biografia=forms.CharField(label = 'Quien es usted? (opcional)')
+    first_name=forms.CharField()
+    last_name=forms.CharField()
 
     class Meta:
         model=User
-        fields=['username', 'email', 'password1', 'password2', 'biografia']
+        fields=['username', 'email', 'password1', 'password2','first_name','last_name' ,'biografia']
         help_texts= {k:"" for k in fields}
 
 class UserEditForm(UserCreationForm):
     email= forms.EmailField()
     password1= forms.CharField(label='Contraseña', widget= forms.PasswordInput)
     password2=forms.CharField(label='Repetir contraseña', widget= forms.PasswordInput)
-    # first_name= forms.CharField()
-    # last_name= forms.CharField()
+    first_name= forms.CharField()
+    last_name= forms.CharField()
     class Meta:
         model = User
-        fields = ['email','password1', 'password2']
+        fields = ['email','password1', 'password2','first_name', 'last_name']
 class PerfilForm(forms.ModelForm):
+    imagenPerfil= forms.ImageField(required=False)
+    biografia= forms.CharField()
     class Meta:
         model = Perfil
         fields = ['imagenPerfil', 'biografia']

@@ -2,7 +2,7 @@
 {%load static%}
 {% block ContenidoQueCambia %}
     <h2>Registrese</h2>
-    <form action="" method="POST">
+    <form action="" method="POST" enctype="multipart/form-data" >
 
         {% csrf_token %}
         <p>Hola! {{usuario}}, aqui puedes editar tu perfil</p>

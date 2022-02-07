@@ -13,8 +13,11 @@ div#posteos{
     background-color: transparent;
 }
 div#profile{
+    border-color : rgb(117, 116, 116); 	
+    border-style: solid;
+    border-width: 2px;
     float:right;
-    width: 500px;
+    width: 400px;
     height: auto;
     background-color: transparent;
 }
