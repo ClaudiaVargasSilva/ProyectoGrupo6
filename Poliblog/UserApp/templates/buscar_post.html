@@ -15,12 +15,20 @@
                 <div class="card-body">
                     <h2 class="card-title h4">Titulo: {{p.titulo}}</h2>
                     <p class="card-text">Fecha Publicación: {{p.fecha_publicacion}}</p>
+                    <p class="card-text">Imagen: {{p.imagenPost}}</p>
                     <a class="btn btn-primary" href="{% url 'eliminaPost' p.id %}">Eliminar</a>
                     <a class="btn btn-primary" href="{% url 'actualizaPost' p.id %}">Editar</a>
                 </div>
             </div>
         </div>
     </div>
-    {% endfor %}        
+    {% endfor %}
+    <div>
+        <div class="row">
+            <div class="col-lg-6" style="margin-top: 35px">
+                <a class="btn btn-primary" href= "{% url 'inicio' %}">Volver a Inicio</a>
+            </div>
+        </div>
+    </div>     
 </body>
 </html>
