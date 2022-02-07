@@ -24,6 +24,8 @@ from django.urls import reverse_lazy
 
 # Create your views here.
 
+def mantencion(req):
+    return render(req, 'mantencion.html')
 
 
 
@@ -411,11 +413,12 @@ class detallePost(DetailView):
 class actualizaPost(UpdateView):
     model = Post
     success_url = "/UserApp/listaPost"
-    fields = ["titulo","contenido", "tematica"]
+    fields = ["titulo","contenido", "tematica", "imagenPost"]
+    success_message = 'Post editado!'
 
 class postCreate(CreateView):
     model = Post
-    fields = ["posteador", "titulo","contenido", "fecha_publicacion", "tematica", "estado"]
+    fields = ["posteador", "titulo","contenido", "fecha_publicacion", "tematica", "estado", "imagenPost"]
     success_url = '/UserApp/listaPost'
 
 class eliminaPost(DeleteView):

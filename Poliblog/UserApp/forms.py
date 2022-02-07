@@ -10,6 +10,7 @@ class PostFormulario(forms.Form):
     titulo              = forms.CharField(max_length=100)
     contenido           = forms.CharField(max_length=100000000)
     tematica            = forms.CharField(max_length=100)
+    imagenPost          = forms.ImageField(required=False)
 
 class UserRegisterForm(UserCreationForm):
     #Por qué no ponemos username=forms.text...?
