@@ -1,5 +1,6 @@
 from audioop import reverse
 from collections import UserDict
+from email.policy import default
 from http.client import HTTPResponse
 from venv import create
 from dataclasses import fields
@@ -12,7 +13,7 @@ from django.views.generic.edit import CreateView
 from django.views.generic.detail import DetailView
 
 from django.views.generic.edit import UpdateView, DeleteView
-from UserApp.forms import PostForm, TematicaForm, UserRegisterForm, UserEditForm,ComentarioForm
+from UserApp.forms import PostForm, PerfilForm,TematicaForm, UserRegisterForm, UserEditForm,ComentarioForm, AvatarFormulario
 from UserApp.models import Avatar,Post,Perfil, Tematica, ComentariosPost, Lenguaje
 from django.db.models import Q
 from django.views.generic.detail import DetailView
@@ -41,7 +42,19 @@ def register(request):
            form = UserRegisterForm(request.POST)
            if form.is_valid():
                  username = form.cleaned_data['username']
-                 form.save()
+                 user = form.save()
+                 bio = form.cleaned_data['biografia']
+                #  avatar= Avatar(user=request.user)
+                #  perfil=Perfil(user=request.user , avatar = avatar)
+                 avatar = Avatar.objects.create(
+                     user = user,
+                    #  imagen = None
+                 )
+                 Perfil.objects.create(
+                     user = user,
+                     biografia = form.cleaned_data['biografia']
+                 )
+                 
                  return render(request,"usuarioCreado.html" ,  {"mensaje":"Usuario Creado :)"})
 
     else:
@@ -88,44 +101,109 @@ def verPerfil(req):
     usuario = req.user
     perfil = Perfil.objects.filter(user=usuario)
     post= Post.objects.filter(posteador=usuario)
+
     username= usuario.username
     userBio= usuario.perfil.biografia
+    email= usuario.email
+    avatar= usuario.perfil.imagenPerfil
+
+    #Cuando el usuario actualice su avatar que borre el por defecto !
+
+    # avatar= usuario.perfil.avatar
+
+
+
     # perfilBio= perfil.biografia
-    print(userBio)
+    # print(userBio)
     print(username)
     print(post)
     # print(perfilBio)
         # avatares=Avatar.objects.filter(user=request.user.id)
 
-    return render(req, "perfil.html", {'username':username, 'biografia':userBio,'post':post})
+    return render(req, "perfil.html", {'username':username,'email':email,'biografia':userBio, 'post':post})
+
+
 def perfil2(req):
     return render(req, "perfil2.html")
 
-# class Perfil(DetailView):
-#     model= Perfil
-#     template_name="perfil.html"
+def agregarAvatar(request):
+      if request.method == 'POST':
 
-#     def get_object(self):
-#         return self.user
+            miFormulario = AvatarFormulario(request.POST, request.FILES)
 
-def editarUsuario(req):
-    usuario= req.user #quien fue quien hizo esa req
-    if req.method== 'POST':
-        miForm= UserEditForm(req.post)
-        if miForm.is_valid:
-            informacion= miForm.cleaned_data
-            usuario.email = informacion['email']
-            usuario.password1 = informacion['password1']
-            usuario.password2 = informacion['password2']
-            usuario.save()
-            #return render(req, 'inicio.html')
-            return redirect(inicio)
-        #else 
-    else:
-        miForm= UserEditForm(initial={'email': usuario.email})
-        return render(req, 'editarPerfil.html', {'miForm': miForm, 'usuario':usuario}) 
+            if miFormulario.is_valid():
+
+
+                #   u = User.objects.get(username=request.user)
+                  user= request.user
+                  imagen=miFormulario.cleaned_data['imagen']
+                  avatar = Avatar (user=user, imagen=imagen) 
+                #   imagenNueva= Perfil
+      
+                  avatar.save()
+
+                  return render(request, "perfil.html", {'avatar':avatar.imagen.url}) 
+
+      else: 
+
+            miFormulario= AvatarFormulario() 
+
+      return render(request, "agregarAvatar.html", {"miFormulario":miFormulario})
+
+
+def actualizarAvatar(request):
+    pass
+
+
+# def editarUsuario(req):
+#     usuario= req.user #quien fue quien hizo esa req
+#     perfil= Perfil.objects.filter(user=usuario)
+#     miForm= UserEditForm(initial={'email': usuario.email})
+#     if req.method== 'POST':
+#         miForm= UserEditForm(req.POST, req.FILES)
+#         if miForm.is_valid():
+#             informacion= miForm.cleaned_data
+#             usuario.email = informacion['email']
+#             usuario.password1 = informacion['password1']
+#             usuario.password2 = informacion['password2']
+#             usuario.perfil.imagenPerfil= informacion['imagenPerfil']
+#             usuario.save()
+#             return redirect(inicio)
+#         #else 
+#     return render(req, 'editarPerfil.html', {'miForm': miForm, 'usuario':usuario}) 
             
+def editarUsuario(req):
+    usuario = req.user
+    perfil = req.user.perfil
+    # perfil = Perfil.objects.filter(user=usuario)
+    if req.method == 'POST':
+        miForm = UserEditForm(req.POST, instance = usuario)
+        miPerfil= PerfilForm(req.POST, req.FILES, instance=perfil)
+        if miForm.is_valid() and miPerfil.is_valid():
+            info= miForm.cleaned_data
+            usuario.email = info['email']
+            usuario.password1 = info['password1']
+            usuario.password2 = info['password2']
+            ##No se guardan las contraseñas D: el email si pero contraseñas no....
 
+
+            # usuario.perfil.imagenPerfil = info['imagenPerfil']
+            
+            # Perfil.objects.update(
+            #     imagenPerfil = info['imagenPerfil'] 
+            # )
+            # perfil.imagenPerfil= info['imagenPerfil']
+            
+            # perfil=miPerfil.save(commit=False)
+            # perfil.user = req.user
+            miPerfil.save()
+            usuario.save()
+            # miPerfil.save_m2m()
+            return redirect(inicio)
+    else:
+        miForm = UserEditForm(initial={'email': usuario.email })
+        miPerfil = PerfilForm(instance=perfil)
+        return render(req, 'editarPerfil.html',{'miForm':miForm, 'miPerfil': miPerfil,'usuario':usuario})
 
 
 

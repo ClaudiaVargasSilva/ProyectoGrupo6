@@ -3,18 +3,18 @@ div#contenedor{
     margin-top:50px; 
     margin-block-end: 50px;
     width: 1500px;
-    height: 3000px;
-    background-color:red;
+    height: 2000px;
+    background-color: white;
 }
 div#posteos{
     float:left;
     height: auto;
     width: 900px;
-    background-color: green;
+    background-color: transparent;
 }
 div#profile{
     float:right;
     width: 500px;
     height: auto;
-    background-color: rgb(0, 0, 0);
+    background-color: transparent;
 }

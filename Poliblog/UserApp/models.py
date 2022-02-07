@@ -11,13 +11,14 @@ from django.contrib.auth.models import User
 
 class Avatar(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    imagen = models.ImageField(upload_to= 'avatares', null=True, blank=True)
+    imagen = models.ImageField(upload_to= 'avatares', null=True, blank=True, default = 'PorDefecto/profileImageDefault.jpg' )
     
 ##Ver diferencia entre auth_user_model y model User
 
 class Perfil(models.Model):
     user = models.OneToOneField(User, on_delete= models.CASCADE)
-    avatar= models.OneToOneField(Avatar, on_delete=models.CASCADE)
+    imagenPerfil =models.ImageField(upload_to= 'avatares', null=True, blank=True, default = 'PorDefecto/profileImageDefault.jpg' )
+    # avatar= models.OneToOneField(Avatar, on_delete=models.CASCADE)
     biografia = models.TextField(max_length=500, null=True, blank=True)
     #poner un atributo posteos? osea los posteos relacionados a cada usuario y se muestren en el perfil?
 class Tematica(models.Model):

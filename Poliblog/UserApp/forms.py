@@ -1,7 +1,7 @@
 import email
 from mimetypes import init
 from re import S
-from UserApp.models import Post, Tematica, ComentariosPost
+from UserApp.models import Post, Tematica, ComentariosPost,Perfil
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth.models import User
@@ -14,23 +14,28 @@ class PostFormulario(forms.Form):
 class UserRegisterForm(UserCreationForm):
     #Por qué no ponemos username=forms.text...?
     email= forms.EmailField()
-    password1= forms.CharField(label='Contraseña', widget= forms.PasswordInput)
-    password2=forms.CharField(label='Repetir contraseña', widget= forms.PasswordInput)
+    password1= forms.CharField(label = 'Contraseña', widget= forms.PasswordInput)
+    password2=forms.CharField(label = 'Repetir contraseña', widget= forms.PasswordInput)
+    biografia=forms.CharField(label = 'Quien es usted?')
 
     class Meta:
         model=User
-        fields=['username', 'email', 'password1', 'password2']
+        fields=['username', 'email', 'password1', 'password2', 'biografia']
         help_texts= {k:"" for k in fields}
 
 class UserEditForm(UserCreationForm):
     email= forms.EmailField()
     password1= forms.CharField(label='Contraseña', widget= forms.PasswordInput)
     password2=forms.CharField(label='Repetir contraseña', widget= forms.PasswordInput)
-    first_name= forms.CharField()
+    # first_name= forms.CharField()
     # last_name= forms.CharField()
     class Meta:
         model = User
-        fields = ['email','password1', 'password2', 'first_name']
+        fields = ['email','password1', 'password2']
+class PerfilForm(forms.ModelForm):
+    class Meta:
+        model = Perfil
+        fields = ['imagenPerfil', 'biografia']
 class PostForm(forms.ModelForm):
     # def __init__(self,*args, **kwargs):
     #     super(PostForm, self).__init__(*args, **kwargs)
@@ -114,3 +119,8 @@ class ComentarioForm(forms.ModelForm):
                 }
             )
         }
+class AvatarFormulario(forms.Form):
+
+    #Especificar los campos
+    
+    imagen = forms.ImageField(required=False)

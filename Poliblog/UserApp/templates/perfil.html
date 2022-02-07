@@ -12,7 +12,7 @@
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous"> -->
 
 	<!--Custom styles-->
-	<link rel="stylesheet" type="text/css" href="{% static 'UserApp/css/styleProfile.css'%}">
+	<link rel="stylesheet" href="{% static 'UserApp/css/styleProfile.css'%}">
 </head>
 
 <!--header para que diga Perfil-->
@@ -46,6 +46,16 @@
                     <!-- </div> -->
     <div id="profile">
         <p>PERFIL</p>
+        <!--  Acá va la imagen por defecto -->
+        <h2>Hola {{username}}</h2>
+        <p>Email: {{email}}</p>
+        <!-- {{avatar}} -->
+
+        <!-- Verificar que si no tiene avatar deje el avatar por defecto y si tiene/agregó que muestre ese...-->
+        <img class="rounded-circle" src= "{{request.user.perfil.imagenPerfil.url}}" alt="..."  height="100px" width="100px" />
+        <a href=" {% url 'editarPerfil' %}"><img class="rounded-circle" src= "..\..\media\PorDefecto\configuracion.png" alt="..."  height="30px" width="30px"/></a>
+        <p>{{biografia}}</p>
+        
     </div>
     
 </div>

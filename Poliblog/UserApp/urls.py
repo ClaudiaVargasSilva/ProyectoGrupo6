@@ -11,7 +11,8 @@ urlpatterns = [
     path('login2', views.login2, name="login2"),
     path('perfil', views.verPerfil, name="Perfil"),
     path('perfil2', views.perfil2, name="perfil2"),
-    path('editarPerfil', views.UserEditForm, name="editarPerfil"),
+    path('editarPerfil', views.editarUsuario, name="editarPerfil"),
+    path('agregarAvatar', views.agregarAvatar, name="agregarAvatar"),
     #path('login2', views.Login2, name="login2"),
     
     path('Posteos/<id>', views.verPosteos, name="Posteos"),

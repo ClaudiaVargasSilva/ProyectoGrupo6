@@ -5,9 +5,10 @@
     <form action="" method="POST">
 
         {% csrf_token %}
-        <p>Hola! {usuario}, aqui puedes editar tu perfil</p>
+        <p>Hola! {{usuario}}, aqui puedes editar tu perfil</p>
         {{miForm.as_p}}
-        <button type="submit" href="{% url 'inicio' %}"  class="btn btn-primary" id="enviado">Registrarse</button>
+        {{miPerfil.as_p}}
+        <button type="submit" href="{% url 'inicio' %}"  class="btn btn-primary" id="enviado">Actualizar</button>
     </form> 
     
 <div class="modal fade" id="usercreado" role="dialog">
