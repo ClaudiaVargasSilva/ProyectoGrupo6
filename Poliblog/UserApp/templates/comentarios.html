@@ -1,8 +1,22 @@
 {% extends 'padre.html' %}
 {%load static%}
 {% block ContenidoQueCambia %}
-    <h2>Comentarios del {{comentario.post.titulo}}</h2>
-    <p>{{comentario.contenido_comentario}}</p>
+    
+     {% if comentario %}
+                            
+            {% for coment  in comentario  %}
+            <h2>Comentarios del post: {{coment.post.titulo}}</h2> 
+            <div class="text-muted fst-italic mb-2">Publicado por: {{coment.comentarista}}</div>
+            <div class="text-muted fst-italic mb-2">{{coment.fecha}}</div>
+            <p>Comentaste: </p>
+            <p>{{coment.contenido_comentario}}</p>
+                            
+                                
+            {% endfor %}
+                                
+    {% else %}
+            <p>No hay nada:(</p>   
+    {% endif %}
 
 {% endblock ContenidoQueCambia %}
     

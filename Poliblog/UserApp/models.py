@@ -85,3 +85,6 @@ class Favoritos(models.Model):
     post=models.ForeignKey(Post, on_delete=models.CASCADE)
     #ver que tipo de relacion tendria
 
+######## Mensajes directos #########
+# class Canal(models.Manager):
+#     pass

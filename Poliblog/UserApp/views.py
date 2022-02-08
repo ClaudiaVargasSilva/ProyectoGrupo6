@@ -17,6 +17,7 @@ from UserApp.forms import PostForm, PerfilForm,TematicaForm, UserRegisterForm, U
 from UserApp.models import Avatar,Post,Perfil, Tematica, ComentariosPost, Lenguaje
 from django.db.models import Q
 from django.views.generic.detail import DetailView
+from django.contrib.auth.decorators import login_required
 
 from django.shortcuts import redirect
 from django.contrib import messages
@@ -29,8 +30,8 @@ def mantencion(req):
 
 
 
-def login2(req):
-    return render(req, 'login2.html')
+# def login2(req):
+#     return render(req, 'login2.html')
 
 def padre(req):
     return render(req, 'padre.html')
@@ -97,6 +98,7 @@ def Login(request):
     return render(request,"login.html", {'form':form} )
 
 
+
 # def verPerfil(req):
 #     usuario= Perfil.user.get_object()
 #     return render(req, 'perfil.html',{'usuario':usuario})
@@ -110,19 +112,8 @@ def verPerfil(req):
     userBio= usuario.perfil.biografia
     email= usuario.email
     avatar= usuario.perfil.imagenPerfil
-    
-    #Cuando el usuario actualice su avatar que borre el por defecto !
-
-    # avatar= usuario.perfil.avatar
-
-
-
-    # perfilBio= perfil.biografia
-    # print(userBio)
     print(username)
     print(post)
-    # print(perfilBio)
-        # avatares=Avatar.objects.filter(user=request.user.id)
 
     return render(req, "perfil.html", {'username':username,'email':email,'biografia':userBio, 'usuario':usuario,'post':post})
 
@@ -198,6 +189,10 @@ def editarUsuario(req):
         return render(req, 'editarPerfil.html',{'miForm':miForm, 'miPerfil': miPerfil,'usuario':usuario})
 
 
+def mensajes(req):
+    return render(req,'mensajesDirectos.html')
+
+
 
 def idPost(id): #devuelve la id de cada POST pasandole el id del Post
     return Post.objects.get(id=id)
@@ -261,7 +256,7 @@ def verPosteos(req,id):
 
 
 
-
+@login_required
 def CrearPost(req):
 
     if req.method == "POST":
@@ -378,8 +373,8 @@ def editarTematicas(req, id_tematica):
 
 ###SECCION COMENTARIOS###
 
-def verComentarios(req,id):
-    comentario= ComentariosPost.objects.get(id=id)
+def verComentarios(req):
+    comentario= ComentariosPost.objects.filter(comentarista=req.user)
    
     return render(req, 'comentarios.html', {'comentario':comentario})
 
@@ -395,11 +390,14 @@ class LenguajeCreate(CreateView):
 
 
 ###SECCION CRUD###
+@login_required
 def leerposts(req):
     post = Post.objects.all()
     contexto = {"post": post}
 
     return render(req, 'buscar_post.html', contexto)
+
+
 
 class listaPost(ListView):
     model = Post

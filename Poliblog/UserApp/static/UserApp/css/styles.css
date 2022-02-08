@@ -7493,6 +7493,11 @@ textarea.form-control-lg {
 .py-5 {
   padding-top: 3rem !important;
   padding-bottom: 3rem !important;
+  /* position: absolute;
+  bottom: 0; */
+  /* position: absolute; */
+
+  /* bottom: 0; */
 }
 
 .pt-0 {
@@ -7844,6 +7849,12 @@ textarea.form-control-lg {
   --bs-bg-opacity: 1;
   background-color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity)) !important;
 }
+/* .footer-543 {
+  padding-top: 3rem !important;
+  padding-bottom: 3rem !important;
+  position: absolute;
+  bottom: auto;
+} */
 
 .bg-black {
   --bs-bg-opacity: 1;

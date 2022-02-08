@@ -21,3 +21,29 @@ div#profile{
     height: auto;
     background-color: transparent;
 }
+div#barraPerfil{
+    width: 300px;
+    margin-block-end: 50px;
+}
+li {
+    display: inline;
+    
+
+    
+}
+ul#menuPerfil{
+    list-style-type: none;
+    background-color: black;
+    height: 30px;
+
+}
+li a {
+    /* display: block; */
+    color: white;
+    text-align: center;
+    padding: 1px 10px;
+    text-decoration: none;
+}
+li a:hover {
+    background-color: #111;
+}
