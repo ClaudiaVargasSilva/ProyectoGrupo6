@@ -4,7 +4,7 @@ from email.policy import default
 from http.client import HTTPResponse
 from venv import create
 from dataclasses import fields
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render, get_list_or_404
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.views import LogoutView
@@ -14,7 +14,7 @@ from django.views.generic.detail import DetailView
 
 from django.views.generic.edit import UpdateView, DeleteView
 from UserApp.forms import PostForm, PerfilForm,TematicaForm, UserRegisterForm, UserEditForm,ComentarioForm, AvatarFormulario
-from UserApp.models import Avatar,Post,Perfil, Tematica, ComentariosPost, Lenguaje
+from UserApp.models import Avatar,Likes,Post,Perfil, Tematica, ComentariosPost, Lenguaje
 from django.db.models import Q
 from django.views.generic.detail import DetailView
 from django.contrib.auth.decorators import login_required
@@ -253,8 +253,19 @@ def verPosteos(req,id):
     return render(req,'posteos.html', {'post':post, 'tematicas':tematicas, 'comentario':comentario, 'miFormComentario': miFormComentario})
 
 
+def darLike(req,id):
+    post = get_object_or_404(Post, id=id)
+    likes = Likes.objects.filter(usuario=req.user, post=post)
+    if likes.exists():
+        likes.delete()
+        return redirect('Posteos',id=id)
+    Likes.objects.create(usuario=req.user, post=post)
+    return redirect('Posteos',id=id)
 
-
+def verLikes(req):
+    likes = Likes.objects.filter(usuario=req.user)
+    
+    return render(req, "misLikes.html", {'likes':likes})
 
 @login_required
 def CrearPost(req):

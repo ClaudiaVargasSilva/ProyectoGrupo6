@@ -27,7 +27,10 @@
                         <p>No recibo la lista tematicas :(</p>
     
                     {% endif %}
-                    
+                    <a class="text-muted" href="{% url 'Likes' post.pk %}" >
+                        <i class="fas fa-thumbs-up fa-lg"></i>
+                        {{post.get_like_count}}
+                    </a>
                     
 
                     {% if post.imagenPost %}

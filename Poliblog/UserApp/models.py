@@ -44,28 +44,20 @@ class Post(models.Model):
     imagenPost= models.ImageField(null=True, blank=True, upload_to = 'imagenes', max_length = 255)
     def __str__(self):
         return f'Posteo:   {self.titulo}, user: {self.posteador}'
-    #     class A(model.Model):
-    # blah = CharField(max_length=10)
-    # profile = ImageField(
-    #     upload_to='uploads/',
-    #     default='uploads/default.jpg',
-    #     blank=True
-    # )
-    # @property
-    # def get_comment_count(self):
-    #     return self.ComentariosPost_set.all().count()
-    # @property
-    # def get_view_count(self):
-    #     return self.VistaDelPost_set.all().count()
-    # @property
-    # def get_like_count(self):
-    #     return self.Likes_set.all().count()
+   
+    def get_comment_count(self):
+        return self.comentariospost_set.all().count()
+    def get_view_count(self):
+        return self.vistadelpost_set.all().count()
+    def get_like_count(self):
+        return self.likes_set.all().count()
 
 class Likes(models.Model):
     post=models.ForeignKey(Post,on_delete=models.CASCADE)
     usuario=models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
-
+    def __str__(self):
+        return f'Like de: {self.usuario}, post= {self.post.titulo}'
 class ComentariosPost(models.Model):
     post= models.ForeignKey(Post, on_delete=models.CASCADE)
     #foreignKey porque un comentario está en un SOLO post pero cada Post puede tener

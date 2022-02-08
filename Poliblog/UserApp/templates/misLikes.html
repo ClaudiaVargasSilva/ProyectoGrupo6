@@ -1,0 +1,20 @@
+{% extends 'padre.html' %}
+{%load static%}
+{% block ContenidoQueCambia %}
+    
+     {% if likes %}
+                            
+            {% for like  in likes  %}
+            <h2>Like del post: <a href=" {% url 'Posteos' % like.post.id}">{{like.post.titulo}}</a> </h2> 
+            <div class="text-muted fst-italic mb-2">Publicado por: {{like.usuario}}</div>
+            
+                            
+                                
+            {% endfor %}
+                                
+    {% else %}
+            <p>No hay nada:(</p>   
+    {% endif %}
+
+{% endblock ContenidoQueCambia %}
+    

@@ -50,7 +50,13 @@
                             <p class="post-meta">Escrito por {{posteo.posteador}}</p>
 
                             <div class="small text-muted">{{posteo.fecha_publicacion}}</div>
-                            
+                            <p>
+                                <span><i class="fas fa-thumbs-up"></i>{{posteo.get_like_count}}</span>
+                                <span><i class="fas fa-comments"></i>{{posteo.get_comment_count}}</span>
+                                
+                                
+
+                            </p>
                             
                             {% if lista  %}
                                 {% for post in lista %}
