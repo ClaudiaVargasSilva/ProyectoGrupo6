@@ -335,17 +335,7 @@ class TematicaDelete(DeleteView):
     success_url=  reverse_lazy('tematicasList') #Ver por qué no me lleva a la url correspondiente...
     template_name= "tematica_delete.html"
 def postRelacionados(req, pk):
-    #ver las tematicas de todos los posts y mostrarlas
-    # post= Post.objects.all()
-    # tematicas= Tematica.objects.all()
-    # #post y tematicas son dos listas...
-    # postRelacionados = []
-    # for p in post:
-    #     if p.tematica == tematicas.nombre:
-    #         postRelacionados.append(p)
-    #     else:
-    #         pass    
-    # return render(req, 'postRelacionados.html', {'postRelacionados':postRelacionados})
+    
     post= Post.objects.filter(tematica__id=pk)
 
     return render(req,'postRelacionados.html', {'postRelacionados' : post})
