@@ -10,6 +10,8 @@
             <div class="text-muted fst-italic mb-2">{{coment.fecha}}</div>
             <p>Comentaste: </p>
             <p>{{coment.contenido_comentario}}</p>
+            <a class="btn btn-primary" href="{% url 'eliminarComentario' coment.id %}">Eliminar</a>
+            <a class="btn btn-primary" href="{% url 'editarComentario' coment.id %}">Editar</a>
                             
                                 
             {% endfor %}
