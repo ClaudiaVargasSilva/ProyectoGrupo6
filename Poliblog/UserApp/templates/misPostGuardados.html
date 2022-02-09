@@ -1,0 +1,21 @@
+{% extends 'padre.html' %}
+{%load static%}
+{% block ContenidoQueCambia %}
+<h2>Guardados: </h2>
+     {% if postFav %}
+                     
+            {% for fav  in postFav  %}
+            <ul>
+             <li><a href="{% url 'Posteos' fav.post.pk%}" >{{fav.post.titulo}}</a></li>   
+            </ul>
+           
+                            
+                                
+            {% endfor %}
+                                
+    {% else %}
+            <p>No hay nada:(</p>   
+    {% endif %}
+
+{% endblock ContenidoQueCambia %}
+    

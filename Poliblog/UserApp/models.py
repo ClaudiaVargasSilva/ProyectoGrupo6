@@ -32,19 +32,20 @@ class Lenguaje(models.Model):
 class Post(models.Model):
     id= models.AutoField(primary_key=True)
     posteador= models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
-    #foreingKey porque un Post tiene un solo posteador/usuario pero cada
-    #usuario puede tener muchos posts
+    
     titulo= models.CharField(max_length=100)
     contenido= models.TextField()
     fecha_publicacion=models.DateTimeField(default=timezone.now)
-    #actualizacion=models.DateTimeField(auto_now=True)
-    # tipoPost=models.CharField(max_length=50)
+    
     tematica= models.ManyToManyField(Tematica)
     estado= models.BooleanField('Publicado/NoPublicado', default=True)
     imagenPost= models.ImageField(null=True, blank=True, upload_to = 'imagenes', max_length = 255)
     def __str__(self):
-        return f'Posteo:   {self.titulo}, user: {self.posteador}'
-   
+        return f'Posteo:   {self.titulo}, posteador: {self.posteador}'
+
+    def get_tematica(self):
+        tematicas= self.tematica.all()
+        return tematicas
     def get_comment_count(self):
         return self.comentariospost_set.all().count()
     def get_view_count(self):
@@ -65,16 +66,20 @@ class ComentariosPost(models.Model):
     fecha= models.DateTimeField(default=timezone.now)
     contenido_comentario=models.TextField()
     comentarista= models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE, related_name="comentarista")
-    #ForeignKey porque un comentario tiene un solo comentarista pero 
-    #cada usuario puede hacer muchos comentarios
+    
     def __str__(self):
         return f'Comentario:   {self.contenido_comentario} user: {self.comentarista}'
 class VistaDelPost(models.Model):
     post= models.ForeignKey(Post, on_delete=models.CASCADE)
     visto= models.DateTimeField(auto_now_add=True)
 
-class Favoritos(models.Model):
+class PostFavoritos(models.Model):
     post=models.ForeignKey(Post, on_delete=models.CASCADE)
+    user=models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    def __str__(self):
+        return f'Fav de: {self.user}, post= {self.post}'
+    #un favorito tiene un usuario pero un usuario puede tener muchos favs
+    
     #ver que tipo de relacion tendria
 
 ######## Mensajes directos #########

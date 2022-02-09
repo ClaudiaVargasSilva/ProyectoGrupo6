@@ -5,8 +5,8 @@
      {% if likes %}
                             
             {% for like  in likes  %}
-            <h2>Like del post: <a href=" {% url 'Posteos' % like.post.id}">{{like.post.titulo}}</a> </h2> 
-            <div class="text-muted fst-italic mb-2">Publicado por: {{like.usuario}}</div>
+            <h2>Likeaste el post: <a href=" {% url 'Posteos'  like.post.pk%}">{{like.post.titulo}}</a> </h2> 
+            <!-- <div class="text-muted fst-italic mb-2">Publicado por: {{like.usuario}}</div> -->
             
                             
                                 

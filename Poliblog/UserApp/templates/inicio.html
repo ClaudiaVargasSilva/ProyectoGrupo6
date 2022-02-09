@@ -53,22 +53,36 @@
                             <p>
                                 <span><i class="fas fa-thumbs-up"></i>{{posteo.get_like_count}}</span>
                                 <span><i class="fas fa-comments"></i>{{posteo.get_comment_count}}</span>
+                                <p>{{posteo.get_tematica}}</p>
                                 
-                                
+                                {% for i in posteo.get_tematica %}
+                                    <a class="badge bg-secondary text-decoration-none link-light" href="{% url 'tematicasList' %}">{{i}}</a>
+                                {% endfor %}
+                                    
 
+                                <!-- <p>{{posteo.get_titulo}}</p> -->
+                                <!-- <span>        <i class="fa-solid fa-gears"></i>settings</span> -->
                             </p>
                             
-                            {% if lista  %}
-                                {% for post in lista %}
-                            
-                                    <a class="badge bg-secondary text-decoration-none link-light" href="{% url 'tematicasList' %}">{{post.nombre}}</a>
-                            
-                                {% endfor %}
-                            {% else %}
+                            <!-- {% if lista  %} -->
+                                <!-- {% for tematicas in lista %} -->
+
+                                    <!-- {% if tematica.nombre == posteo.tematica.nombre %}  -->
+                                        <!-- <a class="badge bg-secondary text-decoration-none link-light" href="{% url 'tematicasList' %}">{{tematicas.nombre}}</a> -->
+                                    <!-- {% else %}
+                                        <p>nada</p>
+                                        
+                                    {% endif %}  -->
+                                    
+                                
+                                        
+                                    
+                                <!-- {% endfor %} -->
+                            <!-- {% else %} -->
                             <!-- <a class="badge bg-secondary text-decoration-none link-light" href="{% url 'tematicas' %}">{{posteo.tematica}}</a> -->
                                 <!--Tiene que aparecer cada tematica  -->
-                            {% endif %}
-                                <p class="card-text">{{posteo.contenido}}</p>
+                            <!-- {% endif %} -->
+                            <p class="card-text">{{posteo.contenido}}</p>
                             <a class="btn btn-primary" href="{% url 'Posteos' posteo.pk %}">Leer más →</a>
                             {% endfor %}
                         {% else %}
