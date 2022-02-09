@@ -5,8 +5,8 @@
      {% if comentario %}
                             
             {% for coment  in comentario  %}
-            <h2>Comentarios del post: {{coment.post.titulo}}</h2> 
-            <div class="text-muted fst-italic mb-2">Publicado por: {{coment.comentarista}}</div>
+            <h2>Comentarios del post: <a href="{% url 'Posteos' coment.post.pk %}" >{{coment.post.titulo}}</a></h2> 
+            <div class="text-muted fst-italic mb-2">Publicado por ti: {{coment.comentarista}}</div>
             <div class="text-muted fst-italic mb-2">{{coment.fecha}}</div>
             <p>Comentaste: </p>
             <p>{{coment.contenido_comentario}}</p>

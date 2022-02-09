@@ -21,8 +21,15 @@ urlpatterns = [
     path('buscarPosteos', views.buscarPosteos, name="buscarPosteos"),
     path('busquedaPosteos', views.busquedaPosteos, name="busquedaPosteos"),
     path('comentarios', views.verComentarios, name="comentarios"),
+
     path('eliminarComentario/<id_comentario>',views.eliminarComentario, name="eliminarComentario"),
     path('editarComentario/<id_comentario>/', views.editarComentario, name="editarComentario"),
+
+    path('likes/<id>', views.darLike, name="Likes"),
+    path('misLikes', views.verLikes, name="verLikes"),
+    path('guardados/<id>', views.postFavoritos, name="Postfavoritos"),
+    path('misPostsGuardados', views.verPostFavoritos, name="verPostFavoritos"),
+
     #path('eliminarComentarios/<id>', views.eliminarComentarios, name="eliminarComentarios"),
 
     path('crearPost',views.CrearPost, name ="crearPost"),
@@ -38,6 +45,7 @@ urlpatterns = [
     path('tematicasUpdate/<pk>',views.TematicaUpdate.as_view(), name="tematicasUpdate"),
     path('tematicasDelete/<pk>',views.TematicaDelete.as_view(), name="tematicasDelete"),
     path('tematicasCreate',views.TematicaCreate.as_view(), name="tematicasCreate"),
+    path('postRelacionados/<pk>', views.postRelacionados, name="postRelacionados"),
 
     path('crearTematica',views.CrearTematica, name="crearTematica"),
     path('buscarTematicas', views.buscarTematicas, name="buscarTematicas"),

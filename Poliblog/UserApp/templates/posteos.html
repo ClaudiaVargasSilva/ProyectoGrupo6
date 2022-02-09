@@ -13,8 +13,7 @@
                     <h1 class="fw-bolder mb-1">Posteos</h1>
                     <!-- Post meta content-->
                     <a class="btn btn-primary" href= "{% url 'crearPost' %}">Crear post</a>
-
-                    <h1>{{post.titulo}}</h1>
+                    <h2>{{post.titulo}} <a href="{% url 'Postfavoritos' post.pk %}" ><span ><i class="fa-solid fas fa-bookmark"></i></span> </a> </h2>
                     <div class="text-muted fst-italic mb-2">{{post.fecha_publicacion}}</div>
                     <!-- Post categories-->
                     
@@ -27,7 +26,10 @@
                         <p>No recibo la lista tematicas :(</p>
     
                     {% endif %}
-                    
+                    <a class="text-muted" href="{% url 'Likes' post.pk %}" >
+                        <i class="fas fa-thumbs-up fa-lg"></i>
+                        {{post.get_like_count}}
+                    </a>
                     
 
                     {% if post.imagenPost %}

@@ -22,8 +22,9 @@ div#profile{
     background-color: transparent;
 }
 div#barraPerfil{
-    width: 300px;
+    width: 500px;
     margin-block-end: 50px;
+    /* background-color: 33, 37, 41; */
 }
 li {
     display: inline;

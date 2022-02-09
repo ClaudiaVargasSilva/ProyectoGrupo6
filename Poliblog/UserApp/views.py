@@ -4,7 +4,7 @@ from email.policy import default
 from http.client import HTTPResponse
 from venv import create
 from dataclasses import fields
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render, get_list_or_404
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.views import LogoutView
@@ -14,7 +14,8 @@ from django.views.generic.detail import DetailView
 
 from django.views.generic.edit import UpdateView, DeleteView
 from UserApp.forms import PostForm, PerfilForm,TematicaForm, UserRegisterForm, UserEditForm,ComentarioForm, AvatarFormulario, ComentFormulario
-from UserApp.models import Avatar,Post,Perfil, Tematica, ComentariosPost, Lenguaje
+from UserApp.models import Avatar,PostFavoritos,Likes,Post,Perfil, Tematica, ComentariosPost, Lenguaje
+
 from django.db.models import Q
 from django.views.generic.detail import DetailView
 from django.contrib.auth.decorators import login_required
@@ -194,38 +195,25 @@ def mensajes(req):
 
 
 
-def idPost(id): #devuelve la id de cada POST pasandole el id del Post
+def idPost(id): #devuelve la id de cada POST
     return Post.objects.get(id=id)
     
 
 
 
 def inicio(request):
-    post=Post.objects.all()
-    avatares=Avatar.objects.filter(user=request.user.id)
-    # print(Post.objects.filter(id))
+    post=Post.objects.all() #devuelve una lista de posteos
     post1=list(Post.objects.filter(
         estado=True
     ).values_list('id', flat=True))
     print(post1) #post1 me devuelve una LISTA con las ID de los POSTS
-    # post2=idPost(post1)
-    # print(post2)
-    # listaTematicasPost=[]
-    # tematicas=[]
-    
+    # tematicasPost=[]
+    # for i in post:
+    #     print(i.id)
+    #     tematicasPost.append(post__id=i.id) #guardo el post
+    # print(tematicasPost)
     listaTematicas=Tematica.objects.all() #devuelve una lista
-    # for i in post1:
-    #     postResult= idPost(i) 
-    #     print(postResult)
-    #     tematicas= Tematica.objects.filter(post__id=postResult.id)   
-    #     print(tematicas) 
-    #     listaTematicasPost.append(tematicas)
-    # print(listaTematicasPost) #lista de tematicas de CADA POST ordenados por id...si borro un post, como quedaria????, si yo la paso como está me muestra la lista nomás...
-    # print(tematicas) #me imprime la ultima tematica del ultimo Post....
-    
-    # listaTematicasPost= Tematica.objects.filter(post__id=post1.id)
-    # listaTematicasPost=Tematica.objects.filter(post__id=id(post.i))
-    #en listaTematicasPost me tiene que devolver las tematicas del post que aparece en el inicio
+    print(listaTematicas)
     if not request.user.is_authenticated:
         return render(request, 'inicio.html', {'post':post, 'lista':listaTematicas})
     else:
@@ -253,8 +241,32 @@ def verPosteos(req,id):
     return render(req,'posteos.html', {'post':post, 'tematicas':tematicas, 'comentario':comentario, 'miFormComentario': miFormComentario})
 
 
+def darLike(req,id):
+    post = get_object_or_404(Post, id=id)
+    likes = Likes.objects.filter(usuario=req.user, post=post)
+    if likes.exists():
+        likes.delete()
+        return redirect('Posteos',id=id)
+    Likes.objects.create(usuario=req.user, post=post)
+    return redirect('Posteos',id=id)
 
+def verLikes(req):
+    likes = Likes.objects.filter(usuario=req.user)
+    
+    return render(req, "misLikes.html", {'likes':likes})
 
+def postFavoritos(req, id):
+    post= get_object_or_404(Post, id=id)
+    postFav= PostFavoritos.objects.filter(user=req.user, post=post)
+    if postFav.exists():
+        postFav.delete()
+        return redirect('Posteos', id=id)
+    PostFavoritos.objects.create(user=req.user,post=post)
+    return redirect('Posteos',id=id)
+
+def verPostFavoritos(req):
+    postFav= PostFavoritos.objects.filter(user=req.user)
+    return render(req, 'misPostGuardados.html',{'postFav':postFav})
 
 @login_required
 def CrearPost(req):
@@ -323,7 +335,21 @@ class TematicaDelete(DeleteView):
     model= Tematica
     success_url=  reverse_lazy('tematicasList') #Ver por qué no me lleva a la url correspondiente...
     template_name= "tematica_delete.html"
+def postRelacionados(req, pk):
+    #ver las tematicas de todos los posts y mostrarlas
+    # post= Post.objects.all()
+    # tematicas= Tematica.objects.all()
+    # #post y tematicas son dos listas...
+    # postRelacionados = []
+    # for p in post:
+    #     if p.tematica == tematicas.nombre:
+    #         postRelacionados.append(p)
+    #     else:
+    #         pass    
+    # return render(req, 'postRelacionados.html', {'postRelacionados':postRelacionados})
+    post= Post.objects.filter(tematica__id=pk)
 
+    return render(req,'postRelacionados.html', {'postRelacionados' : post})
 
 def CrearTematica(req):
 

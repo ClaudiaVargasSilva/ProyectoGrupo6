@@ -1,0 +1,12 @@
+{% extends 'padre.html' %}
+{%load static%}
+{% block ContenidoQueCambia %}
+<h2>Posteos relacionados con la tematica: </h2>
+    
+    {% for post in postRelacionados  %}
+       <p><a href="{% url 'Posteos' post.pk %}" >{{post.titulo}}</a></p> 
+    {% endfor %}
+        
+
+{% endblock ContenidoQueCambia %}
+    
