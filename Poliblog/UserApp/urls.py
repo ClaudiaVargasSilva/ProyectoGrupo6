@@ -15,11 +15,8 @@ urlpatterns = [
     path('editarPerfil', views.editarUsuario, name="editarPerfil"),
     path('agregarAvatar', views.agregarAvatar, name="agregarAvatar"),
     #path('login2', views.Login2, name="login2"),
-    path('mensajes', views.mensajes, name="misMensajes"),
-    
+    path('mensajes', views.mensajes, name="misMensajes"),  
     path('Posteos/<id>', views.verPosteos, name="Posteos"),
-    path('buscarPosteos', views.buscarPosteos, name="buscarPosteos"), #
-    path('busquedaPosteos', views.busquedaPosteos, name="busquedaPosteos"), #usar esta
     path('comentarios', views.verComentarios, name="comentarios"),
 
     path('busquedaPost/', views.busquedaPost, name="busquedaPost"),
