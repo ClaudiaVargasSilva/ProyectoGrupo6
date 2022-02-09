@@ -13,8 +13,9 @@ from django.views.generic.edit import CreateView
 from django.views.generic.detail import DetailView
 
 from django.views.generic.edit import UpdateView, DeleteView
-from UserApp.forms import PostForm, PerfilForm,TematicaForm, UserRegisterForm, UserEditForm,ComentarioForm, AvatarFormulario
+from UserApp.forms import PostForm, PerfilForm,TematicaForm, UserRegisterForm, UserEditForm,ComentarioForm, AvatarFormulario, ComentFormulario
 from UserApp.models import Avatar,PostFavoritos,Likes,Post,Perfil, Tematica, ComentariosPost, Lenguaje
+
 from django.db.models import Q
 from django.views.generic.detail import DetailView
 from django.contrib.auth.decorators import login_required
@@ -393,9 +394,30 @@ def verComentarios(req):
    
     return render(req, 'comentarios.html', {'comentario':comentario})
 
+def eliminarComentario(req, id_comentario):
+    comentario= ComentariosPost.objects.get(id=id_comentario)
+    comentario.delete()
+    comentarioCompleto= ComentariosPost.objects.filter(comentarista=req.user) 
+    return render(req, 'comentarios.html', {'comentario':comentarioCompleto})
 
+def editarComentario(req, id_comentario):
+    comentario = ComentariosPost.objects.get(id=id_comentario)
+    if req.method=="POST":
 
+        miFormComentario = ComentarioForm(req.POST) 
+        print(miFormComentario)
+        if miFormComentario.is_valid:
+            informacion                     = miFormComentario.cleaned_data
+            comentario.contenido_comentario = informacion['contenido_comentario']
+            comentario.save()
+        else:
+            return HTTPResponse("No funcionaaaaaaa")
 
+    else: 
+        miFormComentario= ComentarioForm(initial={'contenido_comentario': comentario.contenido_comentario}) 
+        
+    return render(req, "editarComentario.html", {"miFormulario":miFormComentario, "id_comentario":id_comentario})
+    
 
 class LenguajeCreate(CreateView):
     model= Lenguaje
