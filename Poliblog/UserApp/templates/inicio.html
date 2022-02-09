@@ -53,7 +53,7 @@
                             <p>
                                 <span><i class="fas fa-thumbs-up"></i>{{posteo.get_like_count}}</span>
                                 <span><i class="fas fa-comments"></i>{{posteo.get_comment_count}}</span>
-                                <p>{{posteo.get_tematica}}</p>
+                                <!-- <p>{{posteo.get_tematica}}</p> -->
                                 
                                 {% for i in posteo.get_tematica %}
                                     <a class="badge bg-secondary text-decoration-none link-light" href="{% url 'tematicasList' %}">{{i}}</a>

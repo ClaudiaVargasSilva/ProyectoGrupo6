@@ -40,6 +40,7 @@ urlpatterns = [
     path('tematicasUpdate/<pk>',views.TematicaUpdate.as_view(), name="tematicasUpdate"),
     path('tematicasDelete/<pk>',views.TematicaDelete.as_view(), name="tematicasDelete"),
     path('tematicasCreate',views.TematicaCreate.as_view(), name="tematicasCreate"),
+    path('postRelacionados/<pk>', views.postRelacionados, name="postRelacionados"),
 
     path('crearTematica',views.CrearTematica, name="crearTematica"),
     path('buscarTematicas', views.buscarTematicas, name="buscarTematicas"),
