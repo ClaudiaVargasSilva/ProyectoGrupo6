@@ -31,20 +31,19 @@
     </header>
     <!-- Page content-->
     <div class="container">
-        <div class="row">
+        <!-- <div class="row infinite-container"> -->
             <!-- Blog entries-->
-            <div class="col-lg-8">
+            <div class="col-lg-8 infinite-item" >
 
 
                 
-                <!-- Featured blog post-->
                 <div class="card mb-4">
                     <a href="#!"><img class="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg" alt="..." /></a>
                     <div class="card-body">
                         
                         {% if post %}
                         
-                            {% for posteo in post  %}
+                            {% for posteo in posteos  %}
                             
                             <h2 class="card-title">{{posteo.titulo}}</h2>
                             <p class="post-meta">Escrito por {{posteo.posteador}}</p>
@@ -53,35 +52,11 @@
                             <p>
                                 <span><i class="fas fa-thumbs-up"></i>{{posteo.get_like_count}}</span>
                                 <span><i class="fas fa-comments"></i>{{posteo.get_comment_count}}</span>
-                                <!-- <p>{{posteo.get_tematica}}</p> -->
                                 
                                 {% for i in posteo.get_tematica %}
                                     <a class="badge bg-secondary text-decoration-none link-light" href="{% url 'tematicasList' %}">{{i}}</a>
                                 {% endfor %}
-                                    
-
-                                <!-- <p>{{posteo.get_titulo}}</p> -->
-                                <!-- <span>        <i class="fa-solid fa-gears"></i>settings</span> -->
                             </p>
-                            
-                            <!-- {% if lista  %} -->
-                                <!-- {% for tematicas in lista %} -->
-
-                                    <!-- {% if tematica.nombre == posteo.tematica.nombre %}  -->
-                                        <!-- <a class="badge bg-secondary text-decoration-none link-light" href="{% url 'tematicasList' %}">{{tematicas.nombre}}</a> -->
-                                    <!-- {% else %}
-                                        <p>nada</p>
-                                        
-                                    {% endif %}  -->
-                                    
-                                
-                                        
-                                    
-                                <!-- {% endfor %} -->
-                            <!-- {% else %} -->
-                            <!-- <a class="badge bg-secondary text-decoration-none link-light" href="{% url 'tematicas' %}">{{posteo.tematica}}</a> -->
-                                <!--Tiene que aparecer cada tematica  -->
-                            <!-- {% endif %} -->
                             <p class="card-text">{{posteo.contenido}}</p>
                             <a class="btn btn-primary" href="{% url 'Posteos' posteo.pk %}">Leer más →</a>
                             {% endfor %}
@@ -89,135 +64,107 @@
                             <h2>Error, no se cargaron post</h2>
                             
                         {% endif %}
+
+                        
+                
+                            
                             
                         
                     </div>
                 </div>
 
-
-
-                <!-- Nested row for non-featured blog posts-->
-                <div class="row">
-                    <div class="col-lg-6">
-                        <!-- Blog post-->
-                        <div class="card mb-4">
-                            <a href="#!"><img class="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a>
-                            <div class="card-body">
-                                <div class="small text-muted">January 1, 2021</div>
-                                <h2 class="card-title h4">Post Title</h2>
-                                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla.</p>
-                                <a class="btn btn-primary" href="#!">Read more →</a>
-                            </div>
-                        </div>
-                        <!-- Blog post-->
-                        <div class="card mb-4">
-                            <a href="#!"><img class="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a>
-                            <div class="card-body">
-                                <div class="small text-muted">January 1, 2021</div>
-                                <h2 class="card-title h4">Post Title</h2>
-                                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla.</p>
-                                <a class="btn btn-primary" href="#!">Read more →</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <!-- Blog post-->
-                        <div class="card mb-4">
-                            <a href="#!"><img class="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a>
-                            <div class="card-body">
-                                <div class="small text-muted">January 1, 2021</div>
-                                <h2 class="card-title h4">Post Title</h2>
-                                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla.</p>
-                                <a class="btn btn-primary" href="#!">Read more →</a>
-                            </div>
-                        </div>
-                        <!-- Blog post-->
-                        <div class="card mb-4">
-                            <a href="#!"><img class="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a>
-                            <div class="card-body">
-                                <div class="small text-muted">January 1, 2021</div>
-                                <h2 class="card-title h4">Post Title</h2>
-                                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam.</p>
-                                <a class="btn btn-primary" href="#!">Read more →</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Pagination-->
-                <nav aria-label="Pagination">
-                    <hr class="my-0" />
-                    <ul class="pagination justify-content-center my-4">
-                        <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1" aria-disabled="true">Newer</a></li>
-                        <li class="page-item active" aria-current="page"><a class="page-link" href="#!">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#!">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#!">3</a></li>
-                        <li class="page-item disabled"><a class="page-link" href="#!">...</a></li>
-                        <li class="page-item"><a class="page-link" href="#!">15</a></li>
-                        <li class="page-item"><a class="page-link" href="#!">Older</a></li>
-                    </ul>
-                </nav>
-            </div>
-            <!-- Side widgets-->
-            <div class="col-lg-4">
-
-
-
-                <!-- Search widget-->
-                <div class="card mb-4">
-                    <div class="card-header">Buscar</div>
-                    <div class="card-body">
-                        <div class="input-group">
-
-
-                            <form action="buscarTematicas" method="GET">
-                                <input class="form-control" type="text" name="tematica" id="tematica" placeholder="Ingrese alguna tematica..." aria-label="Enter search term..." aria-describedby="button-search" />
-                                <input style="margin-top: 15px" class="btn btn-primary" id="button-search" type="submit">
-                            </form>
-                            
-                        </div>
-                    </div>
-                </div>
-                <!-- Categories widget-->
-
-
-
-                <div class="card mb-4">
-                    <div class="card-header">Tematicas</div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-sm-6">
-
-
+                <div class="col-lg-4">
+                    <div class="card mb-4">
+                        <div class="card-header">Buscar</div>
+                        <div class="card-body">
+                            <div class="input-group">
+                
+                
+                                <form action="buscarTematicas" method="GET">
+                                    <input class="form-control" type="text" name="tematica" id="tematica" placeholder="Ingrese alguna tematica..." aria-label="Enter search term..." aria-describedby="button-search" />
+                                    <input style="margin-top: 15px" class="btn btn-primary" id="button-search" type="submit">
+                                </form>
                                 
-                                {% if lista  %}
-                                    {% for tematica in lista  %}
-                                        <p>{{tematica.nombre}}</p>
-                                
-                                    {% endfor %}
-                                {% else %}
-                                    <p>no recibis lista</p>
-                                {% endif %}
-                                                                            
+                            </div>
+                        </div>
+                    </div>
+                
+                
+                <!--SLIDE WIDGETS-->
+                    <div class="card mb-4">
+                        <div class="card-header">Tematicas</div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-6">
+                
+                
                                     
+                                    {% if lista  %}
+                                        {% for tematica in lista  %}
+                                            <p>{{tematica.nombre}}</p>
+                                    
+                                        {% endfor %}
+                                    {% else %}
+                                        <p>no recibis lista</p>
+                                    {% endif %}
+                                                                                
                                         
-                            </div>
-                            <div class="col-sm-6">
-                                <ul class="list-unstyled mb-0">
-                                    <li><a href="#!">JavaScript</a></li>
-                                    <li><a href="#!">CSS</a></li>
-                                    <li><a href="#!">Tutorials</a></li>
-                                </ul>
+                                            
+                                </div>
+                                <div class="col-sm-6">
+                                    <ul class="list-unstyled mb-0">
+                                        <li><a href="#!">JavaScript</a></li>
+                                        <li><a href="#!">CSS</a></li>
+                                        <li><a href="#!">Tutorials</a></li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <div class="card mb-4">
+                        <div class="card-header">Side Widget</div>
+                        <div class="card-body">You can put anything you want inside of these side widgets. They are easy to use, and feature the Bootstrap 5 card component!</div>
+                    </div>
                 </div>
-                <!-- Side widget-->
-                <div class="card mb-4">
-                    <div class="card-header">Side Widget</div>
-                    <div class="card-body">You can put anything you want inside of these side widgets. They are easy to use, and feature the Bootstrap 5 card component!</div>
-                </div>
-            </div>
+            
         </div>
-    </div>
+        
+        {% if posteos.has_next %}
+            <a class="infinite-more-link" href="?page={{ posteos.next_page_number }}">More</a>
+
+        {% endif %}
+        <!-- <div class="d-flex justify-content-center" style="display:none;">
+            <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div> -->
+        
+
+
+    
+        
+    <!-- </div> -->
+    <!-- Side widgets-->
+  
+</div>    
+  
+<script>
+        var infinite = new Waypoint.Infinite({
+            element: $('.infinite-container')[0],
+            handler: function(direction) {
+    
+        },
+        offset: 'bottom-in-view',
+    
+        onBeforePageLoad: function () {
+        $('.spinner-border').show();
+        },
+        onAfterPageLoad: function () {
+        $('.spinner-border').hide();
+        }
+    
+        });
+    
+</script>
 {% endblock ContenidoQueCambia %}
     

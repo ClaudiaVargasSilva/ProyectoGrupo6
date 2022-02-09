@@ -1,5 +1,7 @@
 from audioop import reverse
 from collections import UserDict
+import numbers
+from django.core.paginator import Paginator,EmptyPage, PageNotAnInteger
 from email.policy import default
 from http.client import HTTPResponse
 from venv import create
@@ -11,7 +13,7 @@ from django.contrib.auth.views import LogoutView
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView
 from django.views.generic.detail import DetailView
-
+import random
 from django.views.generic.edit import UpdateView, DeleteView
 from UserApp.forms import PostForm, PerfilForm,TematicaForm, UserRegisterForm, UserEditForm,ComentarioForm, AvatarFormulario, ComentFormulario
 from UserApp.models import Avatar,PostFavoritos,Likes,Post,Perfil, Tematica, ComentariosPost, Lenguaje
@@ -203,21 +205,61 @@ def idPost(id): #devuelve la id de cada POST
 
 def inicio(request):
     post=Post.objects.all() #devuelve una lista de posteos
+    listaTematicas=Tematica.objects.all() #devuelve una lista
+    page=request.GET.get('page',1)
+    paginator = Paginator(post,4)
+    try:
+        posteos=paginator.page(page)
+        
+    except PageNotAnInteger:
+        posteos=paginator.page(1)
+    
+    except EmptyPage:
+        posteos= paginator.page(paginator.num_pages)
+
+
+    
     post1=list(Post.objects.filter(
         estado=True
     ).values_list('id', flat=True))
     print(post1) #post1 me devuelve una LISTA con las ID de los POSTS
-    # tematicasPost=[]
-    # for i in post:
-    #     print(i.id)
-    #     tematicasPost.append(post__id=i.id) #guardo el post
-    # print(tematicasPost)
-    listaTematicas=Tematica.objects.all() #devuelve una lista
+    
+    post0 = random.choice(post1)
+    post1.remove(post0)
+    post0 = Post.objects.get(id=post0)
+    
+    post2=random.choice(post1)
+    post1.remove(post2)
+    post2 = Post.objects.get(id=post2)
+
+    post3=random.choice(post1)
+    post1.remove(post3)
+    post3 = Post.objects.get(id=post3)
+
+    post4=random.choice(post1)
+    post1.remove(post4)
+    post4 = Post.objects.get(id=post4)
+
+    #Elegir 4 posts random y mostrarlos... 
+    contexto={
+        'post':post,
+        'lista': listaTematicas,
+        'post0': post0,
+        'post2':post2,
+        'post3':post3,
+        'post4':post4,
+        'posteos':posteos
+    }
+
+    
+    
     print(listaTematicas)
+    
+    
     if not request.user.is_authenticated:
-        return render(request, 'inicio.html', {'post':post, 'lista':listaTematicas})
+        return render(request, 'inicio.html', contexto)
     else:
-        return render(request, 'inicio.html', {'post':post, 'lista':listaTematicas})
+        return render(request, 'inicio.html', contexto)
 
 
 def verPosteos(req,id):
