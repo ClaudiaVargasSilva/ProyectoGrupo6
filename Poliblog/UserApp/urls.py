@@ -18,9 +18,12 @@ urlpatterns = [
     path('mensajes', views.mensajes, name="misMensajes"),
     
     path('Posteos/<id>', views.verPosteos, name="Posteos"),
-    path('buscarPosteos', views.buscarPosteos, name="buscarPosteos"),
-    path('busquedaPosteos', views.busquedaPosteos, name="busquedaPosteos"),
+    path('buscarPosteos', views.buscarPosteos, name="buscarPosteos"), #
+    path('busquedaPosteos', views.busquedaPosteos, name="busquedaPosteos"), #usar esta
     path('comentarios', views.verComentarios, name="comentarios"),
+
+    path('busquedaPost/', views.busquedaPost, name="busquedaPost"),
+    path('buscar/', views.buscar), 
 
     path('eliminarComentario/<id_comentario>',views.eliminarComentario, name="eliminarComentario"),
     path('editarComentario/<id_comentario>/', views.editarComentario, name="editarComentario"),

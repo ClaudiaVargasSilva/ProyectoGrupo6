@@ -2,6 +2,7 @@ from audioop import reverse
 from collections import UserDict
 from email.policy import default
 from http.client import HTTPResponse
+from urllib import request
 from venv import create
 from dataclasses import fields
 from django.shortcuts import get_object_or_404, render, get_list_or_404
@@ -297,6 +298,22 @@ def CrearPost(req):
 
 # VER COMO 
 
+def busquedaPost(req):
+    return render(req, "UserApp/busquedaPost.html")
+
+def buscar(request):
+    if request.GET['titulo']:
+        respuesta  = f"Buscando : {request.GET['titulo']}"
+        print("AAAAAAAAAAAAA")
+        print(respuesta)
+
+        titulo     = request.GET['titulo']
+        post       = Post.objects.filter(titulo__icontains=titulo)
+        return render(request, 'UserApp/resultadosBusqueda.html', {"post": post, "titulo":titulo })
+    else:
+        respuesta = "No hay datos"
+
+    return HTTPResponse(respuesta)
 
 
 
