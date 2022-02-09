@@ -12,6 +12,10 @@ class PostFormulario(forms.Form):
     tematica            = forms.CharField(max_length=100)
     imagenPost          = forms.ImageField(required=False)
 
+class ComentFormulario(forms.Form):
+    contenido_comentario = forms.CharField(max_length=100)
+
+
 class UserRegisterForm(UserCreationForm):
     #Por qué no ponemos username=forms.text...?
     email= forms.EmailField()
