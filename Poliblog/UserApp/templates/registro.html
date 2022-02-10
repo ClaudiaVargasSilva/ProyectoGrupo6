@@ -5,7 +5,7 @@
     <form action="" method="POST">
         {% csrf_token %}
         {{form.as_p}}
-        <button type="submit" href="{% url 'registro' %}" class="btn btn-primary" id="enviado">Registrarse</button>
+        <button type="submit" href="{% url 'registro' %}" class="btn btn-secondary" id="enviado">Registrarse</button>
     </form>
     
 <div class="modal fade" id="usercreado" role="dialog">

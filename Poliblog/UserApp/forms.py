@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 
 class PostFormulario(forms.Form):   
     titulo              = forms.CharField(max_length=100)
+    subtitulo           = forms.CharField(max_length=100)
     contenido           = forms.CharField(max_length=100000000)
     tematica            = forms.CharField(max_length=100)
     imagenPost          = forms.ImageField(required=False)
@@ -51,7 +52,7 @@ class PostForm(forms.ModelForm):
     #     self.fields['imagenPost'].required=False
     class Meta:  
         model=Post
-        fields = ('titulo','contenido','tematica','imagenPost')
+        fields = ('titulo', 'subtitulo', 'contenido','tematica','imagenPost')
         label={
             'titulo': 'Titulo del posteo',
             'contenido': 'Contenido',
@@ -63,6 +64,12 @@ class PostForm(forms.ModelForm):
                 attrs={
                     'class': 'form-control',
                     'placeholder': 'Ingrese el titulo del posteo'
+                }
+            ),
+            'subtitulo': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': 'Ingrese el subtitulo del posteo'
                 }
             ),
             'contenido': forms.Textarea(

@@ -211,16 +211,23 @@ def inicio(request):
     paginator = Paginator(post,4)
     try:
         posteos=paginator.page(page)
-        
     except PageNotAnInteger:
         posteos=paginator.page(1)
-    
     except EmptyPage:
         posteos= paginator.page(paginator.num_pages)
+    contexto={
+        'post':post,
+        'lista': listaTematicas,
+        'posteos':posteos
+    }
+    if not request.user.is_authenticated:
+        return render(request, 'inicio.html', contexto)
+    else:
+        return render(request, 'inicio.html', contexto)
 
 
     
-    post1=list(Post.objects.filter(
+""" post1=list(Post.objects.filter(
         estado=True
     ).values_list('id', flat=True))
     print(post1) #post1 me devuelve una LISTA con las ID de los POSTS
@@ -260,7 +267,7 @@ def inicio(request):
     if not request.user.is_authenticated:
         return render(request, 'inicio.html', contexto)
     else:
-        return render(request, 'inicio.html', contexto)
+        return render(request, 'inicio.html', contexto) """
 
 
 def verPosteos(req,id):
@@ -507,12 +514,12 @@ class detallePost(DetailView):
 class actualizaPost(UpdateView):
     model = Post
     success_url = "/UserApp/listaPost"
-    fields = ["titulo","contenido", "tematica", "imagenPost"]
+    fields = ["titulo","subtitulo", "contenido", "tematica", "imagenPost"]
     success_message = 'Post editado!'
 
 class postCreate(CreateView):
     model = Post
-    fields = ["posteador", "titulo","contenido", "fecha_publicacion", "tematica", "estado", "imagenPost"]
+    fields = ["posteador", "titulo", "subtitulo", "contenido", "fecha_publicacion", "tematica", "estado", "imagenPost"]
     success_url = '/UserApp/listaPost'
 
 class eliminaPost(DeleteView):
