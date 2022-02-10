@@ -1,4 +1,5 @@
 from itertools import count
+from xxlimited import Null
 from django.utils import timezone
 from tkinter import CASCADE
 from django.db import models
@@ -34,6 +35,7 @@ class Post(models.Model):
     posteador= models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
     
     titulo= models.CharField(max_length=100)
+    subtitulo = models.CharField(max_length=100, default=Null)
     contenido= models.TextField()
     fecha_publicacion=models.DateTimeField(default=timezone.now)
     
