@@ -38,6 +38,7 @@
                 <a href="#!"><img class="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg"
                         alt="..." /></a>
                 <div class="card-body">
+                    {% if user.is_authenticated %}
 
                     {% if post %}
 
@@ -63,6 +64,13 @@
                     {% else %}
                     <h2>Error, no se cargaron post</h2>
                     {% endif %}
+                    {% else %}
+                    <div style="margin: 15px;">
+                        <p>Debes iniciar sesion para revisar los Post</p>
+                        <a class="btn btn-secondary" href="{% url 'inicioSesion'%}">Iniciar sesion</a>
+                    </div>
+        
+        {% endif %} 
                 </div>
             </div>
         </div>
@@ -87,6 +95,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm-6">
+                                {% if user.is_authenticated %}
                                 {% if lista %}
                                 {% for tematica in lista %}
                                 <p>{{tematica.nombre}}</p>
@@ -94,6 +103,12 @@
                                 {% else %}
                                 <p>no recibis lista</p>
                                 {% endif %}
+                                {% else %}
+                                <div style="margin: 15px;">
+                                    <p>Debes iniciar sesion para revisar las Tematicas</p>
+                                </div>
+                    
+                    {% endif %} 
                             </div>
                             <div class="col-sm-6">
                                 <ul class="list-unstyled mb-0">
