@@ -1,11 +1,12 @@
 from itertools import count
+from operator import truediv
 from django.utils import timezone
 from tkinter import CASCADE
 from django.db import models
 from django.conf import Settings,settings
 #from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.models import User
-
+import uuid
 
 
 
@@ -83,5 +84,24 @@ class PostFavoritos(models.Model):
     #ver que tipo de relacion tendria
 
 ######## Mensajes directos #########
-# class Canal(models.Manager):
-#     pass
+
+# class ModelBase(models.Model):
+#     id = models.UUIDField(default=uuid.uuid4, primary_key=True, db_index= True, editable = False)
+#     tiempo = models.DateTimeField(auto_now_add=True)
+#     actualizar = models.DateTimeField(auto_now_add= True)
+#     class Meta():
+#         abstract = True
+#     #no creara ninguna base de datos pues este modelo base es ABSTRACTO
+
+# class CanalMensajes(ModelBase):
+#     canal = models.ForeignKey("Canal", on_delete=models.CASCADE)
+#     usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+#     texto = models.TextField()
+
+# class CanalUsusario(ModelBase):
+#     canal = models.ForeignKey("Canal", on_delete=models.SET_NULL)
+#     usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
+
+# class Canal(ModelBase):
+#     usuario =models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, through=CanalUsusario)

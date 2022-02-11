@@ -3,7 +3,7 @@ from collections import UserDict
 import numbers
 from django.core.paginator import Paginator,EmptyPage, PageNotAnInteger
 from email.policy import default
-from http.client import HTTPResponse
+from django.http import HttpResponse
 from urllib import request
 from venv import create
 from dataclasses import fields
@@ -220,35 +220,31 @@ def inicio(request):
 
 
     
-    post1=list(Post.objects.filter(
-        estado=True
-    ).values_list('id', flat=True))
-    print(post1) #post1 me devuelve una LISTA con las ID de los POSTS
+    # post1=list(Post.objects.filter(
+    #     estado=True
+    # ).values_list('id', flat=True))
+    # print(post1) #post1 me devuelve una LISTA con las ID de los POSTS
     
-    post0 = random.choice(post1)
-    post1.remove(post0)
-    post0 = Post.objects.get(id=post0)
+    # post0 = random.choice(post1)
+    # post1.remove(post0)
+    # post0 = Post.objects.get(id=post0)
     
-    post2=random.choice(post1)
-    post1.remove(post2)
-    post2 = Post.objects.get(id=post2)
+    # post2=random.choice(post1)
+    # post1.remove(post2)
+    # post2 = Post.objects.get(id=post2)
 
-    post3=random.choice(post1)
-    post1.remove(post3)
-    post3 = Post.objects.get(id=post3)
+    # post3=random.choice(post1)
+    # post1.remove(post3)
+    # post3 = Post.objects.get(id=post3)
 
-    post4=random.choice(post1)
-    post1.remove(post4)
-    post4 = Post.objects.get(id=post4)
+    # post4=random.choice(post1)
+    # post1.remove(post4)
+    # post4 = Post.objects.get(id=post4)
 
     #Elegir 4 posts random y mostrarlos... 
     contexto={
         'post':post,
         'lista': listaTematicas,
-        'post0': post0,
-        'post2':post2,
-        'post3':post3,
-        'post4':post4,
         'posteos':posteos
     }
 
@@ -278,7 +274,7 @@ def verPosteos(req,id):
             comentarioNuevo.post=post
             comentarioNuevo.save()
         else:
-            return HTTPResponse("No funcionaaaaaaa")
+            return HttpResponse("No funcionaaaaaaa")
     else:
         miFormComentario=ComentarioForm()
     return render(req,'posteos.html', {'post':post, 'tematicas':tematicas, 'comentario':comentario, 'miFormComentario': miFormComentario})
@@ -328,7 +324,7 @@ def CrearPost(req):
             # return render(req, 'inicio.html',{"mensaje":"Tu post fue creado!"})
             return redirect(inicio)
         else:
-            return HTTPResponse('Los datos ingresados son incorrectos')
+            return HttpResponse('Los datos ingresados son incorrectos')
     else:
         miForm= PostForm()
     return render(req, 'crearPost.html',{'miForm':miForm})
@@ -355,19 +351,19 @@ def buscar(request):
     else:
         respuesta = "No hay datos"
 
-    return HTTPResponse(respuesta)
+    return HttpResponse(respuesta)
 
 
 
 
-def buscarPosteos(req):
-    return render(req, 'buscarPosteos.html')
-def busquedaPosteos(req):
-    if req.GET['titulo']:
-        return HTTPResponse(req,'XD')
-    else:
-        respuesta="No enviaste datos"
-    return HTTPResponse(respuesta)
+# def buscarPosteos(req):
+#     return render(req, 'buscarPosteos.html')
+# def busquedaPosteos(req):
+#     if req.GET['titulo']:
+#         return HTTPResponse(req,'XD')
+#     else:
+#         respuesta="No enviaste datos"
+#     return HTTPResponse(respuesta)
 
 
 
@@ -423,7 +419,7 @@ def buscarTematicas(req):
         return render(req, "resultados.html", {'tematicas':nombreTematica})
     else:
         respuesta="No enviaste datos"
-    return HTTPResponse(respuesta)
+    return HttpResponse(respuesta)
 
 def eliminarTematicas(req, id_tematica):
     tematica= Tematica.objects.get(id=id_tematica)
@@ -470,7 +466,7 @@ def editarComentario(req, id_comentario):
             comentario.contenido_comentario = informacion['contenido_comentario']
             comentario.save()
         else:
-            return HTTPResponse("No funcionaaaaaaa")
+            return HttpResponse("No funcionaaaaaaa")
 
     else: 
         miFormComentario= ComentarioForm(initial={'contenido_comentario': comentario.contenido_comentario}) 
