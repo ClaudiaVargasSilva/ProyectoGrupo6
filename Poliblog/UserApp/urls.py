@@ -18,6 +18,13 @@ urlpatterns = [
     path('mensajes', views.mensajes, name="misMensajes"),  
     path('Posteos/<id>', views.verPosteos, name="Posteos"),
     path('comentarios', views.verComentarios, name="comentarios"),
+    path('chat', views.iniciarChat, name="chat"),
+ 
+    path('<str:room>/', views.room, name='room'),
+    path('checkview', views.checkview, name='checkview'),
+    path('<str:room>/send', views.send, name='send'),
+    path('<str:room>/getMessages/<id>', views.getMessages, name='getMessages'),
+   
 
     path('busquedaPost/', views.busquedaPost, name="busquedaPost"),
     path('buscar/', views.buscar), 

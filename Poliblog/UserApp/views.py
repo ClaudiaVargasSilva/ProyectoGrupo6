@@ -1,9 +1,10 @@
 from audioop import reverse
 from collections import UserDict
+from genericpath import exists
 import numbers
 from django.core.paginator import Paginator,EmptyPage, PageNotAnInteger
 from email.policy import default
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from urllib import request
 from venv import create
 from dataclasses import fields
@@ -16,8 +17,8 @@ from django.views.generic.edit import CreateView
 from django.views.generic.detail import DetailView
 import random
 from django.views.generic.edit import UpdateView, DeleteView
-from UserApp.forms import PostForm, PerfilForm,TematicaForm, UserRegisterForm, UserEditForm,ComentarioForm, AvatarFormulario, ComentFormulario
-from UserApp.models import Avatar,PostFavoritos,Likes,Post,Perfil, Tematica, ComentariosPost, Lenguaje
+from UserApp.forms import PostForm, RoomForm,PerfilForm,TematicaForm, UserRegisterForm, UserEditForm,ComentarioForm, AvatarFormulario, ComentFormulario
+from UserApp.models import Avatar,Room,MisMensajes , PostFavoritos,Likes,Post,Perfil, Tematica, ComentariosPost, Lenguaje
 
 from django.db.models import Q
 from django.views.generic.detail import DetailView
@@ -153,6 +154,53 @@ def agregarAvatar(request):
 def actualizarAvatar(request):
     pass
 
+def iniciarChat(req):
+    return render(req, 'chat.html')
+
+def room(request, room):
+    username = request.GET.get('username')
+    user= request.user
+    room_details = Room.objects.get(name=room)
+    return render(request, 'room.html', {
+        'username': username,
+        'room': room,
+        'room_details': room_details,
+        'user' :user
+    })
+    # return render (request, 'chats/room.html')
+
+def checkview(request):
+    room = request.POST['room_name']
+    username = request.POST['username']
+
+    if Room.objects.filter(name=room).exists():
+        return redirect(room+'/?username='+username)
+    else:
+        new_room = Room.objects.create(name=room)
+        new_room.save()
+        return redirect(room+'/?username='+username)
+
+def send(request,room):
+    # is_private = request.POST.get('is_private', False);
+
+    # message = request.POST.get('message',False)
+    message = request.POST['message']
+    # username = request.POST.get('username', False)
+    user = request.user
+    # room_id = request.POST.get('room_id', False)
+    room1 = Room.objects.get(name = room)
+
+    new_message = MisMensajes.objects.create(user=user,mensaje=message,room=room1)
+    new_message.save()
+    print(new_message)
+    return HttpResponse('mensaje enviado')
+
+def getMessages(request, id, room):
+    room_details = Room.objects.get(id=id)
+    messages = MisMensajes.objects.filter(room__id=room_details.id)
+    return JsonResponse({"messages":list(messages.values())})
+
+
 
 def editarUsuario(req):
     usuario = req.user
@@ -211,52 +259,22 @@ def inicio(request):
     paginator = Paginator(post,4)
     try:
         posteos=paginator.page(page)
-        
     except PageNotAnInteger:
         posteos=paginator.page(1)
-    
     except EmptyPage:
         posteos= paginator.page(paginator.num_pages)
-
-
-    
-    # post1=list(Post.objects.filter(
-    #     estado=True
-    # ).values_list('id', flat=True))
-    # print(post1) #post1 me devuelve una LISTA con las ID de los POSTS
-    
-    # post0 = random.choice(post1)
-    # post1.remove(post0)
-    # post0 = Post.objects.get(id=post0)
-    
-    # post2=random.choice(post1)
-    # post1.remove(post2)
-    # post2 = Post.objects.get(id=post2)
-
-    # post3=random.choice(post1)
-    # post1.remove(post3)
-    # post3 = Post.objects.get(id=post3)
-
-    # post4=random.choice(post1)
-    # post1.remove(post4)
-    # post4 = Post.objects.get(id=post4)
-
-    #Elegir 4 posts random y mostrarlos... 
     contexto={
         'post':post,
         'lista': listaTematicas,
         'posteos':posteos
     }
-
-    
-    
-    print(listaTematicas)
-    
-    
     if not request.user.is_authenticated:
         return render(request, 'inicio.html', contexto)
     else:
         return render(request, 'inicio.html', contexto)
+
+
+    
 
 
 def verPosteos(req,id):
@@ -404,7 +422,7 @@ def CrearTematica(req):
             miForm.save()
             return render(req, 'inicio.html')
         else:
-            return HTTPResponse('Los datos ingresados son incorrectos')
+            return HttpResponse('Los datos ingresados son incorrectos')
     else:
         miForm=TematicaForm()
     
@@ -503,12 +521,12 @@ class detallePost(DetailView):
 class actualizaPost(UpdateView):
     model = Post
     success_url = "/UserApp/listaPost"
-    fields = ["titulo","contenido", "tematica", "imagenPost"]
+    fields = ["titulo","subtitulo", "contenido", "tematica", "imagenPost"]
     success_message = 'Post editado!'
 
 class postCreate(CreateView):
     model = Post
-    fields = ["posteador", "titulo","contenido", "fecha_publicacion", "tematica", "estado", "imagenPost"]
+    fields = ["posteador", "titulo", "subtitulo", "contenido", "fecha_publicacion", "tematica", "estado", "imagenPost"]
     success_url = '/UserApp/listaPost'
 
 class eliminaPost(DeleteView):

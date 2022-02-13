@@ -1,21 +1,45 @@
 {% extends 'padre.html' %}
 {%load static%}
 {% block ContenidoQueCambia %}
-<h2>Guardados: </h2>
-     {% if postFav %}
-                     
-            {% for fav  in postFav  %}
-            <ul>
-             <li><a href="{% url 'Posteos' fav.post.pk%}" >{{fav.post.titulo}}</a></li>   
-            </ul>
-           
-                            
-                                
-            {% endfor %}
-                                
-    {% else %}
-            <p>No hay nada:(</p>   
-    {% endif %}
 
-{% endblock ContenidoQueCambia %}
-    
+<head>
+    <title>Login Page</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'UserApp/css/styleProfile.css'%}">
+</head>
+
+<div class="container" id="contenedor">
+    <div class="row">
+        <div class="col-lg-8">
+            <div id="barraPerfil">
+                <nav class="menu">
+                    <ul id="menuPerfil">
+                        <li><a href="{%url 'Perfil' %}">Posts</a></li>
+                        <li><a href="{% url 'comentarios' %}">Comentarios</a></li>
+                        <li><a href="{% url 'verLikes' %}">Likes</a></li>
+                        <li><a href="{% url 'verPostFavoritos' %}">Guardados</a> </li>
+                        <li><a href="{% url 'busquedaPost' %}">Buscar</a> </li>
+                    </ul>
+                </nav>
+            </div>
+        <div>
+    </div>
+        </div>
+        <div>
+                <h2>Guardados: </h2>
+                {% if postFav %}
+                                
+                       {% for fav  in postFav  %}
+                       <ul>
+                        <li><a href="{% url 'Posteos' fav.post.pk%}" >{{fav.post.titulo}}</a></li>   
+                       </ul>
+                      
+                                       
+                                           
+                       {% endfor %}
+                                           
+               {% else %}
+                       <p>No hay nada:(</p>   
+               {% endif %}
+        </div>
+        {% endblock ContenidoQueCambia %}

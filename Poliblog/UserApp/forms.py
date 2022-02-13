@@ -1,20 +1,20 @@
 import email
 from mimetypes import init
 from re import S
-from UserApp.models import Post, Tematica, ComentariosPost,Perfil
+from UserApp.models import Post, Tematica, Room,ComentariosPost,Perfil
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth.models import User
 
 class PostFormulario(forms.Form):   
     titulo              = forms.CharField(max_length=100)
+    subtitulo           = forms.CharField(max_length=100)
     contenido           = forms.CharField(max_length=100000000)
     tematica            = forms.CharField(max_length=100)
     imagenPost          = forms.ImageField(required=False)
 
 class ComentFormulario(forms.Form):
     contenido_comentario = forms.CharField(max_length=100)
-
 
 class UserRegisterForm(UserCreationForm):
     #Por qué no ponemos username=forms.text...?
@@ -51,7 +51,7 @@ class PostForm(forms.ModelForm):
     #     self.fields['imagenPost'].required=False
     class Meta:  
         model=Post
-        fields = ('titulo','contenido','tematica','imagenPost')
+        fields = ('titulo', 'subtitulo', 'contenido','tematica','imagenPost')
         label={
             'titulo': 'Titulo del posteo',
             'contenido': 'Contenido',
@@ -63,6 +63,12 @@ class PostForm(forms.ModelForm):
                 attrs={
                     'class': 'form-control',
                     'placeholder': 'Ingrese el titulo del posteo'
+                }
+            ),
+            'subtitulo': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': 'Ingrese el subtitulo del posteo'
                 }
             ),
             'contenido': forms.Textarea(
@@ -113,6 +119,21 @@ class TematicaForm(forms.ModelForm):
 class LenguajeFormulario(forms.Form):
     nombreLenguaje= forms.CharField()
 
+class RoomForm(forms.ModelForm):
+    class Meta:
+        model=Room
+        fields=('name',)
+        label={
+            'name' : 'nombre room'
+        }
+        widgets = {
+            'name': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': 'Ingrese la habitación'
+                }
+            )
+        }
 class ComentarioForm(forms.ModelForm):
     class Meta:
         model=ComentariosPost

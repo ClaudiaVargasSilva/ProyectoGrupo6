@@ -12,7 +12,7 @@
                     <!-- Post titulo-->
                     <h1 class="fw-bolder mb-1">Posteos</h1>
                     <!-- Post meta content-->
-                    <a class="btn btn-primary" href= "{% url 'crearPost' %}">Crear post</a>
+                    <a class="btn btn-secondary" href= "{% url 'crearPost' %}">Crear post</a>
                     <h2>{{post.titulo}} <a href="{% url 'Postfavoritos' post.pk %}" ><span ><i class="fa-solid fas fa-bookmark"></i></span> </a> </h2>
                     <div class="text-muted fst-italic mb-2">{{post.fecha_publicacion}}</div>
                     <!-- Post categories-->
@@ -70,7 +70,7 @@
                             {% csrf_token %}
                             {{miFormComentario.as_p}}
                             
-                            <button type="submit" class="save btn btn-primary">Agregar comentario</button>
+                            <button type="submit" class="save btn btn-secondary">Agregar comentario</button>
 
                         </form> 
                         <!-- Ese form despues tiene que ser utilizado para CREAR comentarios-->
@@ -143,7 +143,7 @@
                 <div class="card-body">
                     <div class="input-group">
                         <input class="form-control" type="text" placeholder="Enter search term..." aria-label="Enter search term..." aria-describedby="button-search" />
-                        <button class="btn btn-primary" id="button-search" type="button">Go!</button>
+                        <button class="btn btn-secondary" id="button-search" type="button">Go!</button>
                     </div>
                 </div>
             </div>

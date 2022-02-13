@@ -1,5 +1,6 @@
+from asyncio.windows_events import NULL
 from itertools import count
-from operator import truediv
+
 from django.utils import timezone
 from tkinter import CASCADE
 from django.db import models
@@ -35,6 +36,7 @@ class Post(models.Model):
     posteador= models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
     
     titulo= models.CharField(max_length=100)
+    subtitulo = models.CharField(max_length=100, null= True)
     contenido= models.TextField()
     fecha_publicacion=models.DateTimeField(default=timezone.now)
     
@@ -83,25 +85,14 @@ class PostFavoritos(models.Model):
     
     #ver que tipo de relacion tendria
 
-######## Mensajes directos #########
 
-# class ModelBase(models.Model):
-#     id = models.UUIDField(default=uuid.uuid4, primary_key=True, db_index= True, editable = False)
-#     tiempo = models.DateTimeField(auto_now_add=True)
-#     actualizar = models.DateTimeField(auto_now_add= True)
-#     class Meta():
-#         abstract = True
-#     #no creara ninguna base de datos pues este modelo base es ABSTRACTO
+class Room(models.Model):
+    id= models.AutoField(primary_key=True)
+    name = models.CharField(max_length=1000)
+class MisMensajes(models.Model):
+    user=models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    #destinatario = models.charfield()
+    mensaje = models.CharField(max_length=200)
+    fechaMensaje = models.DateTimeField(default=timezone.now)
+    room = models.ForeignKey(Room, on_delete=models.CASCADE)
 
-# class CanalMensajes(ModelBase):
-#     canal = models.ForeignKey("Canal", on_delete=models.CASCADE)
-#     usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-#     texto = models.TextField()
-
-# class CanalUsusario(ModelBase):
-#     canal = models.ForeignKey("Canal", on_delete=models.SET_NULL)
-#     usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-
-
-# class Canal(ModelBase):
-#     usuario =models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, through=CanalUsusario)
