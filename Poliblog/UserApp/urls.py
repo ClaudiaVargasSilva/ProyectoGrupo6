@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from UserApp import views
 from django.contrib.auth.views import LogoutView
 
@@ -62,3 +62,8 @@ urlpatterns = [
     path('crearLenguajes', views.LenguajeCreate.as_view(), name='New'),
     #path('PostView', views.CantViewPost.as_view(), name="VistasPost")
 ]
+urlpatterns += [
+    path('accounts/', include('django.contrib.auth.urls')),
+    
+]
+
