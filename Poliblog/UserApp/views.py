@@ -7,6 +7,8 @@ from email.policy import default
 from django.http import HttpResponse, JsonResponse
 from urllib import request
 from venv import create
+from django.contrib.auth.models import User
+
 from dataclasses import fields
 from django.shortcuts import get_object_or_404, render, get_list_or_404
 from django.contrib.auth.forms import AuthenticationForm
@@ -18,7 +20,7 @@ from django.views.generic.detail import DetailView
 import random
 from django.views.generic.edit import UpdateView, DeleteView
 from UserApp.forms import PostForm, RoomForm,PerfilForm,TematicaForm, UserRegisterForm, UserEditForm,ComentarioForm, AvatarFormulario, ComentFormulario
-from UserApp.models import Avatar,Room,MisMensajes , PostFavoritos,Likes,Post,Perfil, Tematica, ComentariosPost, Lenguaje
+from UserApp.models import Avatar,SolicitudAmistad,Room,MisMensajes , PostFavoritos,Likes,Post,Perfil, Tematica, ComentariosPost, Lenguaje
 
 from django.db.models import Q
 from django.views.generic.detail import DetailView
@@ -199,6 +201,62 @@ def getMessages(request, id, room):
     room_details = Room.objects.get(id=id)
     messages = MisMensajes.objects.filter(room__id=room_details.id)
     return JsonResponse({"messages":list(messages.values())})
+def otroPerfil(req, id):
+    otroUser = User.objects.get(id=id) #recuperar la id del otro perfil
+    postsDelOtroUser= Post.objects.filter(posteador=otroUser)
+    print(otroUser)
+    print(postsDelOtroUser)
+    perfil = Perfil.objects.get(user=otroUser)
+    
+    return render(req,'otroPerfil.html', {'otroUser': otroUser,'perfil':perfil, 'posts': postsDelOtroUser})
+
+def verAmigos(req):
+    perfil = Perfil.objects.get(user=req.user)
+    amigos = perfil.amigos
+    solicitudes = SolicitudAmistad.objects.filter(to_user=req.user)
+    print(amigos)
+    return render(req, 'amigos.html', {'amigos':amigos, 'solicitudes':solicitudes})
+
+def enviarSolicitud(req, id):
+    from_user = req.user
+    to_user = User.objects.get(id=id)
+    SolicitudAmistad.objects.get_or_create(from_user= from_user, to_user = to_user)
+    return HttpResponse('solicitud enviada')
+
+def aceptarSolicitud(req, id):
+    solicitudAmistad = SolicitudAmistad.objects.get(id= id)
+    to_user = req.user
+    from_user = solicitudAmistad.from_user
+    perfil_to_user=Perfil.objects.get(user = to_user )
+    perfil_from_user= Perfil.objects.get( user = from_user)
+    
+    if solicitudAmistad.to_user == req.user:
+        solicitudAmistad.to_user.perfil.amigos.add(solicitudAmistad.from_user)
+        solicitudAmistad.from_user.perfil.amigos.add(solicitudAmistad.to_user)
+        solicitudAmistad.delete()
+        return HttpResponse('solicitud de amistad aceptada') #la idea seria utilizar django.messages o un modal
+   
+def rechazarSolicitud(req, id):
+    solicitudAmistad = SolicitudAmistad.objects.get(id= id)
+    solicitudAmistad.delete()
+    return HttpResponse('solicitud de amistad eliminada') #la idea seria utilizar django.messages o un modal
+
+
+def enviarMensaje(req):
+    pass
+def verMensajes(req):
+    
+    destinatario = req.user
+    # perfil =Perfil.objects.get(user= usuario)
+    # print(perfil)
+    # mensaje = MisMensajes.objects.filter(destinatario = perfil)
+    mensaje = MisMensajes.objects.filter(destinatario=destinatario)
+    return render(req, 'mensajesDirectos.html', {
+        'mensaje':mensaje
+        
+    })
+
+
 
 
 

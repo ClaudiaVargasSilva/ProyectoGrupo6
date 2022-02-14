@@ -1,244 +1,222 @@
 {% extends 'padre.html' %}
 {%load static%}
 {% block ContenidoQueCambia %}
-{% comment %} <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"> {% endcomment %}
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<!------ Include the above in your HEAD tag ---------->
-{% load static  %}
-
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 <link rel="stylesheet" href="{% static 'UserApp/css/styleMessages.css'%}">
 
-{% comment %} <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"> {% endcomment %}
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<!------ Include the above in your HEAD tag ---------->
+<div class="container">
+<div class="row">
+	<!-- BEGIN INBOX -->
+	<div class="col-md-12">
+		<div class="grid email">
+			<div class="grid-body">
+				<div class="row">
+					<!-- BEGIN INBOX MENU -->
+					<div class="col-md-3">
+						<h2 class="grid-title"><i class="fa fa-inbox"></i> Inbox</h2>
+						<a class="btn btn-block btn-primary" data-toggle="modal" data-target="#compose-modal"><i class="fa fa-pencil"></i>&nbsp;&nbsp;NEW MESSAGE</a>
 
-<script src="https://use.fontawesome.com/45e03a14ce.js"></script>
-<div class="main_section">
-   <div class="container">
-      <div class="chat_container">
-         <div class="col-sm-3 chat_sidebar">
-    	 <div class="row">
-            <div id="custom-search-input">
-               <div class="input-group col-md-12">
-                  <input type="text" class="  search-query form-control" placeholder="Conversation" />
-                  <button class="btn btn-danger" type="button">
-                  <span class=" glyphicon glyphicon-search"></span>
-                  </button>
-               </div>
-            </div>
-            <div class="dropdown all_conversation">
-               <button class="dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-               <i class="fa fa-weixin" aria-hidden="true"></i>
-               All Conversations
-               <span class="caret pull-right"></span>
-               </button>
-               <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                  <li><a href="#"> All Conversation </a>  <ul class="sub_menu_ list-unstyled">
-                  <li><a href="#"> All Conversation </a> </li>
-                  <li><a href="#">Another action</a></li>
-                  <li><a href="#">Something else here</a></li>
-                  <li><a href="#">Separated link</a></li>
-               </ul>
-			   </li>
-                  <li><a href="#">Another action</a></li>
-                  <li><a href="#">Something else here</a></li>
-                  <li><a href="#">Separated link</a></li>
-               </ul>
-            </div>
-            <div class="member_list">
-               <ul class="list-unstyled">
-                  <li class="left clearfix">
-                     <span class="chat-img pull-left">
-                     <img src="https://lh6.googleusercontent.com/-y-MY2satK-E/AAAAAAAAAAI/AAAAAAAAAJU/ER_hFddBheQ/photo.jpg" alt="User Avatar" class="img-circle">
-                     </span>
-                     <div class="chat-body clearfix">
-                        <div class="header_sec">
-                           <strong class="primary-font">Jack Sparrow</strong> <strong class="pull-right">
-                           09:45AM</strong>
-                        </div>
-                        <div class="contact_sec">
-                           <strong class="primary-font">(123) 123-456</strong> <span class="badge pull-right">3</span>
-                        </div>
-                     </div>
-                  </li>
-                  {% comment %} <li class="left clearfix">
-                     <span class="chat-img pull-left">
-                     <img src="https://lh6.googleusercontent.com/-y-MY2satK-E/AAAAAAAAAAI/AAAAAAAAAJU/ER_hFddBheQ/photo.jpg" alt="User Avatar" class="img-circle">
-                     </span>
-                     <div class="chat-body clearfix">
-                        <div class="header_sec">
-                           <strong class="primary-font">Jack Sparrow</strong> <strong class="pull-right ">
-                           09:45AM</strong>
-                        </div>
-                        <div class="contact_sec">
-                           <strong class="primary-font">(123) 123-456</strong> <span class="badge pull-right">3</span>
-                        </div>
-                     </div>
-                  </li>
-                  <li class="left clearfix">
-                     <span class="chat-img pull-left">
-                     <img src="https://lh6.googleusercontent.com/-y-MY2satK-E/AAAAAAAAAAI/AAAAAAAAAJU/ER_hFddBheQ/photo.jpg" alt="User Avatar" class="img-circle">
-                     </span>
-                     <div class="chat-body clearfix">
-                        <div class="header_sec">
-                           <strong class="primary-font">Jack Sparrow</strong> <strong class="pull-right">
-                           09:45AM</strong>
-                        </div>
-                        <div class="contact_sec">
-                           <strong class="primary-font">(123) 123-456</strong> <span class="badge pull-right">3</span>
-                        </div>
-                     </div>
-                  </li>
-                          <li class="left clearfix">
-                     <span class="chat-img pull-left">
-                     <img src="https://lh6.googleusercontent.com/-y-MY2satK-E/AAAAAAAAAAI/AAAAAAAAAJU/ER_hFddBheQ/photo.jpg" alt="User Avatar" class="img-circle">
-                     </span>
-                     <div class="chat-body clearfix">
-                        <div class="header_sec">
-                           <strong class="primary-font">Jack Sparrow</strong> <strong class="pull-right">
-                           09:45AM</strong>
-                        </div>
-                        <div class="contact_sec">
-                           <strong class="primary-font">(123) 123-456</strong> <span class="badge pull-right">3</span>
-                        </div>
-                     </div>
-                  </li>
-                          <li class="left clearfix">
-                     <span class="chat-img pull-left">
-                     <img src="https://lh6.googleusercontent.com/-y-MY2satK-E/AAAAAAAAAAI/AAAAAAAAAJU/ER_hFddBheQ/photo.jpg" alt="User Avatar" class="img-circle">
-                     </span>
-                     <div class="chat-body clearfix">
-                        <div class="header_sec">
-                           <strong class="primary-font">Jack Sparrow</strong> <strong class="pull-right">
-                           09:45AM</strong>
-                        </div>
-                        <div class="contact_sec">
-                           <strong class="primary-font">(123) 123-456</strong> <span class="badge pull-right">3</span>
-                        </div>
-                     </div>
-                  </li>
-                          <li class="left clearfix">
-                     <span class="chat-img pull-left">
-                     <img src="https://lh6.googleusercontent.com/-y-MY2satK-E/AAAAAAAAAAI/AAAAAAAAAJU/ER_hFddBheQ/photo.jpg" alt="User Avatar" class="img-circle">
-                     </span>
-                     <div class="chat-body clearfix">
-                        <div class="header_sec">
-                           <strong class="primary-font">Jack Sparrow</strong> <strong class="pull-right">
-                           09:45AM</strong>
-                        </div>
-                        <div class="contact_sec">
-                           <strong class="primary-font">(123) 123-456</strong> <span class="badge pull-right">3</span>
-                        </div>
-                     </div>
-                  </li>
-                          <li class="left clearfix">
-                     <span class="chat-img pull-left">
-                     <img src="https://lh6.googleusercontent.com/-y-MY2satK-E/AAAAAAAAAAI/AAAAAAAAAJU/ER_hFddBheQ/photo.jpg" alt="User Avatar" class="img-circle">
-                     </span>
-                     <div class="chat-body clearfix">
-                        <div class="header_sec">
-                           <strong class="primary-font">Jack Sparrow</strong> <strong class="pull-right">
-                           09:45AM</strong>
-                        </div>
-                        <div class="contact_sec">
-                           <strong class="primary-font">(123) 123-456</strong> <span class="badge pull-right">3</span>
-                        </div>
-                     </div>
-                  </li> {% endcomment %}
-               </ul>
-            </div></div>
-         </div>
+						<hr>
 
+						<div>
+							<ul class="nav nav-pills nav-stacked">
+								<li class="header">Folders</li>
+								<li class="active"><a href="#"><i class="fa fa-inbox"></i> Inbox (14)</a></li>
+								<li><a href="#"><i class="fa fa-star"></i> Starred</a></li>
+								<li><a href="#"><i class="fa fa-bookmark"></i> Important</a></li>
+								<li><a href="#"><i class="fa fa-mail-forward"></i> Sent</a></li>
+								<li><a href="#"><i class="fa fa-pencil-square-o"></i> Drafts</a></li>
+								<li><a href="#"><i class="fa fa-folder"></i> Spam (217)</a></li>
+							</ul>
+						</div>
+					</div>
+					<!-- END INBOX MENU -->
+					
+					<!-- BEGIN INBOX CONTENT -->
+					<div class="col-md-9">
+						<div class="row">
+							<div class="col-sm-6">
+								<label style="margin-right: 8px;" class="">
+									<div class="icheckbox_square-blue" style="position: relative;"><input type="checkbox" id="check-all" class="icheck" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins></div>
+								</label>
+								<div class="btn-group">
+									<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+										Action <span class="caret"></span>
+									</button>
+									<ul class="dropdown-menu" role="menu">
+										<li><a href="#">Mark as read</a></li>
+										<li><a href="#">Mark as unread</a></li>
+										<li><a href="#">Mark as important</a></li>
+										<li class="divider"></li>
+										<li><a href="#">Report spam</a></li>
+										<li><a href="#">Delete</a></li>
+									</ul>
+								</div>
+							</div>
 
-         <!--CHAT -->
-		 
-		 
-         <div class="col-sm-9 message_section">
-		 <div class="row">
-		 <div class="new_message_head">
-		 <div class="pull-left"><button><i class="fa fa-plus-square-o" aria-hidden="true"></i> New Message</button></div><div class="pull-right"><div class="dropdown">
-  <button class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    <i class="fa fa-cogs" aria-hidden="true"></i>  Setting
-    <span class="caret"></span>
-  </button>
-  <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
-    <li><a href="#">Action</a></li>
-    <li><a href="#">Profile</a></li>
-    <li><a href="#">Logout</a></li>
-  </ul>
-</div></div>
-		 </div><!--new_message_head-->
-		 
-		 <div class="chat_area">
-		 <ul class="list-unstyled">
-		 <li class="left clearfix">
-                     <span class="chat-img1 pull-left">
-                     <img src="https://lh6.googleusercontent.com/-y-MY2satK-E/AAAAAAAAAAI/AAAAAAAAAJU/ER_hFddBheQ/photo.jpg" alt="User Avatar" class="img-circle">
-                     </span>
-                     <div class="chat-body1 clearfix">
-                        <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia.</p>
-						<div class="chat_time pull-right">09:40PM</div>
-                     </div>
-                  </li>
-				   {% comment %} <li class="left clearfix">
-                     <span class="chat-img1 pull-left">
-                     <img src="https://lh6.googleusercontent.com/-y-MY2satK-E/AAAAAAAAAAI/AAAAAAAAAJU/ER_hFddBheQ/photo.jpg" alt="User Avatar" class="img-circle">
-                     </span>
-                     <div class="chat-body1 clearfix">
-                        <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia.</p>
-						<div class="chat_time pull-right">09:40PM</div>
-                     </div>
-                  </li>
-                     <li class="left clearfix">
-                     <span class="chat-img1 pull-left">
-                     <img src="https://lh6.googleusercontent.com/-y-MY2satK-E/AAAAAAAAAAI/AAAAAAAAAJU/ER_hFddBheQ/photo.jpg" alt="User Avatar" class="img-circle">
-                     </span>
-                     <div class="chat-body1 clearfix">
-                        <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia.</p>
-    					<div class="chat_time pull-right">09:40PM</div>
-                     </div>
-                  </li>
-				  
-                  <li class="left clearfix admin_chat">
-                     <span class="chat-img1 pull-right">
-                     <img src="https://lh6.googleusercontent.com/-y-MY2satK-E/AAAAAAAAAAI/AAAAAAAAAJU/ER_hFddBheQ/photo.jpg" alt="User Avatar" class="img-circle">
-                     </span>
-                     <div class="chat-body1 clearfix">
-                        <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia.</p>
-    					<div class="chat_time pull-left">09:40PM</div>
-                     </div>
-                  </li>
-				   {% endcomment %}
-                   <li class="left clearfix admin_chat">
-                    <span class="chat-img1 pull-right">
-                    <img src="https://lh6.googleusercontent.com/-y-MY2satK-E/AAAAAAAAAAI/AAAAAAAAAJU/ER_hFddBheQ/photo.jpg" alt="User Avatar" class="img-circle">
-                    </span>
-                    <div class="chat-body1 clearfix">
-                       <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia.</p>
-                       <div class="chat_time pull-left">09:40PM</div>
-                    </div>
-                 </li>
-		 
-		 
-		 </ul>
-		 </div><!--chat_area-->
+							<div class="col-md-6 search-form">
+								<form action="#" class="text-right">
+									<div class="input-group">
+										<input type="text" class="form-control input-sm" placeholder="Search">
+										<span class="input-group-btn">
+                                            <button type="submit" name="search" class="btn_ btn-primary btn-sm search"><i class="fa fa-search"></i></button></span>
+									</div>			 
+								</form>
+							</div>
+						</div>
+						
+						<div class="padding"></div>
+						
+						<div class="table-responsive">
+							<table class="table">
+								<tbody>
+                        <tr>
+									<td class="action"><input type="checkbox" /></td>
+									<td class="action"><i class="fa fa-star-o"></i></td>
+									<td class="action"><i class="fa fa-bookmark-o"></i></td>
+									<td class="name"><a href="#">Larry Gardner</a></td>
+									<td class="subject"><a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed </a></td>
+									<td class="time">08:30 PM</td>
+								</tr>
+								<tr>
+									<td class="action"><input type="checkbox" /></td>
+									<td class="action"><i class="fa fa-star-o"></i></td>
+									<td class="action"><i class="fa fa-bookmark"></i></td>
+									<td class="name"><a href="#">Larry Gardner</a></td>
+									<td class="subject"><a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed </a></td>
+									<td class="time">08:30 PM</td>
+								</tr>
+								<tr class="read">
+									<td class="action"><div class="icheckbox_square-blue" st<td class="action"><input type="checkbox" /></td>
+									<td class="action"><i class="fa fa-star"></i></td>
+									<td class="action"><i class="fa fa-bookmark"></i></td>
+									<td class="name"><a href="#">Larry Gardner</a></td>
+									<td class="subject"><a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed </a></td>
+									<td class="time">08:30 PM</td>
+								</tr>
+								<tr>
+									<td class="action"><input type="checkbox" /></td>
+									<td class="action"><i class="fa fa-star-o"></i></td>
+									<td class="action"><i class="fa fa-bookmark-o"></i></td>
+									<td class="name"><a href="#">Larry Gardner</a></td>
+									<td class="subject"><a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed </a></td>
+									<td class="time">08:30 PM</td>
+								</tr>
+								<tr class="read">
+									<td class="action"><input type="checkbox" /></td>
+									<td class="action"><i class="fa fa-star-o"></i></td>
+									<td class="action"><i class="fa fa-bookmark-o"></i></td>
+									<td class="name"><a href="#">Larry Gardner</a></td>
+									<td class="subject"><a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed </a></td>
+									<td class="time">08:30 PM</td>
+								</tr>
+								<tr class="read">
+                                    <td class="action"><input type="checkbox" /></td>
+									<td class="action"><i class="fa fa-star-o"></i></td>
+									<td class="action"><i class="fa fa-bookmark"></i></td>
+									<td class="name"><a href="#">Larry Gardner</a></td>
+									<td class="subject"><a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed </a></td>
+									<td class="time">08:30 PM</td>
+								</tr>
+								<tr>
+                                    <td class="action"><input type="checkbox" /></td>
+									<td class="action"><i class="fa fa-star"></i></td>
+									<td class="action"><i class="fa fa-bookmark-o"></i></td>
+									<td class="name"><a href="#">Larry Gardner</a></td>
+									<td class="subject"><a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed </a></td>
+									<td class="time">08:30 PM</td>
+								</tr>
+								<tr>
+									<td class="action"><input type="checkbox" /></td>
+									<td class="action"><i class="fa fa-star-o"></i></td>
+									<td class="action"><i class="fa fa-bookmark-o"></i></td>
+									<td class="name"><a href="#">Larry Gardner</a></td>
+									<td class="subject"><a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed </a></td>
+									<td class="time">08:30 PM</td>
+								</tr>
+								<tr class="read">
+									<td class="action"><input type="checkbox" /></td>
+									<td class="action"><i class="fa fa-star"></i></td>
+									<td class="action"><i class="fa fa-bookmark"></i></td>
+									<td class="name"><a href="#">Larry Gardner</a></td>
+									<td class="subject"><a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed </a></td>
+									<td class="time">08:30 PM</td>
+								</tr>
+								<tr>
+									<td class="action"><input type="checkbox" /></td>
+									<td class="action"><i class="fa fa-star"></i></td>
+									<td class="action"><i class="fa fa-bookmark-o"></i></td>
+									<td class="name"><a href="#">Larry Gardner</a></td>
+									<td class="subject"><a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed </a></td>
+									<td class="time">08:30 PM</td>
+								</tr>
+							</tbody></table>
+						</div>
 
-         <!-- forms para mensajes-->
-          <div class="message_write">
-    	    <textarea class="form-control" placeholder="type a message"></textarea>
-		    <div class="clearfix"></div>
-		    <div class="chat_bottom"><a href="#" class="pull-left upload_btn"><i class="fa fa-cloud-upload" aria-hidden="true"></i>Add Files</a>
-            <a href="#" class="pull-right btn btn-success">Send</a>
-        </div>
-
-		 </div>
-		 </div>
-         </div> <!--message_section-->
-      </div>
-   </div>
+						<ul class="pagination">
+							<li class="disabled"><a href="#">«</a></li>
+							<li class="active"><a href="#">1</a></li>
+							<li><a href="#">2</a></li>
+							<li><a href="#">3</a></li>
+							<li><a href="#">4</a></li>
+							<li><a href="#">5</a></li>
+							<li><a href="#">»</a></li>
+						</ul>						
+					</div>
+					<!-- END INBOX CONTENT -->
+					
+					<!-- BEGIN COMPOSE MESSAGE -->
+					<div class="modal fade" id="compose-modal" tabindex="-1" role="dialog" aria-hidden="true">
+						<div class="modal-wrapper">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header bg-blue">
+										<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+										<h4 class="modal-title"><i class="fa fa-envelope"></i> Compose New Message</h4>
+									</div>
+									<form action="#" method="post">
+										<div class="modal-body">
+											<div class="form-group">
+												<input name="to" type="email" class="form-control" placeholder="To">
+											</div>
+											<div class="form-group">
+												<input name="cc" type="email" class="form-control" placeholder="Cc">
+											</div>
+											<div class="form-group">
+												<input name="bcc" type="email" class="form-control" placeholder="Bcc">
+											</div>
+											<div class="form-group">
+												<input name="subject" type="email" class="form-control" placeholder="Subject">
+											</div>
+											<div class="form-group">
+												<textarea name="message" id="email_message" class="form-control" placeholder="Message" style="height: 120px;"></textarea>
+											</div>
+											<div class="form-group">														<input type="file" name="attachment">
+											</div>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Discard</button>
+											<button type="submit" class="btn btn-primary pull-right"><i class="fa fa-envelope"></i> Send Message</button>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- END COMPOSE MESSAGE -->
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- END INBOX -->
 </div>
+</div>
+   {%if mensaje%}
+      {%for m in mensaje%}
+         <p>{{m.user}}</p>
+         <p>{{m.mensaje}}</p>
+      {%endfor%}
+   {%endif%}
 
 {% endblock ContenidoQueCambia %}
     

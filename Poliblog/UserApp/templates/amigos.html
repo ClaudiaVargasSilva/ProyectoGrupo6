@@ -1,0 +1,64 @@
+{% extends 'padre.html' %}
+{%load static%}
+{% block ContenidoQueCambia %}
+<head>
+	<title>Login Page</title>
+   {% load static  %}
+	<link rel="stylesheet" href="{% static 'UserApp/css/styleProfile.css'%}">
+</head>
+<div class="container" id="contenedor">
+        <div class="row">
+            <div class="col-lg-8">
+                <div id="barraPerfil">  
+                    <nav class="menu">
+                        <ul id="menuPerfil">
+                            <li><a href="{%url 'amigos' %}">amigos</a></li>
+                            <li><a href="{% url 'comentarios' %}">Comentarios</a></li>
+                            <li><a href="{% url 'verLikes' %}">Likes</a></li>
+                            <li><a href="{% url 'verPostFavoritos' %}" >Guardados</a> </li>
+                            <li><a href="{% url 'busquedaPost' %}" >Buscar</a> </li>
+                        </ul>
+                    </nav>   
+                </div>
+            <div>    
+         </div>
+</div>
+<div>
+     {% if amigos %}
+            <h2>Estos son tus amigos: </h2>                  
+            {% for amigo  in amigos.all  %}
+            {% comment %} <h2>Likeaste el post: <a href=" {% url 'Posteos'  like.post.pk%}">{{like.post.titulo}}</a> </h2>  {% endcomment %}
+            <!-- <div class="text-muted fst-italic mb-2">Publicado por: {{like.usuario}}</div> -->
+            {% comment %} <h2>Estos son tus amigos: </h2>     {% endcomment %}
+                       
+{% comment %} <p class="post-meta">Escrito por <a href="{% url 'otroPerfil' post.posteador.pk %}" > {{post.posteador}} </a></p>  {% endcomment %}
+
+                <a href="#">{{amigo}}</a>
+                
+                           
+                                
+            {% endfor %}
+                                
+    {% else %}
+            <p>No hay nada:(</p>   
+    {% endif %}
+
+    <h3>Solicitudes pendientes</h3>
+    {% if solicitudes %}
+        {%for solicitud in solicitudes%}
+
+            <p>{{solicitud.from_user}} quiere que seas su amig@!</p>
+            {% comment %} <p> <a href="{% url 'inicio'  %}" >aceptar</a> </p> {% endcomment %}
+            
+            <p> <a href="{% url 'aceptarSolicitud' solicitud.pk  %}" >aceptar</a> </p>
+            <p> <a href="{% url 'rechazarSolicitud' solicitud.pk %}">rechazar</a> </p>
+
+            
+        {%endfor%}
+    {%else%}
+        <p>No tienes solicitudes pendientes</p>
+    {%endif%}
+</div>
+
+{% endblock ContenidoQueCambia %}
+    

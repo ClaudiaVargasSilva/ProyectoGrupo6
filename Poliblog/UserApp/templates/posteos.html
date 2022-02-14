@@ -14,6 +14,15 @@
                     <!-- Post meta content-->
                     <a class="btn btn-secondary" href= "{% url 'crearPost' %}">Crear post</a>
                     <h2>{{post.titulo}} <a href="{% url 'Postfavoritos' post.pk %}" ><span ><i class="fa-solid fas fa-bookmark"></i></span> </a> </h2>
+                    {% if post.posteador == request.user%}
+                        {% comment %} <p>Soy yo :D</p> {% endcomment %}
+                        <p class="post-meta">Escrito por <a href="{% url 'Perfil'%}" > {{post.posteador}} </a></p> <!-- un if para ver si yo soy el posteador -->
+
+                    {%else%}
+                        {% comment %} <p>No soy yo</p> {% endcomment %}
+                        <p class="post-meta">Escrito por <a href="{% url 'otroPerfil' post.posteador.pk %}" > {{post.posteador}} </a></p> <!-- un if para ver si yo soy el posteador -->
+
+                    {%endif%}
                     <div class="text-muted fst-italic mb-2">{{post.fecha_publicacion}}</div>
                     <!-- Post categories-->
                     
@@ -23,6 +32,25 @@
                         <a class="badge bg-secondary text-decoration-none link-light" href="{% url 'tematicas' %}">{{tematica_post.nombre}}</a>
                         {% endfor %}
                     {% else %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                         <p>No recibo la lista tematicas :(</p>
     
                     {% endif %}
@@ -56,16 +84,7 @@
                     <!-- seccion donde iria el contenido del post que presioné-->
                 </section>
             </article>
-            <!-- Seccion COMENTARIOS->
-            <section class="mb-5">
-                <div class="card bg-light">
-                    <div class="card-body">
-                        <!- Comment form-->
-                        <!-- <form method="POST" class="post-form">
-                            {% csrf_token %}
-                            {{miForm.as_p}}
-                            <button type="submit" class="save btn btn-default">Guardar tematica</button>
-                        </form> -->
+            
                         <form  method="POST" class="post-form">
                             {% csrf_token %}
                             {{miFormComentario.as_p}}
@@ -73,10 +92,7 @@
                             <button type="submit" class="save btn btn-secondary">Agregar comentario</button>
 
                         </form> 
-                        <!-- Ese form despues tiene que ser utilizado para CREAR comentarios-->
-                        <!-- Comment with nested comments-->
-                        
-                            <!--Aparecen comentarios del post determinado-->
+                       
                             
                             
 
@@ -92,7 +108,17 @@
 
                                 <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div> <!--Acá deberia aparecer la imagen que el usuario elija...-->    
                                 <div class="ms-3">
-                                    <div class="fw-bold">{{comentario_post.comentarista}}</div>
+                                    {% if comentario_post.comentarista == request.user%}
+                                        {% comment %} <p>Soy yo :D</p> {% endcomment %}
+                                        {% comment %} <p class="post-meta">Escrito por <a href="{% url 'Perfil'%}" > {{post.posteador}} </a></p> <!-- un if para ver si yo soy el posteador --> {% endcomment %}
+                                        <div class="fw-bold"><a href="{% url 'Perfil'%}">{{comentario_post.comentarista}}</a></div> <!-- un if para ver si yo soy el posteador -->
+
+                                    {%else%}
+                                        {% comment %} <p>No soy yo</p> {% endcomment %}
+                                        <div class="fw-bold"><a href="{% url 'otroPerfil' comentario_post.comentarista.pk %}">{{comentario_post.comentarista}}</a></div> <!-- un if para ver si yo soy el posteador -->
+
+                                    {%endif%}
+                                    
                                     <!-- <p>{{comentario_post.fecha}}</p> -->
                                     <div class="text-muted fst-italic mb-2">{{comentario_post.fecha}}</div>
                                     <p>{{comentario_post.contenido_comentario}} </p>

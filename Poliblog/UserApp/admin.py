@@ -1,5 +1,5 @@
 from django.contrib import admin
-from UserApp.models import Perfil,MisMensajes,Room,ComentariosPost, Avatar,Lenguaje, Likes, Post, Tematica, PostFavoritos
+from UserApp.models import Perfil,MisMensajes,Room,SolicitudAmistad,ComentariosPost, Avatar,Lenguaje, Likes, Post, Tematica, PostFavoritos
 
 admin.site.register(Tematica)
 
@@ -20,3 +20,6 @@ admin.site.register(PostFavoritos)
 admin.site.register(MisMensajes)
 
 admin.site.register(Room)
+
+
+admin.site.register(SolicitudAmistad)

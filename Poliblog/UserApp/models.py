@@ -21,8 +21,16 @@ class Perfil(models.Model):
     user = models.OneToOneField(User, on_delete= models.CASCADE)
     imagenPerfil =models.ImageField(upload_to= 'avatares', null=True, blank=True, default = 'PorDefecto/profileImageDefault.jpg' )
     # avatar= models.OneToOneField(Avatar, on_delete=models.CASCADE)
+    amigos = models.ManyToManyField(User, blank = True, related_name="Amigos")
+    
     biografia = models.TextField(max_length=500, null=True, blank=True)
     #poner un atributo posteos? osea los posteos relacionados a cada usuario y se muestren en el perfil?
+class SolicitudAmistad(models.Model):
+    to_user = models.ForeignKey(User, related_name= "to_user",on_delete=models.CASCADE)
+    from_user = models.ForeignKey(User,related_name= "from_user", on_delete=models.CASCADE)
+    def __str__(self):
+        return f'from: {self.from_user} to: {self.to_user}'
+
 class Tematica(models.Model):
     nombre=models.CharField(max_length=100)
 

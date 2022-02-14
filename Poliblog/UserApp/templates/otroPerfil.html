@@ -24,24 +24,14 @@
 
     <h3>Biografia:</h3>
         <p>{{biografia}}</p> -->
-        <div id="barraPerfil">  
-            <nav class="menu">
-                <ul id="menuPerfil">
-                    <li><a href="{% url 'amigos'%}" >Amigos</a></li>
-                    <li><a href="{% url 'comentarios' %}">Comentarios</a></li>
-                    <li><a href="{% url 'verLikes' %}">Likes</a></li>
-                    <li><a href="{% url 'verPostFavoritos' %}" >Guardados</a> </li>
-                    <li><a href="{% url 'busquedaPost' %}" >Buscar</a> </li>
-                </ul>
-        </nav>   
-        </div>
+        
         <div id="posteos">
             <!-- <h3>Tus posteos:</h3> -->
                      <!-- <div class="col-lg-8">  -->
 
-                             {% if post %}
+                             {% if posts %}
                             
-                                {% for posteo  in post  %}
+                                {% for posteo  in posts  %}
                                     <h1>{{posteo.titulo}}</h1> 
                                     <div class="text-muted fst-italic mb-2">{{posteo.fecha_publicacion}}</div>
 
@@ -57,23 +47,42 @@
                             {% endif %}
              
         </div>
-        </div>
+        </div> 
+        {% comment %} <div id="barraPerfil">  
+            <nav class="menu">
+                <ul id="menuPerfil">
+                    <li><a href="#">Posts</a></li>
+                    <li><a href="{% url 'comentarios' %}">Comentarios</a></li>
+                    <li><a href="{% url 'verLikes' %}">Likes</a></li>
+                    <li><a href="{% url 'verPostFavoritos' %}" >Guardados</a> </li>
+                    <li><a href="{% url 'busquedaPost' %}" >Buscar</a> </li>
+                </ul>
+        </nav>    {% endcomment %}
         <div class="col-lg-4">
                         <!-- </div> -->
         <div id="profile" style="padding: 15px;">
             <p>PERFIL</p>
             <!--  Acá va la imagen por defecto -->
-            <h2>Hola {{username}}</h2>
-            <img class="rounded-circle" src= "{{request.user.perfil.imagenPerfil.url}}" alt="..."  height="100px" width="100px" />
+                {%if otroUser not in request.user.perfil.amigos.all%}
+                    <a href="{% url 'enviarSolicitud' otroUser.id %}">Enviar solicitud de amistad</a>
+                {%else%}
+                    <p>Son amigos :)</p>
+                    <a href="#">Enviale un mensaje!</a>
+                {%endif%}
+
+            <h2>{{perfil.user}}</h2>
+            
+            <img class="rounded-circle" src= "{{perfil.imagenPerfil.url}}" alt="..."  height="100px" width="100px" />
+            
             <!-- <a href=" {% url 'editarPerfil' %}"><img class="rounded-circle" src= "..\..\media\PorDefecto\configuracion.png" alt="..."  height="20px" width="25px"/></a> -->
             <!-- <i class="fa-solid fas fa-gears"></i> -->
                                 <!-- <span><i class="fa-solid fas fa-heart"></i></span> -->
                                 <!-- <span><i class="fa-solid fa fa-gear"></i></span> -->
-            <a class="text-muted" href="{% url 'editarPerfil' %}" > <i class="fa-solid fa fa-gear"></i></a>
+            {% comment %} <a class="text-muted" href="{% url 'editarPerfil' %}" > <i class="fa-solid fa fa-gear"></i></a> {% endcomment %}
             <!-- <span> <i class="fa-solid fa-gear">ds</i></span>  -->
-            <p>Nombre: {{usuario.first_name}}</p>
-            <p>Apellido: {{usuario.last_name}}</p>
-            <p>Email: {{email}}</p>
+            <p>Nombre: {{perfil.user.first_name}}</p>
+            <p>Apellido: {{perfil.user.last_name}}</p>
+            <p>Email: {{perfil.user.email}}</p>
 
             <!-- {{avatar}} -->
 
@@ -82,7 +91,7 @@
 
 
             <p>Sobre ti:</p>
-            <p>{{usuario.perfil.biografia}}</p>
+            <p>{{perfil.biografia}}</p>
         
         </div>
     

@@ -13,6 +13,12 @@ urlpatterns = [
     path('perfil', views.verPerfil, name="Perfil"),
     path('perfil2', views.perfil2, name="perfil2"),
     path('editarPerfil', views.editarUsuario, name="editarPerfil"),
+    path('otroPerfil/<id>',views.otroPerfil,name="otroPerfil"),
+    path('enviarSolicitud/<id>', views.enviarSolicitud, name= "enviarSolicitud"),
+    path('aceptarSolicitud/<id>', views.aceptarSolicitud, name= "aceptarSolicitud"),
+    path('rechazarSolicitud/<id>', views.rechazarSolicitud, name= "rechazarSolicitud"),
+    path('amigos', views.verAmigos, name="amigos"),
+
     path('agregarAvatar', views.agregarAvatar, name="agregarAvatar"),
     #path('login2', views.Login2, name="login2"),
     path('mensajes', views.mensajes, name="misMensajes"),  
