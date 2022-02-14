@@ -15,16 +15,13 @@ class Avatar(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     imagen = models.ImageField(upload_to= 'avatares', null=True, blank=True, default = 'PorDefecto/profileImageDefault.jpg' )
     
-##Ver diferencia entre auth_user_model y model User
 
 class Perfil(models.Model):
     user = models.OneToOneField(User, on_delete= models.CASCADE)
     imagenPerfil =models.ImageField(upload_to= 'avatares', null=True, blank=True, default = 'PorDefecto/profileImageDefault.jpg' )
-    # avatar= models.OneToOneField(Avatar, on_delete=models.CASCADE)
     amigos = models.ManyToManyField(User, blank = True, related_name="Amigos")
     
     biografia = models.TextField(max_length=500, null=True, blank=True)
-    #poner un atributo posteos? osea los posteos relacionados a cada usuario y se muestren en el perfil?
 class SolicitudAmistad(models.Model):
     to_user = models.ForeignKey(User, related_name= "to_user",on_delete=models.CASCADE)
     from_user = models.ForeignKey(User,related_name= "from_user", on_delete=models.CASCADE)
@@ -36,6 +33,8 @@ class Tematica(models.Model):
 
     def __str__(self):
         return f'{self.nombre}'
+    # def get_tematica_count(self):
+    #     return self.tematica_set.all().count()
 
 class Lenguaje(models.Model):
     nombreLenguaje=models.CharField(max_length=50)
@@ -72,8 +71,6 @@ class Likes(models.Model):
         return f'Like de: {self.usuario}, post= {self.post.titulo}'
 class ComentariosPost(models.Model):
     post= models.ForeignKey(Post, on_delete=models.CASCADE)
-    #foreignKey porque un comentario está en un SOLO post pero cada Post puede tener
-    #muchos comentarios
     fecha= models.DateTimeField(default=timezone.now)
     contenido_comentario=models.TextField()
     comentarista= models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE, related_name="comentarista")
@@ -89,17 +86,13 @@ class PostFavoritos(models.Model):
     user=models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     def __str__(self):
         return f'Fav de: {self.user}, post= {self.post}'
-    #un favorito tiene un usuario pero un usuario puede tener muchos favs
-    
-    #ver que tipo de relacion tendria
-
+  
 
 class Room(models.Model):
     id= models.AutoField(primary_key=True)
     name = models.CharField(max_length=1000)
 class MisMensajes(models.Model):
     user=models.ForeignKey(User,related_name="desde",on_delete=models.CASCADE)
-    #destinatario = models.charfield()
     destinatario = models.ForeignKey(User,related_name="destinatario", on_delete=models.CASCADE)
     mensaje = models.CharField(max_length=200)
     fechaMensaje = models.DateTimeField(default=timezone.now)

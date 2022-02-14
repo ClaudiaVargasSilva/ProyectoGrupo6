@@ -24,8 +24,11 @@ urlpatterns = [
     path('mensajes', views.verMensajes, name="misMensajes"),  
     path('enviarMensaje/<id>',views.enviarMensaje, name="enviarMensaje"),
     path('crearMensaje', views.crearMensaje, name="crearMensaje"),
+    path('crearMensaje2', views.crearMensaje2, name="crearMensaje2"),
     path('verMensajeEspecifico/<id>',views.verMensajeEspecifico, name="verMensajeEspecifico"),
     path('verMensajesEnviados', views.verMensajesEnviados, name="verMensajesEnviados"),
+    path('eliminarMensaje/<id>', views.eliminarMensaje, name="eliminarMensaje"),
+
     path('Posteos/<id>', views.verPosteos, name="Posteos"),
     path('comentarios', views.verComentarios, name="comentarios"),
     # path('chat', views.iniciarChat, name="chat"),
@@ -51,7 +54,7 @@ urlpatterns = [
 
     path('crearPost',views.CrearPost, name ="crearPost"),
 
-    path('leerPosts/', views.leerposts, name="leerPosts"),
+    path('leerPosts', views.leerposts, name="leerPosts"),
     path('listaPost', views.listaPost.as_view(), name='listaPost'),
     path('actualizaPost/<pk>/', views.actualizaPost.as_view(), name='actualizaPost'),
     path('eliminaPost/<pk>/', views.eliminaPost.as_view(), name='eliminaPost'),

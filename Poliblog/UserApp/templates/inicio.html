@@ -35,14 +35,25 @@
     <div class="row">
         <div class="col-lg-8">
             <div class="card mb-4">
-                <a href="#!"><img class="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg"
-                        alt="..." /></a>
+                {% comment %} <a href="#!"><img class="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg"
+                        alt="..." /></a> {% endcomment %}
                 <div class="card-body">
-                    {% if user.is_authenticated %}
+                    {% comment %} {% if user.is_authenticated %} {% endcomment %}
 
                     {% if post %}
 
                     {% for posteo in posteos %}
+                    {% comment %} {% if post.imagenPost %}
+                    <figure class="mb-4"><img class="img-fluid rounded" src={{post.imagenPost.url}} onerror="this.onerror=null ;this.remove();"  alt="..." /></figure>
+                     {% endif %} {% endcomment %}
+
+                    {% if posteo.imagenPost %}
+                        <a href="{% url 'Posteos' posteo.pk %}"><img class="card-img-top" src={{posteo.imagenPost.url}} onerror="this.onerror=null ;this.remove();" alt="..." /></a>
+                    {% comment %} {% else %}
+                        <a href="#!"><img class="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg"
+                        alt="..." /></a> {% endcomment %}
+                    {% endif %}
+
 
                     <h2 class="card-title">{{posteo.titulo}}</h2>
                     <h3 class="card-subtitle">{{posteo.subtitulo}}</h3>
@@ -64,13 +75,13 @@
                     {% else %}
                     <h2>Error, no se cargaron post</h2>
                     {% endif %}
-                    {% else %}
+                    {% comment %} {% else %}
                     <div style="margin: 15px;">
                         <p>Debes iniciar sesion para revisar los Post</p>
                         <a class="btn btn-secondary" href="{% url 'inicioSesion'%}">Iniciar sesion</a>
-                    </div>
+                    </div> {% endcomment %}
         
-        {% endif %} 
+        {% comment %} {% endif %}  {% endcomment %}
                 </div>
             </div>
         </div>
@@ -94,29 +105,39 @@
                     <div class="card-header">Tematicas</div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-sm-6">
-                                {% if user.is_authenticated %}
+                            
+                                
                                 {% if lista %}
                                 {% for tematica in lista %}
-                                <p>{{tematica.nombre}}</p>
+                                <div class="col-sm-6">
+                                    <div class="col-sm-6">
+
+                                    <ul class="list-unstyled mb-0">
+                                        <li><a href="#!">{{tematica.nombre}}</a></li>
+                                        
+                                    </ul>
+                                     </div>
+                                </div>
+
+                                {% comment %} <div class="col-sm-6">
+
+                                    <div class="col-sm-6">
+
+                                    <ul class="list-unstyled mb-0">
+                                        <li><a href="#!">{{tematica.nombre}}</a></li>
+                                 
+                                    </ul>
+                                    </div>
+                                </div> {% endcomment %}
+
+
+                                
                                 {% endfor %}
                                 {% else %}
                                 <p>no recibis lista</p>
                                 {% endif %}
-                                {% else %}
-                                <div style="margin: 15px;">
-                                    <p>Debes iniciar sesion para revisar las Tematicas</p>
-                                </div>
-                    
-                    {% endif %} 
-                            </div>
-                            <div class="col-sm-6">
-                                <ul class="list-unstyled mb-0">
-                                    <li><a href="#!">JavaScript</a></li>
-                                    <li><a href="#!">CSS</a></li>
-                                    <li><a href="#!">Tutorials</a></li>
-                                </ul>
-                            </div>
+                                
+                            
                         </div>
                     </div>
                 </div>

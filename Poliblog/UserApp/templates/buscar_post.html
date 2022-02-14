@@ -2,20 +2,24 @@
 {% load static %}
 {% block ContenidoQueCambia %}
 <head>
-    <title>Login Page</title>
+    <title>Mis posts</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'UserApp/css/styleProfile.css'%}">
 </head>
+    {% comment %} {% for p in posts %}
+        {{p.titulo}}
+    {% endfor %} {% endcomment %}
+
     <div class="container">
-        {% if user.is_authenticated %}
-        {% for p in object_list %}
+        {% comment %} {% if user.is_authenticated %} {% endcomment %}
+        {% for p in posts %}
         <div class="row">
             <div class="col-lg-6" style="margin: 10px;">
                 <div id="posteos">
                 <!-- Blog post-->
                 <div class="card mb-4">
                     <div class="card-body">
-                        <h2 class="card-title h4">Titulo: {{p.titulo}}</h2>
+                        <h2 class="card-title h4"><a href="{% url 'Posteos' p.id%}">Titulo: {{p.titulo}}</a></h2>
                         <p class="text-muted fst-italic mb-2">Fecha Publicación: {{p.fecha_publicacion}}</p>
                         <p class="card-text">Imagen: {{p.imagenPost}}</p>
                         <a class="btn btn-secondary" href="{% url 'eliminaPost' p.id %}">Eliminar</a>
@@ -26,7 +30,7 @@
             </div>
         </div>
         {% endfor %}
-        {% else %}
+        {% comment %} {% else %}
         <div class="row">
             <div ass="col-lg-6" style="margin-top: 10px">
                 <p>Debes iniciar sesion para revisar los Post</p>
@@ -34,7 +38,7 @@
             </div>
         </div>
         
-        {% endif %} 
+        {% endif %}  {% endcomment %}
         <div>
             <div class="row">
                 <div class="col-lg-6" style="margin-top: 10px">

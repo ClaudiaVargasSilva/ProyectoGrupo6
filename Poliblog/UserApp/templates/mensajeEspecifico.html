@@ -10,7 +10,14 @@
 				{% comment %} <td class="action"><input type="checkbox" /></td> {% endcomment %}
 				<td class="action"><i class="fa fa-star-o"></i></td>
 				<td class="action"><i class="fa fa-bookmark-o"></i></td>
-				<td class="name"><a href="{% url 'otroPerfil' mensajeEsp.user.pk%}">De: {{mensajeEsp.user}} | email: {{mensajeEsp.user.email}}</a></td> <!--visitar perfil-->
+				{% if request.user == mensajeEsp.destinatario%}
+					<td class="name"><a href="{% url 'otroPerfil' mensajeEsp.user.pk%}">De: {{mensajeEsp.user}} | email: {{mensajeEsp.user.email}}</a></td> <!--visitar perfil-->
+					<td class="name"><a href="{% url 'Perfil'%}">Para: {{mensajeEsp.destinatario}}</a></td>
+				{% else%}
+					<td class="name"><a href="{% url 'Perfil'%}">De: {{mensajeEsp.user}} | email: {{mensajeEsp.user.email}}</a></td> <!--visitar perfil-->
+					<td class="name"><a href="{% url 'otroPerfil' mensajeEsp.destinatario.pk%}">Para: {{mensajeEsp.destinatario}}</a></td>
+				{% endif %}
+				
 				<p>{{mensajeEsp.mensaje}}</p> <!--ver mensaje especifico-->
 				<td class="time">{{m.fechaMensaje}}</td>
 				
@@ -22,7 +29,7 @@
 {% comment %} </table> {% endcomment %}
 	<a class="btn btn-secondary" href="{% url 'enviarMensaje' mensajeEsp.user.pk%}">Responder</a>
 
-		<a class="btn btn-secondary" href="">Eliminar</a>
+		<a class="btn btn-secondary" href="{% url 'eliminarMensaje' mensajeEsp.id %}">Eliminar</a>
 </div>
 	
 

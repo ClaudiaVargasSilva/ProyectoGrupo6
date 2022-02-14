@@ -3,10 +3,25 @@
 {% block ContenidoQueCambia %}
     <div class="container">
         <h2>Escribe tu mensaje</h2>
-        <form method="POST" class="post-form" enctype="multipart/form-data">
+            {% comment %} <form method="POST" class="post-form" enctype="multipart/form-data">
             {% csrf_token %}
             {{miForm.as_p}}
             <button type="submit" class="btn btn-secondary">Enviar</button>
+             {% endcomment %}
+            {% comment %} <form action="{% url 'enviarMensaje2' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="destinatario" value="{{ destinatario.id }}" />
+
+            </form> {% endcomment %}
+            <form id="post-form" method="POST" action="crearMensaje2">
+                {% csrf_token %}
+                <label>Username o email: </label>
+                <input type="text" name="destinatario" id="destinatario" width="100px" />
+                <label>Mensaje</label>
+                <textarea name="mensaje" id="email_message" class="form-control" placeholder="Message" style="height: 120px;"></textarea>
+                {% comment %} <input type="textarea" name="mensaje" id="mensaje" width="100px" /> {% endcomment %}
+                <input type="submit" value="Enviar mensaje">
+            </form>
         </form>
     </div>
 

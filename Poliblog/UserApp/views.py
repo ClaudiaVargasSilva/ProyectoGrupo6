@@ -2,6 +2,7 @@ from audioop import reverse
 from collections import UserDict
 from genericpath import exists
 import numbers
+from this import d
 from django.core.paginator import Paginator,EmptyPage, PageNotAnInteger
 from email.policy import default
 from django.http import HttpResponse, JsonResponse
@@ -11,6 +12,7 @@ from django.contrib.auth.models import User
 
 from dataclasses import fields
 from django.shortcuts import get_object_or_404, render, get_list_or_404
+from django.views import View
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.views import LogoutView
@@ -160,50 +162,6 @@ def actualizarAvatar(request):
 def iniciarChat(req):
     return render(req, 'chat.html')
 
-# def room(request, room):
-#     username = request.GET.get('username')
-#     user= request.user
-#     room_details = Room.objects.get(name=room)
-#     return render(request, 'room.html', {
-#         'username': username,
-#         'room': room,
-#         'room_details': room_details,
-#         'user' :user
-#     })
-#     # return render (request, 'chats/room.html')
-
-# def checkview(request):
-#     room = request.POST['room_name']
-#     username = request.POST['username']
-
-#     if Room.objects.filter(name=room).exists():
-#         return redirect(room+'/?username='+username)
-#     else:
-#         new_room = Room.objects.create(name=room)
-#         new_room.save()
-#         return redirect(room+'/?username='+username)
-
-# def send(request,room):
-#     # is_private = request.POST.get('is_private', False);
-
-#     # message = request.POST.get('message',False)
-#     message = request.POST['message']
-#     # username = request.POST.get('username', False)
-#     user = request.user
-#     # room_id = request.POST.get('room_id', False)
-#     room1 = Room.objects.get(name = room)
-
-#     new_message = MisMensajes.objects.create(user=user,mensaje=message,room=room1)
-#     new_message.save()
-#     print(new_message)
-#     return HttpResponse('mensaje enviado')
-
-# def getMessages(request, id, room):
-#     room_details = Room.objects.get(id=id)
-#     messages = MisMensajes.objects.filter(room__id=room_details.id)
-#     return JsonResponse({"messages":list(messages.values())})
-
-
 def otroPerfil(req, id):
     otroUser = User.objects.get(id=id) #recuperar la id del otro perfil
     postsDelOtroUser= Post.objects.filter(posteador=otroUser)
@@ -266,30 +224,21 @@ def enviarMensaje(req,id):
     return render(req, 'crearMensaje.html',{'miForm':miForm,'destinatario':destinatario})
 
 
-def crearMensaje(req):
-    # destinatario= req.POST['destinatario']
-    # emailUsuarios = User.objects.all
-    if req.method == "POST":
-        miForm=MensajeForm2(req.POST) #me lo tomo como no valido
-        Destinatario=req.POST['destinatario']
-        userDestino= User.objects.get(username=Destinatario)
-        # miForm['destinatario'] = userDestino 
-        # print(req.FILES['imagenPost'])
-        if miForm.is_valid():
-            mensaje=miForm.save(commit=False)
-            #recuperar el email y emparejarlo con un email de algun usuario existente...
-            mensaje.user=req.user
-            mensaje.destinatario= userDestino
-            mensaje.save()
-            # miForm.save_m2m()
-         
-            
-            return redirect(inicio)
-        else:
-            return HttpResponse('Los datos ingresados son incorrectos')
+def crearMensaje(req): 
+    return render(req, 'crearMensaje2.html')
+
+
+def crearMensaje2(req):
+    destino = req.POST['destinatario']
+    mensaje = req.POST['mensaje']
+    # destinoFinal = User.objects.get(username=destino)
+    if User.objects.filter(username=destino).exists():
+        destinoFinal = User.objects.get(username=destino)
+        MisMensajes.objects.create(user=req.user, mensaje=mensaje, destinatario=destinoFinal)
+        return HttpResponse("mensaje enviado!")
     else:
-        miForm= MensajeForm2()
-    return render(req, 'crearMensaje2.html',{'miForm':miForm})
+        return HttpResponse('el usuario destino no existe!')
+    
 
 def verMensajes(req):
     
@@ -305,12 +254,17 @@ def verMensajes(req):
 def verMensajesEnviados(req):
     mensajes= MisMensajes.objects.filter(user=req.user)
     return render(req, 'mensajesEnviados.html', {'mensajes':mensajes})
+
 def verMensajeEspecifico(req,id):
     mensajeEsp = MisMensajes.objects.get(id=id)
     return render(req, 'mensajeEspecifico.html', {'mensajeEsp':mensajeEsp})
 
-def eliminarMensaje(req):
-    pass
+def eliminarMensaje(req,id):
+    mensajeEliminar=MisMensajes.objects.get(id=id)
+    #faltaria un template o MODAL que diga si estoy seguro y asi
+    #faltaria que si borro un mensaje que ENVIÉ que se borre de ambas partes pero si elimino un mensaje que RECIBI que se me borre a mi pero no a la otra persona...
+    mensajeEliminar.delete()
+    return redirect(inicio)
 
 def guardarMensaje(req):
     pass
@@ -334,20 +288,8 @@ def editarUsuario(req):
             usuario.last_name= info['last_name']
             new_password = info['password1']
             usuario.set_password(new_password)
-            # perfil.user= usuario
             perfil.imagenPerfil= perfil1['imagenPerfil'] #esto no me actualiza
             perfil.biografia = perfil1['biografia']
-            # usuario.password1 = info['password1']
-            # usuario.password2 = info['password2']
-            # usuario.perfil.imagenPerfil = info['imagenPerfil']
-            
-            # Perfil.objects.update(
-            #     imagenPerfil = info['imagenPerfil'] 
-            # )
-            # perfil.imagenPerfil= info['imagenPerfil']
-            
-            # perfil=miPerfil.save(commit=False)
-            # perfil.user = req.user
             miPerfil.save()
             usuario.save()
             # miPerfil.save_m2m()
@@ -399,6 +341,7 @@ def verPosteos(req,id):
     comentario= ComentariosPost.objects.filter(post__id=id) #si uso GET devuelve una lista? No, no devuelve una lista
     #entonces uso filter :D
     tematicas=Tematica.objects.filter(post__id=id) #tematicas asociadas al Post solicitado
+    lista= Tematica.objects.all()
 
     if req.method=="POST":
         miFormComentario=ComentarioForm(req.POST)
@@ -412,7 +355,7 @@ def verPosteos(req,id):
             return HttpResponse("No funcionaaaaaaa")
     else:
         miFormComentario=ComentarioForm()
-    return render(req,'posteos.html', {'post':post, 'tematicas':tematicas, 'comentario':comentario, 'miFormComentario': miFormComentario})
+    return render(req,'posteos.html', {'post':post, 'tematicas':tematicas, 'comentario':comentario, 'miFormComentario': miFormComentario, 'lista':lista})
 
 
 def darLike(req,id):
@@ -516,7 +459,7 @@ def CrearTematica(req):
         miForm=TematicaForm(req.POST)
         if miForm.is_valid:
             miForm.save()
-            return render(req, 'inicio.html')
+            return redirect(inicio)
         else:
             return HttpResponse('Los datos ingresados son incorrectos')
     else:
@@ -608,7 +551,16 @@ def leerposts(req):
 class listaPost(ListView):
     model = Post
     template_name = "buscar_post.html"
+    def get_context_data(self,*args, **kwargs):
+        context = super(listaPost, self).get_context_data(*args,**kwargs)
+        context['posts'] = Post.objects.filter(posteador=self.request.user)
+        return context
+    # def get(self,req):
+    #     context:{}
 
+    #     post= Post.objects.filter(posteador=req.user)
+    #     return context:{'post':post}
+    #filtrar pero por los posteos del, que no aparezcan todos
 class detallePost(DetailView):
     model = Post
     template_name = "detalle_post.html"

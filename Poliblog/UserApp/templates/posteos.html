@@ -9,9 +9,7 @@
             <article>
                 <!-- Post header-->
                 <header class="mb-4">
-                    <!-- Post titulo-->
                     <h1 class="fw-bolder mb-1">Posteos</h1>
-                    <!-- Post meta content-->
                     <a class="btn btn-secondary" href= "{% url 'crearPost' %}">Crear post</a>
                     <h2>{{post.titulo}} <a href="{% url 'Postfavoritos' post.pk %}" ><span ><i class="fa-solid fas fa-bookmark"></i></span> </a> </h2>
                     {% if post.posteador == request.user%}
@@ -33,24 +31,6 @@
                         {% endfor %}
                     {% else %}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                         <p>No recibo la lista tematicas :(</p>
     
                     {% endif %}
@@ -66,16 +46,7 @@
                         
                     {% endif %}
                     </header>
-                <!-- Preview image figure-->
-                
-                
-                    
-                   
-                                           
-                      
-                        
-                
-                <!-- Post content-->
+              <!-- Post content-->
                 <div class="container">
                     <p>{{post.contenido}}</p>
                 </div>
@@ -122,22 +93,7 @@
                                     <!-- <p>{{comentario_post.fecha}}</p> -->
                                     <div class="text-muted fst-italic mb-2">{{comentario_post.fecha}}</div>
                                     <p>{{comentario_post.contenido_comentario}} </p>
-                                    <!-- Child comment 1-->
-                                    <!-- <div class="d-flex mt-4">
-                                        <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
-                                        <div class="ms-3">
-                                            <div class="fw-bold">Commenter Name</div>
-                                            And under those conditions, you cannot establish a capital-market evaluation of that enterprise. You can't get investors.
-                                        </div>
-                                    </div> -->
-                                    <!-- Child comment 2-->
-                                    <!-- <div class="d-flex mt-4">
-                                        <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
-                                        <div class="ms-3">
-                                            <div class="fw-bold">Commenter Name</div>
-                                            When you put money directly to a problem, it makes a good headline.
-                                        </div>
-                                    </div> -->
+                                    
                                     <div class="col-lg-12" style="margin-top: 10px">
                                         <a href= "{% url 'comentarios' %}">Ver todos mis comentarios</a>
                                     </div>
@@ -149,58 +105,57 @@
                                 
                             
                         
-                        <!-- Single comment-->
-                        <!-- <div class="d-flex">
-                            <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
-                            <div class="ms-3">
-                                <div class="fw-bold">Commenter Name</div>
-                                When I look at the universe and all the ways the universe wants to kill us, I find it hard to reconcile that with statements of beneficence.
-                            </div>
-                        </div> -->
+                        
                     
                 </div>
             </section>
         
-        <!-- Side widgets-->
-       <div class="col-lg-4">
-            <!-- Search widget-->
-            <div class="card mb-4">
-                <div class="card-header">Search</div>
-                <div class="card-body">
-                    <div class="input-group">
-                        <input class="form-control" type="text" placeholder="Enter search term..." aria-label="Enter search term..." aria-describedby="button-search" />
-                        <button class="btn btn-secondary" id="button-search" type="button">Go!</button>
-                    </div>
-                </div>
-            </div>
-            <!-- Categories widget-->
-            <div class="card mb-4">
-                <div class="card-header">Tematicas</div>
-                <div class="card-body">
-                    <div class="row">
+       
+        <!--SLIDE WIDGETS-->
+        <div class="card mb-4">
+            <div class="card-header">Tematicas</div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-6">
+                        {% comment %} {% if user.is_authenticated %} {% endcomment %}
+                        {% if tematicas %}
+                        {% for tematica in lista %}
+                        {% comment %} {{tematica.get_tematica_count}} {% endcomment %}
                         <div class="col-sm-6">
+
                             <ul class="list-unstyled mb-0">
-                                <li><a href="#!">Web Design</a></li>
-                                <li><a href="#!">HTML</a></li>
-                                <li><a href="#!">Freebies</a></li>
+                                <li><a href="#!">{{tematica.nombre}}</a></li>
                             </ul>
                         </div>
-                        <div class="col-sm-6">
-                            <ul class="list-unstyled mb-0">
-                                <li><a href="#!">JavaScript</a></li>
-                                <li><a href="#!">CSS</a></li>
-                                <li><a href="#!">Tutorials</a></li>
+                        {% comment %} <div class="col-sm-6">
+                                <ul class="list-unstyled mb-0">
+                                <li><a href="#!">{{tematica.nombre}}</a></li>  
                             </ul>
-                        </div>
+                        </div> {% endcomment %}
+
+                        
+                        {% endfor %}
+                        {% else %}
+                        <p>no recibis lista</p>
+                        {% endif %}
+                        {% comment %} {% else %}
+                        <div style="margin: 15px;">
+                            <p>Debes iniciar sesion para revisar las Tematicas</p>
+                        </div> {% endcomment %}
+            
+            {% comment %} {% endif %}  {% endcomment %}
                     </div>
+                    
                 </div>
-            </div>
-            <!-- Side widget-->
-            <div class="card mb-4">
-                <div class="card-header">Side Widget</div>
-                <div class="card-body">You can put anything you want inside of these side widgets. They are easy to use, and feature the Bootstrap 5 card component!</div>
             </div>
         </div>
+        <div class="card mb-4">
+            <div class="card-header">Side Widget</div>
+            <div class="card-body">You can put anything you want inside of these side widgets. They are easy
+                to use, and feature the Bootstrap 5 card component!</div>
+        </div>
+    </div>
+</div>
     </div>
 </div>
 
