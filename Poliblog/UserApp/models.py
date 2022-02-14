@@ -98,9 +98,12 @@ class Room(models.Model):
     id= models.AutoField(primary_key=True)
     name = models.CharField(max_length=1000)
 class MisMensajes(models.Model):
-    user=models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user=models.ForeignKey(User,related_name="desde",on_delete=models.CASCADE)
     #destinatario = models.charfield()
+    destinatario = models.ForeignKey(User,related_name="destinatario", on_delete=models.CASCADE)
     mensaje = models.CharField(max_length=200)
     fechaMensaje = models.DateTimeField(default=timezone.now)
-    room = models.ForeignKey(Room, on_delete=models.CASCADE)
+def __str__(self):
+        return f'de: {self.user}, para= {self.destinatario}'
+
 

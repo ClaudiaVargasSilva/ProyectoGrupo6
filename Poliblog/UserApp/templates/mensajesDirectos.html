@@ -1,9 +1,10 @@
 {% extends 'padre.html' %}
 {%load static%}
 {% block ContenidoQueCambia %}
+<head>
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 <link rel="stylesheet" href="{% static 'UserApp/css/styleMessages.css'%}">
-
+</head>
 <div class="container">
 <div class="row">
 	<!-- BEGIN INBOX -->
@@ -14,19 +15,20 @@
 					<!-- BEGIN INBOX MENU -->
 					<div class="col-md-3">
 						<h2 class="grid-title"><i class="fa fa-inbox"></i> Inbox</h2>
-						<a class="btn btn-block btn-primary" data-toggle="modal" data-target="#compose-modal"><i class="fa fa-pencil"></i>&nbsp;&nbsp;NEW MESSAGE</a>
+						<a class="btn btn-block btn-primary" href="{%url 'crearMensaje'%}"><i class="fa fa-pencil"></i>NUEVO MENSAJE</a> 
 
 						<hr>
 
 						<div>
 							<ul class="nav nav-pills nav-stacked">
 								<li class="header">Folders</li>
-								<li class="active"><a href="#"><i class="fa fa-inbox"></i> Inbox (14)</a></li>
-								<li><a href="#"><i class="fa fa-star"></i> Starred</a></li>
-								<li><a href="#"><i class="fa fa-bookmark"></i> Important</a></li>
-								<li><a href="#"><i class="fa fa-mail-forward"></i> Sent</a></li>
+								<li class="active"><a href="{% url 'misMensajes'%}"><i class="fa fa-inbox"></i> Inbox (14)</a></li>
+								<li><a href="#"><i class="fa fa-bookmark"></i> Importantes</a></li>
+								<li><a href="{% url 'verMensajesEnviados' %}"><i class="fa fa-mail-forward"></i> Enviados</a></li>
+
+								{% comment %} <li><a href="#"><i class="fa fa-star"></i> Starred</a></li>
 								<li><a href="#"><i class="fa fa-pencil-square-o"></i> Drafts</a></li>
-								<li><a href="#"><i class="fa fa-folder"></i> Spam (217)</a></li>
+								<li><a href="#"><i class="fa fa-folder"></i> Spam (217)</a></li> {% endcomment %}
 							</ul>
 						</div>
 					</div>
@@ -54,7 +56,7 @@
 								</div>
 							</div>
 
-							<div class="col-md-6 search-form">
+						<div class="col-md-6 search-form">
 								<form action="#" class="text-right">
 									<div class="input-group">
 										<input type="text" class="form-control input-sm" placeholder="Search">
@@ -66,102 +68,31 @@
 						</div>
 						
 						<div class="padding"></div>
-						
+						{%block contenidoMensajesEspecificos%}
+
+						{%endblock contenidoMensajesEspecificos%}
+
+                            
+						{%block contenidoEnviados%}
+						{%endblock contenidoEnviados%}
 						<div class="table-responsive">
 							<table class="table">
 								<tbody>
-                        <tr>
-									<td class="action"><input type="checkbox" /></td>
-									<td class="action"><i class="fa fa-star-o"></i></td>
-									<td class="action"><i class="fa fa-bookmark-o"></i></td>
-									<td class="name"><a href="#">Larry Gardner</a></td>
-									<td class="subject"><a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed </a></td>
-									<td class="time">08:30 PM</td>
-								</tr>
-								<tr>
-									<td class="action"><input type="checkbox" /></td>
-									<td class="action"><i class="fa fa-star-o"></i></td>
-									<td class="action"><i class="fa fa-bookmark"></i></td>
-									<td class="name"><a href="#">Larry Gardner</a></td>
-									<td class="subject"><a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed </a></td>
-									<td class="time">08:30 PM</td>
-								</tr>
-								<tr class="read">
-									<td class="action"><div class="icheckbox_square-blue" st<td class="action"><input type="checkbox" /></td>
-									<td class="action"><i class="fa fa-star"></i></td>
-									<td class="action"><i class="fa fa-bookmark"></i></td>
-									<td class="name"><a href="#">Larry Gardner</a></td>
-									<td class="subject"><a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed </a></td>
-									<td class="time">08:30 PM</td>
-								</tr>
-								<tr>
-									<td class="action"><input type="checkbox" /></td>
-									<td class="action"><i class="fa fa-star-o"></i></td>
-									<td class="action"><i class="fa fa-bookmark-o"></i></td>
-									<td class="name"><a href="#">Larry Gardner</a></td>
-									<td class="subject"><a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed </a></td>
-									<td class="time">08:30 PM</td>
-								</tr>
-								<tr class="read">
-									<td class="action"><input type="checkbox" /></td>
-									<td class="action"><i class="fa fa-star-o"></i></td>
-									<td class="action"><i class="fa fa-bookmark-o"></i></td>
-									<td class="name"><a href="#">Larry Gardner</a></td>
-									<td class="subject"><a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed </a></td>
-									<td class="time">08:30 PM</td>
-								</tr>
-								<tr class="read">
-                                    <td class="action"><input type="checkbox" /></td>
-									<td class="action"><i class="fa fa-star-o"></i></td>
-									<td class="action"><i class="fa fa-bookmark"></i></td>
-									<td class="name"><a href="#">Larry Gardner</a></td>
-									<td class="subject"><a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed </a></td>
-									<td class="time">08:30 PM</td>
-								</tr>
-								<tr>
-                                    <td class="action"><input type="checkbox" /></td>
-									<td class="action"><i class="fa fa-star"></i></td>
-									<td class="action"><i class="fa fa-bookmark-o"></i></td>
-									<td class="name"><a href="#">Larry Gardner</a></td>
-									<td class="subject"><a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed </a></td>
-									<td class="time">08:30 PM</td>
-								</tr>
-								<tr>
-									<td class="action"><input type="checkbox" /></td>
-									<td class="action"><i class="fa fa-star-o"></i></td>
-									<td class="action"><i class="fa fa-bookmark-o"></i></td>
-									<td class="name"><a href="#">Larry Gardner</a></td>
-									<td class="subject"><a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed </a></td>
-									<td class="time">08:30 PM</td>
-								</tr>
-								<tr class="read">
-									<td class="action"><input type="checkbox" /></td>
-									<td class="action"><i class="fa fa-star"></i></td>
-									<td class="action"><i class="fa fa-bookmark"></i></td>
-									<td class="name"><a href="#">Larry Gardner</a></td>
-									<td class="subject"><a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed </a></td>
-									<td class="time">08:30 PM</td>
-								</tr>
-								<tr>
-									<td class="action"><input type="checkbox" /></td>
-									<td class="action"><i class="fa fa-star"></i></td>
-									<td class="action"><i class="fa fa-bookmark-o"></i></td>
-									<td class="name"><a href="#">Larry Gardner</a></td>
-									<td class="subject"><a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed </a></td>
-									<td class="time">08:30 PM</td>
-								</tr>
+								{%for m in mensaje%}
+									<tr>
+										<td class="action"><input type="checkbox" /></td>
+										<td class="action"><i class="fa fa-star-o"></i></td>
+										<td class="action"><i class="fa fa-bookmark-o"></i></td>
+										<td class="name"><a href="{% url 'otroPerfil' m.user.pk%}">De: {{m.user}}</a></td> <!--visitar perfil-->
+										<td class="subject"><a href="{% url 'verMensajeEspecifico' m.pk%}">{{m.mensaje}}</a></td> <!--ver mensaje especifico-->
+										<td class="time">{{m.fechaMensaje}}</td>
+									</tr>
+								{%endfor%}
+								
 							</tbody></table>
 						</div>
 
-						<ul class="pagination">
-							<li class="disabled"><a href="#">«</a></li>
-							<li class="active"><a href="#">1</a></li>
-							<li><a href="#">2</a></li>
-							<li><a href="#">3</a></li>
-							<li><a href="#">4</a></li>
-							<li><a href="#">5</a></li>
-							<li><a href="#">»</a></li>
-						</ul>						
+					
 					</div>
 					<!-- END INBOX CONTENT -->
 					
@@ -211,12 +142,12 @@
 	<!-- END INBOX -->
 </div>
 </div>
-   {%if mensaje%}
+   {% comment %} {%if mensaje%}
       {%for m in mensaje%}
          <p>{{m.user}}</p>
          <p>{{m.mensaje}}</p>
       {%endfor%}
-   {%endif%}
+   {%endif%} {% endcomment %}
 
 {% endblock ContenidoQueCambia %}
     

@@ -21,15 +21,19 @@ urlpatterns = [
 
     path('agregarAvatar', views.agregarAvatar, name="agregarAvatar"),
     #path('login2', views.Login2, name="login2"),
-    path('mensajes', views.mensajes, name="misMensajes"),  
+    path('mensajes', views.verMensajes, name="misMensajes"),  
+    path('enviarMensaje/<id>',views.enviarMensaje, name="enviarMensaje"),
+    path('crearMensaje', views.crearMensaje, name="crearMensaje"),
+    path('verMensajeEspecifico/<id>',views.verMensajeEspecifico, name="verMensajeEspecifico"),
+    path('verMensajesEnviados', views.verMensajesEnviados, name="verMensajesEnviados"),
     path('Posteos/<id>', views.verPosteos, name="Posteos"),
     path('comentarios', views.verComentarios, name="comentarios"),
-    path('chat', views.iniciarChat, name="chat"),
+    # path('chat', views.iniciarChat, name="chat"),
  
-    path('<str:room>/', views.room, name='room'),
-    path('checkview', views.checkview, name='checkview'),
-    path('<str:room>/send', views.send, name='send'),
-    path('<str:room>/getMessages/<id>', views.getMessages, name='getMessages'),
+    # path('<str:room>/', views.room, name='room'),
+    # path('checkview', views.checkview, name='checkview'),
+    # path('<str:room>/send', views.send, name='send'),
+    # path('<str:room>/getMessages/<id>', views.getMessages, name='getMessages'),
    
 
     path('busquedaPost/', views.busquedaPost, name="busquedaPost"),

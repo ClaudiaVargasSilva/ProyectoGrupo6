@@ -1,0 +1,33 @@
+{% extends 'mensajesDirectos.html' %}
+{%load static%}
+
+{%block contenidoMensajesEspecificos%}
+<div class="table-responsive">
+	{% comment %} <table class="table"> {% endcomment %}
+		{%if mensajeEsp%}
+		{% comment %} <tbody> {% endcomment %}
+		
+				{% comment %} <td class="action"><input type="checkbox" /></td> {% endcomment %}
+				<td class="action"><i class="fa fa-star-o"></i></td>
+				<td class="action"><i class="fa fa-bookmark-o"></i></td>
+				<td class="name"><a href="{% url 'otroPerfil' mensajeEsp.user.pk%}">De: {{mensajeEsp.user}} | email: {{mensajeEsp.user.email}}</a></td> <!--visitar perfil-->
+				<p>{{mensajeEsp.mensaje}}</p> <!--ver mensaje especifico-->
+				<td class="time">{{m.fechaMensaje}}</td>
+				
+				
+			
+		{%endif%}
+		
+	{% comment %} </tbody> {% endcomment %}
+{% comment %} </table> {% endcomment %}
+	<a class="btn btn-secondary" href="{% url 'enviarMensaje' mensajeEsp.user.pk%}">Responder</a>
+
+		<a class="btn btn-secondary" href="">Eliminar</a>
+</div>
+	
+
+
+{%endblock contenidoMensajesEspecificos%}
+                            
+
+						

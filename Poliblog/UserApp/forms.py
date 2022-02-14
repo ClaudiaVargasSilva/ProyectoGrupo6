@@ -1,7 +1,7 @@
 import email
 from mimetypes import init
 from re import S
-from UserApp.models import Post, Tematica, Room,ComentariosPost,Perfil
+from UserApp.models import Post, Tematica, Room,MisMensajes,ComentariosPost,Perfil
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth.models import User
@@ -154,3 +154,45 @@ class AvatarFormulario(forms.Form):
     #Especificar los campos
     
     imagen = forms.ImageField(required=False)
+
+class MensajeForm(forms.ModelForm):
+    class Meta:
+        model = MisMensajes
+        fields=('mensaje',)
+        label={
+            'mensaje': 'Mensaje'
+        }
+        widgets = {
+            'mensaje':forms.Textarea(
+                attrs={
+                    'class':'form-control',
+                    'placeholder':'Escriba su mensaje aqui'
+                }
+            )
+        }
+class MensajeForm2(forms.ModelForm):
+    class Meta:
+        model = MisMensajes
+        fields=('destinatario','mensaje',)
+        label={
+            'destinatario': 'Destinatario',
+            'mensaje': 'Mensaje'
+            
+        
+        }
+        widgets = {
+            'destinatario': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'placeholder':'Escriba el email del destinatario',
+                    'name': 'destinatario'
+
+                }
+            ),
+            'mensaje':forms.Textarea(
+                attrs={
+                    'class':'form-control',
+                    'placeholder':'Escriba su mensaje aqui'
+                }
+            )
+        }

@@ -67,7 +67,7 @@
                     <a href="{% url 'enviarSolicitud' otroUser.id %}">Enviar solicitud de amistad</a>
                 {%else%}
                     <p>Son amigos :)</p>
-                    <a href="#">Enviale un mensaje!</a>
+                    <a href="{% url 'enviarMensaje' otroUser.id%}">Enviale un mensaje!</a> <!--{% url 'enviarMensaje' otroUser.id%}-->
                 {%endif%}
 
             <h2>{{perfil.user}}</h2>

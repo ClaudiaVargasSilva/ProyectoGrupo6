@@ -33,7 +33,7 @@
                        
 {% comment %} <p class="post-meta">Escrito por <a href="{% url 'otroPerfil' post.posteador.pk %}" > {{post.posteador}} </a></p>  {% endcomment %}
 
-                <a href="#">{{amigo}}</a>
+                <a href="{% url 'otroPerfil' amigo.pk%}">{{amigo}}</a>
                 
                            
                                 

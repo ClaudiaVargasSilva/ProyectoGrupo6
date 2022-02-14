@@ -19,7 +19,7 @@ from django.views.generic.edit import CreateView
 from django.views.generic.detail import DetailView
 import random
 from django.views.generic.edit import UpdateView, DeleteView
-from UserApp.forms import PostForm, RoomForm,PerfilForm,TematicaForm, UserRegisterForm, UserEditForm,ComentarioForm, AvatarFormulario, ComentFormulario
+from UserApp.forms import PostForm, MensajeForm,MensajeForm2,RoomForm,PerfilForm,MensajeForm,TematicaForm, UserRegisterForm, UserEditForm,ComentarioForm, AvatarFormulario, ComentFormulario
 from UserApp.models import Avatar,SolicitudAmistad,Room,MisMensajes , PostFavoritos,Likes,Post,Perfil, Tematica, ComentariosPost, Lenguaje
 
 from django.db.models import Q
@@ -35,6 +35,8 @@ from django.urls import reverse_lazy
 def mantencion(req):
     return render(req, 'mantencion.html')
 
+def enviarMensajeAdmin(req):
+    pass
 
 
 # def login2(req):
@@ -104,11 +106,10 @@ def Login(request):
     form = AuthenticationForm()
     return render(request,"login.html", {'form':form} )
 
+def eliminarCuenta(req):
+    pass
 
 
-# def verPerfil(req):
-#     usuario= Perfil.user.get_object()
-#     return render(req, 'perfil.html',{'usuario':usuario})
 
 def verPerfil(req):
     usuario = req.user
@@ -159,48 +160,50 @@ def actualizarAvatar(request):
 def iniciarChat(req):
     return render(req, 'chat.html')
 
-def room(request, room):
-    username = request.GET.get('username')
-    user= request.user
-    room_details = Room.objects.get(name=room)
-    return render(request, 'room.html', {
-        'username': username,
-        'room': room,
-        'room_details': room_details,
-        'user' :user
-    })
-    # return render (request, 'chats/room.html')
+# def room(request, room):
+#     username = request.GET.get('username')
+#     user= request.user
+#     room_details = Room.objects.get(name=room)
+#     return render(request, 'room.html', {
+#         'username': username,
+#         'room': room,
+#         'room_details': room_details,
+#         'user' :user
+#     })
+#     # return render (request, 'chats/room.html')
 
-def checkview(request):
-    room = request.POST['room_name']
-    username = request.POST['username']
+# def checkview(request):
+#     room = request.POST['room_name']
+#     username = request.POST['username']
 
-    if Room.objects.filter(name=room).exists():
-        return redirect(room+'/?username='+username)
-    else:
-        new_room = Room.objects.create(name=room)
-        new_room.save()
-        return redirect(room+'/?username='+username)
+#     if Room.objects.filter(name=room).exists():
+#         return redirect(room+'/?username='+username)
+#     else:
+#         new_room = Room.objects.create(name=room)
+#         new_room.save()
+#         return redirect(room+'/?username='+username)
 
-def send(request,room):
-    # is_private = request.POST.get('is_private', False);
+# def send(request,room):
+#     # is_private = request.POST.get('is_private', False);
 
-    # message = request.POST.get('message',False)
-    message = request.POST['message']
-    # username = request.POST.get('username', False)
-    user = request.user
-    # room_id = request.POST.get('room_id', False)
-    room1 = Room.objects.get(name = room)
+#     # message = request.POST.get('message',False)
+#     message = request.POST['message']
+#     # username = request.POST.get('username', False)
+#     user = request.user
+#     # room_id = request.POST.get('room_id', False)
+#     room1 = Room.objects.get(name = room)
 
-    new_message = MisMensajes.objects.create(user=user,mensaje=message,room=room1)
-    new_message.save()
-    print(new_message)
-    return HttpResponse('mensaje enviado')
+#     new_message = MisMensajes.objects.create(user=user,mensaje=message,room=room1)
+#     new_message.save()
+#     print(new_message)
+#     return HttpResponse('mensaje enviado')
 
-def getMessages(request, id, room):
-    room_details = Room.objects.get(id=id)
-    messages = MisMensajes.objects.filter(room__id=room_details.id)
-    return JsonResponse({"messages":list(messages.values())})
+# def getMessages(request, id, room):
+#     room_details = Room.objects.get(id=id)
+#     messages = MisMensajes.objects.filter(room__id=room_details.id)
+#     return JsonResponse({"messages":list(messages.values())})
+
+
 def otroPerfil(req, id):
     otroUser = User.objects.get(id=id) #recuperar la id del otro perfil
     postsDelOtroUser= Post.objects.filter(posteador=otroUser)
@@ -216,6 +219,8 @@ def verAmigos(req):
     solicitudes = SolicitudAmistad.objects.filter(to_user=req.user)
     print(amigos)
     return render(req, 'amigos.html', {'amigos':amigos, 'solicitudes':solicitudes})
+def eliminarAmigos(req):
+    pass
 
 def enviarSolicitud(req, id):
     from_user = req.user
@@ -242,8 +247,50 @@ def rechazarSolicitud(req, id):
     return HttpResponse('solicitud de amistad eliminada') #la idea seria utilizar django.messages o un modal
 
 
-def enviarMensaje(req):
-    pass
+def enviarMensaje(req,id):
+    destinatario = User.objects.get(id=id)
+    if req.method == "POST":
+        miForm=MensajeForm(req.POST)
+        # print(req.FILES['imagenPost'])
+        if miForm.is_valid:
+            mensaje=miForm.save(commit=False)
+            mensaje.user=req.user
+            mensaje.destinatario= destinatario
+            mensaje.save()
+            miForm.save_m2m()
+            return redirect(inicio)
+        else:
+            return HttpResponse('Los datos ingresados son incorrectos')
+    else:
+        miForm= MensajeForm()
+    return render(req, 'crearMensaje.html',{'miForm':miForm,'destinatario':destinatario})
+
+
+def crearMensaje(req):
+    # destinatario= req.POST['destinatario']
+    # emailUsuarios = User.objects.all
+    if req.method == "POST":
+        miForm=MensajeForm2(req.POST) #me lo tomo como no valido
+        Destinatario=req.POST['destinatario']
+        userDestino= User.objects.get(username=Destinatario)
+        # miForm['destinatario'] = userDestino 
+        # print(req.FILES['imagenPost'])
+        if miForm.is_valid():
+            mensaje=miForm.save(commit=False)
+            #recuperar el email y emparejarlo con un email de algun usuario existente...
+            mensaje.user=req.user
+            mensaje.destinatario= userDestino
+            mensaje.save()
+            # miForm.save_m2m()
+         
+            
+            return redirect(inicio)
+        else:
+            return HttpResponse('Los datos ingresados son incorrectos')
+    else:
+        miForm= MensajeForm2()
+    return render(req, 'crearMensaje2.html',{'miForm':miForm})
+
 def verMensajes(req):
     
     destinatario = req.user
@@ -255,8 +302,20 @@ def verMensajes(req):
         'mensaje':mensaje
         
     })
+def verMensajesEnviados(req):
+    mensajes= MisMensajes.objects.filter(user=req.user)
+    return render(req, 'mensajesEnviados.html', {'mensajes':mensajes})
+def verMensajeEspecifico(req,id):
+    mensajeEsp = MisMensajes.objects.get(id=id)
+    return render(req, 'mensajeEspecifico.html', {'mensajeEsp':mensajeEsp})
 
+def eliminarMensaje(req):
+    pass
 
+def guardarMensaje(req):
+    pass
+def buscarMensaje(req):
+    pass
 
 
 
@@ -388,16 +447,11 @@ def CrearPost(req):
 
     if req.method == "POST":
         miForm=PostForm(req.POST, req.FILES)
-        # print(req.FILES['imagenPost'])
         if miForm.is_valid:
             post=miForm.save(commit=False)
             post.posteador=req.user
-            # post.imagenPost= req.FILES['imagenPost']
-            # post.imagenPost= miForm.cleaned_data['imagenPost']
-            # post.imagenPost= miForm[imagenPost]
             post.save()
             miForm.save_m2m()
-            # return render(req, 'inicio.html',{"mensaje":"Tu post fue creado!"})
             return redirect(inicio)
         else:
             return HttpResponse('Los datos ingresados son incorrectos')
@@ -405,12 +459,6 @@ def CrearPost(req):
         miForm= PostForm()
     return render(req, 'crearPost.html',{'miForm':miForm})
 
-# class PostCreate(CreateView):
-#     model=Post
-#     fields=['titulo','contenido','tematica']
-#     success_url='UserApp/inicio'
-
-# VER COMO 
 
 def busquedaPost(req):
     return render(req, "UserApp/busquedaPost.html")
@@ -430,16 +478,6 @@ def buscar(request):
     return HttpResponse(respuesta)
 
 
-
-
-# def buscarPosteos(req):
-#     return render(req, 'buscarPosteos.html')
-# def busquedaPosteos(req):
-#     if req.GET['titulo']:
-#         return HTTPResponse(req,'XD')
-#     else:
-#         respuesta="No enviaste datos"
-#     return HTTPResponse(respuesta)
 
 
 
