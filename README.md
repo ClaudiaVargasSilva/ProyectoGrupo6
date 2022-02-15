@@ -5,7 +5,7 @@
 
 ## :steam_locomotive: Nuestro Equipo 
 
-:point_right: **Daniel :**
+:point_right: **Daniel Lucio Aduviri:**
 
 Funciones Realizadas
 ```
@@ -17,7 +17,7 @@ Funciones Realizadas
 -Likear, guardar post
 ```
 
-:point_right: **Claudia :**
+:point_right: **Claudia Vargas Silva :**
 - 📫  Puden buscarme en: https://www.linkedin.com/in/claudiavargassilva/
 - :computer: Mi Github: https://github.com/ClaudiaVargasSilva
 
