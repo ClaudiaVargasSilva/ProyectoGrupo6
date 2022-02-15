@@ -4,19 +4,37 @@
 
 						
 
-{% if mensajes %}
+{% if mensajesRecibidos %}
 
 <div class="table-responsive">
     <table class="table">
         <tbody>
-        {%for m in mensajes%}
+        {%for m in mensajesRecibidos%}
             <tr>
-                <td class="action"><input type="checkbox" /></td>
-                <td class="action"><i class="fa fa-star-o"></i></td>
-                <td class="action"><i class="fa fa-bookmark-o"></i></td>
+                
                 <td class="name"><a href="{% url 'otroPerfil' m.user.pk%}">De: {{m.user}}</a></td> <!--visitar perfil-->
                 <td class="subject"><a href="{% url 'verMensajeEspecifico' m.pk%}">{{m.mensaje}}</a></td> <!--ver mensaje especifico-->
                 <td class="time">{{m.fechaMensaje}}</td>
+            </tr>
+        {%endfor%}
+        
+        </tbody>
+    </table>
+</div>
+{%else%}
+    {{mensajeError}}
+{% endif %}
+{% if mensajesEnviados %}
+
+<div class="table-responsive">
+    <table class="table">
+        <tbody>
+        {%for r in mensajesEnviados%}
+            <tr>
+                
+                <td class="name"><a href="{% url 'Perfil' %}">De: {{r.user}}</a></td> <!--visitar perfil-->
+                <td class="subject"><a href="{% url 'verMensajeEspecifico' r.pk%}">{{r.mensaje}}</a></td> <!--ver mensaje especifico-->
+                <td class="time">{{r.fechaMensaje}}</td>
             </tr>
         {%endfor%}
         

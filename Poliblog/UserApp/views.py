@@ -214,8 +214,9 @@ def buscarMensaje(req):
         
         if User.objects.filter(username=usuario).exists():
             u=User.objects.get(username=usuario)
-            mensajes = MisMensajes.objects.filter(user=u)
-            return render(req, 'mensajesBuscados.html', {'mensajes':mensajes} )
+            mensajesRecibidos = MisMensajes.objects.filter(user=u)
+            mensajesEnviados = MisMensajes.objects.filter(destinatario=u)
+            return render(req, 'mensajesBuscados.html', {'mensajesRecibidos':mensajesRecibidos,'mensajesEnviados':mensajesEnviados} )
         else:
             mensajeError=f'No se encontraron mensajes asociados a {usuario}!'
             return render(req,'mensajesBuscados.html',{'mensajeError':mensajeError})
