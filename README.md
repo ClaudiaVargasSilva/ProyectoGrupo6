@@ -21,7 +21,7 @@ https://www.linkedin.com/in/claudiavargassilva/
 :computer: Mi Github:
 https://github.com/ClaudiaVargasSilva
 
-* * Funciones Realizadas **
+* * Funciones Realizadas * *
 ```
 - Creacion de grupos y permisos (Usuario / Administrador)
 - Accesos a funcionalidades dependiendo del permiso
