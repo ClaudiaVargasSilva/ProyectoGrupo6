@@ -4,22 +4,26 @@
 :tv: [link video](https://youtu.be/rZ84U6VKkHs)
 
 
-Daniel:
+:point_right: **Daniel :**
+
+* * Funciones Realizadas * *
+```
 -PreEntrega(crear post, ver post, crear comentario, crear tematica, buscar tematica)
 -register, login ,logout con sus templates
 -Perfiles(ver perfil de usuario actual y otros usuarios, editar mi perfil) con sus templates
 -Mensajes(ver mensaje, enviar mensaje, eliminar mensaje, buscar mensaje) con sus templates
 -Amigos(enviar,aceptar,rechazar solicitudes)
--Likear, guardar post 
+-Likear, guardar post
+```
 
-Dario:
+:no_mouth: Dario:
 -xD
 
-**Claudia :**
+:point_right: **Claudia :**
 📫  Puden buscarme en: 
-https://www.linkedin.com/in/claudiavargassilva/
+- https://www.linkedin.com/in/claudiavargassilva/
 :computer: Mi Github:
-https://github.com/ClaudiaVargasSilva
+- https://github.com/ClaudiaVargasSilva
 
 * * Funciones Realizadas * *
 ```
