@@ -32,6 +32,10 @@ Funciones Realizadas
 - Pre-Entrega en : https://github.com/ClaudiaVargasSilva/ProyectoDjango
 ```
 
-:point_right: **Dario :** :no_mouth:
+:point_right: **Dario :** 
+Funciones Realizadas
+```
+- :no_mouth:
+```
 -xD
 
