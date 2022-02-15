@@ -15,8 +15,17 @@ Daniel:
 Dario:
 -xD
 
-Claudia :
+**Claudia :**
 - 📫  Puden buscarme en: 
 https://www.linkedin.com/in/claudiavargassilva/
 - :computer: Mi Github:
 https://github.com/ClaudiaVargasSilva
+
+* * Funciones Realizadas **
+- Creacion de grupos y permisos (Usuario / Administrador)
+- Accesos a funcionalidades dependiendo del permiso
+- Edición, eliminación, actualización y editar imagenes de Post 
+- Filtrar y buscar Posr
+- Eliminar y editar comentarios
+- Mejoras HTML y estilo 
+
