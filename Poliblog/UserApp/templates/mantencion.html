@@ -19,41 +19,43 @@
           <div class="row">
               <!-- Section Titile -->
               <div class="col-md-12 wow animated fadeInLeft" data-wow-delay=".2s">
-                  <h1 class="section-title">Love to Hear From You</h1>
+                  <h1 class="section-title">Dejanos alguna sugerencia...o queja</h1>
               </div>
           </div>
           <div class="row">
               <!-- Section Titile -->
               <div class="col-md-6 mt-3 contact-widget-section2 wow animated fadeInLeft" data-wow-delay=".2s">
-                <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using Content.</p>
-
+                <p>Somos un grupo que diseñó una red social donde diversos usuarios puedan interactuar sobre temas creados por ellos con la libertad necesaria</p>
                 <div class="find-widget">
-                 Company:  <a href="https://hostriver.ro">HostRiver</a>
+                 Compania: HostRiver
                 </div>
                 <div class="find-widget">
-                 Address: <a href="#">4435 Berkshire Circle Knoxville</a>
+                 Dirección: Calle falsa 123
                 </div>
                 <div class="find-widget">
-                  Phone:  <a href="#">+ 879-890-9767</a>
+                  Telefono:  <a href="#">+011 1122543131</a>
                 </div>
                 
                 <div class="find-widget">
-                  Website:  <a href="https://uny.ro">www.uny.ro</a>
+                  Redes sociales:  <a href="https://www.instagram.com">Instagram</a>
                 </div>
-                <div class="find-widget">
-                   Program: <a href="#">Mon to Sat: 09:30 AM - 10.30 PM</a>
-                </div>
+                
               </div>
               <!-- contact form -->
               <div class="col-md-6 wow animated fadeInRight" data-wow-delay=".2s">
                   
 
-                  <form class="shake" role="form" method="post" id="contactForm" name="contact-form" data-toggle="validator">
+
+
+
+                  <form class="shake" role="form" method="post" id="contactForm" name="contact-form" data-toggle="validator" >
+                    {% csrf_token %}
+
                       <!-- Name -->
                       <div class="form-group label-floating">
-                        <label class="control-label" for="name">Name</label>
+                        <label class="control-label" for="name">Nombre</label>
 
-                        <input class="form-control" id="name" type="text" name="name" required data-error="Please enter your name">
+                        <input class="form-control" id="name" type="text" name="name" required data-error="Por favor ingrese su nombre">
 
                         <div class="help-block with-errors"></div>
                       </div>
@@ -61,30 +63,30 @@
                       <div class="form-group label-floating">
                         <label class="control-label" for="email">Email</label>
 
-                        <input class="form-control" id="email" type="email" name="email" required data-error="Please enter your Email">
+                        <input class="form-control" id="email" type="email" name="email" required data-error="Por favor ingrese su mail">
 
                         <div class="help-block with-errors"></div>
                       </div>
                       <!-- Subject -->
                       <div class="form-group label-floating">
-                        <label class="control-label">Subject</label>
+                        <label class="control-label">Destino</label>
 
-                        <input class="form-control" id="msg_subject" type="text" name="subject" required data-error="Please enter your message subject">
+                        <input class="form-control" id="msg_subject" type="text" name="subject" required data-error="Por favor agregue una direccion">
 
                         <div class="help-block with-errors"></div>
                       </div>
                       <!-- Message -->
                       <div class="form-group label-floating">
-                          <label for="message" class="control-label">Message</label>
+                          <label for="message" class="control-label">Mensaje</label>
 
-                          <textarea class="form-control" rows="3" id="message" name="message" required data-error="Write your message"></textarea>
+                          <textarea class="form-control" rows="3" id="message" name="message" required data-error="Escriba su mensaje"></textarea>
 
                           <div class="help-block with-errors"></div>
                       </div>
                       <!-- Form Submit -->
                       <div class="form-submit mt-5">
 
-                          <button class="btn btn-common" type="submit" id="form-submit"><i class="material-icons mdi mdi-message-outline"></i> Send Message</button>
+                          <button class="btn btn-common" type="submit" id="form-submit"><i class="material-icons mdi mdi-message-outline"></i> Enviar</button>
                           
                           <div id="msgSubmit" class="h3 text-center hidden"></div>
                           <div class="clearfix"></div>

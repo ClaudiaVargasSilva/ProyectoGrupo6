@@ -1,0 +1,30 @@
+{% extends 'mensajesDirectos.html' %}
+{% load static %}
+{%block contenidoMensajesBuscados%}
+
+						
+
+{% if mensajes %}
+
+<div class="table-responsive">
+    <table class="table">
+        <tbody>
+        {%for m in mensajes%}
+            <tr>
+                <td class="action"><input type="checkbox" /></td>
+                <td class="action"><i class="fa fa-star-o"></i></td>
+                <td class="action"><i class="fa fa-bookmark-o"></i></td>
+                <td class="name"><a href="{% url 'otroPerfil' m.user.pk%}">De: {{m.user}}</a></td> <!--visitar perfil-->
+                <td class="subject"><a href="{% url 'verMensajeEspecifico' m.pk%}">{{m.mensaje}}</a></td> <!--ver mensaje especifico-->
+                <td class="time">{{m.fechaMensaje}}</td>
+            </tr>
+        {%endfor%}
+        
+        </tbody>
+    </table>
+</div>
+{%else%}
+    {{mensajeError}}
+{% endif %}
+{{respuesta}}
+{%endblock contenidoMensajesBuscados%}

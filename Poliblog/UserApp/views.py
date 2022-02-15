@@ -22,7 +22,7 @@ from django.views.generic.detail import DetailView
 import random
 from django.views.generic.edit import UpdateView, DeleteView
 from UserApp.forms import PostForm,PerfilForm,MensajeForm,TematicaForm, UserRegisterForm, UserEditForm,ComentarioForm, ComentFormulario
-from UserApp.models import Avatar,SolicitudAmistad,Room,MisMensajes , PostFavoritos,Likes,Post,Perfil, Tematica, ComentariosPost, Lenguaje
+from UserApp.models import SolicitudAmistad,MisMensajes , PostFavoritos,Likes,Post,Perfil, Tematica, ComentariosPost
 from django.db.models import Q
 from django.views.generic.detail import DetailView
 from django.contrib.auth.decorators import login_required
@@ -33,8 +33,6 @@ from django.urls import reverse_lazy
 def mantencion(req):
     return render(req, 'mantencion.html')
 
-def enviarMensajeAdmin(req):
-    pass
 
 
 def padre(req):
@@ -44,8 +42,6 @@ def padre(req):
 def register(request):
 
     if request.method == 'POST':
-
-           #form = UserCreationForm(request.POST)
            form = UserRegisterForm(request.POST)
            if form.is_valid():
                 print(form.cleaned_data['groups'])
@@ -59,9 +55,6 @@ def register(request):
 
                 bio = form.cleaned_data['biografia']
                 
-                avatar = Avatar.objects.create(
-                    user = user,
-                )
                 Perfil.objects.create(
                     user = user,
                     biografia = form.cleaned_data['biografia']
@@ -70,7 +63,6 @@ def register(request):
                 return render(request,"usuarioCreado.html" ,  {"mensaje":"Usuario Creado :)"})
 
     else:
-            #form = UserCreationForm()       
             print("No se creo nada")
             form = UserRegisterForm()     
 
@@ -119,33 +111,6 @@ def verPerfil(req):
     return render(req, "perfil.html", {'username':username,'email':email,'biografia':userBio, 'usuario':usuario,'post':post})
 
 
-def perfil2(req):
-    return render(req, "perfil2.html")
-
-# def agregarAvatar(request):
-#       if request.method == 'POST':
-
-#             miFormulario = AvatarFormulario(request.POST, request.FILES)
-
-#             if miFormulario.is_valid():
-
-
-#                 #   u = User.objects.get(username=request.user)
-#                   user= request.user
-#                   imagen=miFormulario.cleaned_data['imagen']
-#                   avatar = Avatar (user=user, imagen=imagen) 
-#                 #   imagenNueva= Perfil
-      
-#                   avatar.save()
-
-#                   return render(request, "perfil.html", {'avatar':avatar.imagen.url}) 
-
-#       else: 
-
-#             miFormulario= AvatarFormulario() 
-
-#       return render(request, "agregarAvatar.html", {"miFormulario":miFormulario})
-
 
 def iniciarChat(req):
     return render(req, 'chat.html')
@@ -165,8 +130,12 @@ def verAmigos(req):
     solicitudes = SolicitudAmistad.objects.filter(to_user=req.user)
     print(amigos)
     return render(req, 'amigos.html', {'amigos':amigos, 'solicitudes':solicitudes})
-def eliminarAmigos(req):
-    pass
+def eliminarAmigo(req, id):
+    otroUser = User.objects.get(id=id)
+    user= req.user
+    user.perfil.amigos.remove(otroUser)
+    return redirect(inicio)
+
 
 def enviarSolicitud(req, id):
     from_user = req.user
@@ -248,12 +217,26 @@ def eliminarMensaje(req,id):
     mensajeEliminar.delete()
     return redirect(inicio)
 
-def guardarMensaje(req):
-    pass
 def buscarMensaje(req):
-    pass
+    if req.GET['usuario']:
+        usuario     = req.GET['usuario']
+        
+        if User.objects.filter(username=usuario).exists():
+            u=User.objects.get(username=usuario)
+            mensajes = MisMensajes.objects.filter(user=u)
+            return render(req, 'mensajesBuscados.html', {'mensajes':mensajes} )
+        else:
+            mensajeError=f'No se encontraron mensajes asociados a {usuario}!'
+            return render(req,'mensajesBuscados.html',{'mensajeError':mensajeError})
+
+    else:
+        respuesta = "No hay datos"
+        return render(req, 'mensajesBuscados.html',{'respuesta':respuesta} )
+
+    
 
 
+    
 
 def editarUsuario(req):
     usuario = req.user
@@ -389,17 +372,16 @@ def busquedaPost(req):
 
 def buscar(request):
     if request.GET['titulo']:
-        respuesta  = f"Buscando : {request.GET['titulo']}"
-        print("AAAAAAAAAAAAA")
-        print(respuesta)
-
-        titulo     = request.GET['titulo']
-        post       = Post.objects.filter(titulo__icontains=titulo)
-        return render(request, 'UserApp/resultadosBusqueda.html', {"post": post, "titulo":titulo })
+        titulo=request.GET['titulo']
+        if Post.objects.filter(titulo=titulo).exists():
+            post = Post.objects.filter(titulo__icontains=titulo)
+            return render(request, 'UserApp/resultadosBusqueda.html', {"post": post, "titulo":titulo })
+        else:
+            mensajeError = f'No se encontraron post con el titulo {titulo}!'
+            return render(request, 'UserApp/resultadosBusqueda.html',{'mensajeError':mensajeError} )
     else:
         respuesta = "No hay datos"
-
-    return HttpResponse(respuesta)
+        return render(request, 'UserApp/resultadosBusqueda.html',{'respuesta':respuesta} )
 
 
 def verTematicas(req):
@@ -505,19 +487,15 @@ def editarComentario(req, id_comentario):
     return render(req, "editarComentario.html", {"miFormulario":miFormComentario, "id_comentario":id_comentario})
     
 
-class LenguajeCreate(CreateView):
-    model= Lenguaje
-    fields=['nombreLenguaje']
-    success_url= '/UserApp/'
-    template_name = "lenguaje_form.html"
 
 
-@login_required
-def leerposts(req):
-    post = Post.objects.all()
-    contexto = {"post": post}
 
-    return render(req, 'buscar_post.html', contexto)
+# @login_required
+# def leerposts(req):
+#     post = Post.objects.all()
+#     contexto = {"post": post}
+
+#     return render(req, 'buscar_post.html', contexto)
 
 
 

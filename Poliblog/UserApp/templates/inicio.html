@@ -6,23 +6,7 @@
     <div class="container">
         <div class="text-center my-5">
             <h1 class="fw-bolder">Bienvenidos a Poliblog!</h1>
-            {% comment %} {% if messages %}
-            <ul class="messages">
-                {% for message in messages %}
-                <li class="{{ message.tags }}"> {{ message }} </h2>
-                    {% endfor %}
-            </ul>
-            {% endif %}
-
-            {% for message in messages %}
-            <div class="alert {{ message.tags }} alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                {{ message }}
-            </div>
-            {% endfor %} {% endcomment %}
-            <!-- <h3> {{mensaje}}</h3> -->
+            
 
 
         </div>
@@ -35,23 +19,17 @@
     <div class="row">
         <div class="col-lg-8">
             <div class="card mb-4">
-                {% comment %} <a href="#!"><img class="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg"
-                        alt="..." /></a> {% endcomment %}
+                
                 <div class="card-body">
-                    {% comment %} {% if user.is_authenticated %} {% endcomment %}
 
                     {% if post %}
 
                     {% for posteo in posteos %}
-                    {% comment %} {% if post.imagenPost %}
-                    <figure class="mb-4"><img class="img-fluid rounded" src={{post.imagenPost.url}} onerror="this.onerror=null ;this.remove();"  alt="..." /></figure>
-                     {% endif %} {% endcomment %}
+                   
 
                     {% if posteo.imagenPost %}
                         <a href="{% url 'Posteos' posteo.pk %}"><img class="card-img-top" src={{posteo.imagenPost.url}} onerror="this.onerror=null ;this.remove();" alt="..." /></a>
-                    {% comment %} {% else %}
-                        <a href="#!"><img class="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg"
-                        alt="..." /></a> {% endcomment %}
+                    
                     {% endif %}
 
 
@@ -75,31 +53,13 @@
                     {% else %}
                     <h2>Error, no se cargaron post</h2>
                     {% endif %}
-                    {% comment %} {% else %}
-                    <div style="margin: 15px;">
-                        <p>Debes iniciar sesion para revisar los Post</p>
-                        <a class="btn btn-secondary" href="{% url 'inicioSesion'%}">Iniciar sesion</a>
-                    </div> {% endcomment %}
-        
-        {% comment %} {% endif %}  {% endcomment %}
+                   
                 </div>
             </div>
         </div>
         <div class="col-lg-4">
             <div class="card mb-4">
-                {% comment %} <div class="card-header">Buscar</div>
-                <div class="card-body">
-                    <div class="input-group">
-                        <form action="buscarTematicas" method="GET">
-                            <input class="form-control" type="text" name="tematica" id="tematica"
-                                placeholder="Ingrese alguna tematica..." aria-label="Enter search term..."
-                                aria-describedby="button-search" />
-                            <input style="margin-top: 15px" class="btn btn-secondary" id="button-search"
-                                type="submit">
-                        </form>
-
-                    </div> {% endcomment %}
-                {% comment %} </div> {% endcomment %}
+                
                 <!--SLIDE WIDGETS-->
                 <div class="card mb-4">
                     <div class="card-header">Tematicas</div>
@@ -113,22 +73,12 @@
                                     <div class="col-sm-6">
 
                                     <ul class="list-unstyled mb-0">
-                                        <li><a href="#!">{{tematica.nombre}}</a></li>
+                                        <li><a href="{% url 'postRelacionados' tematica.pk %}" >{{tematica.nombre}}</a></li>
+                                        
                                         
                                     </ul>
                                      </div>
                                 </div>
-
-                                {% comment %} <div class="col-sm-6">
-
-                                    <div class="col-sm-6">
-
-                                    <ul class="list-unstyled mb-0">
-                                        <li><a href="#!">{{tematica.nombre}}</a></li>
-                                 
-                                    </ul>
-                                    </div>
-                                </div> {% endcomment %}
 
 
                                 

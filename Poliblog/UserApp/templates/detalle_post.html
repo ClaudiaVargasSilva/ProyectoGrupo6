@@ -48,16 +48,7 @@
                         <!-- seccion donde iria el contenido del post que presioné-->
                     </section>
                 </article>
-                <!-- Seccion COMENTARIOS->
-                <section class="mb-5">
-                    <div class="card bg-light">
-                        <div class="card-body">
-                            <!- Comment form-->
-                            <!-- <form method="POST" class="post-form">
-                                {% csrf_token %}
-                                {{miForm.as_p}}
-                                <button type="submit" class="save btn btn-default">Guardar tematica</button>
-                            </form> -->
+                
                             <form  method="POST" class="post-form">
                                 {% csrf_token %}
                                 {{miFormComentario.as_p}}
@@ -65,17 +56,7 @@
                                 <button type="submit" class="save btn btn-secondary">Agregar comentario</button>
     
                             </form> 
-                            <!-- Ese form despues tiene que ser utilizado para CREAR comentarios-->
-                            <!-- Comment with nested comments-->
                             
-                                <!--Aparecen comentarios del post determinado-->
-                                
-                                
-    
-    
-    
-    
-                                <!-- Parent comment-->
                                 
                                 
                                 {% if comentario %}

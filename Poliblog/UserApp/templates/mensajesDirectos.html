@@ -21,14 +21,11 @@
 
 						<div>
 							<ul class="nav nav-pills nav-stacked">
-								<li class="header">Folders</li>
+								<li class="header">Carpetas</li>
 								<li class="active"><a href="{% url 'misMensajes'%}"><i class="fa fa-inbox"></i> Inbox (14)</a></li>
-								<li><a href="#"><i class="fa fa-bookmark"></i> Importantes</a></li>
 								<li><a href="{% url 'verMensajesEnviados' %}"><i class="fa fa-mail-forward"></i> Enviados</a></li>
 
-								{% comment %} <li><a href="#"><i class="fa fa-star"></i> Starred</a></li>
-								<li><a href="#"><i class="fa fa-pencil-square-o"></i> Drafts</a></li>
-								<li><a href="#"><i class="fa fa-folder"></i> Spam (217)</a></li> {% endcomment %}
+								
 							</ul>
 						</div>
 					</div>
@@ -41,27 +38,17 @@
 								<label style="margin-right: 8px;" class="">
 									<div class="icheckbox_square-blue" style="position: relative;"><input type="checkbox" id="check-all" class="icheck" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins></div>
 								</label>
-								<div class="btn-group">
-									<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-										Action <span class="caret"></span>
-									</button>
-									<ul class="dropdown-menu" role="menu">
-										<li><a href="#">Mark as read</a></li>
-										<li><a href="#">Mark as unread</a></li>
-										<li><a href="#">Mark as important</a></li>
-										<li class="divider"></li>
-										<li><a href="#">Report spam</a></li>
-										<li><a href="#">Delete</a></li>
-									</ul>
-								</div>
+								
 							</div>
 
 						<div class="col-md-6 search-form">
-								<form action="#" class="text-right">
+							
+								<form action="/UserApp/buscarMensaje" class="text-right" method="GET">
 									<div class="input-group">
-										<input type="text" class="form-control input-sm" placeholder="Search">
-										<span class="input-group-btn">
-                                            <button type="submit" name="search" class="btn_ btn-primary btn-sm search"><i class="fa fa-search"></i></button></span>
+										<input type="text" name="usuario" id="usuario">
+
+                						<input type="submit" value="Buscar">
+										
 									</div>			 
 								</form>
 							</div>
@@ -72,6 +59,10 @@
 
 						{%endblock contenidoMensajesEspecificos%}
 
+						{%block contenidoMensajesBuscados%}
+
+						{%endblock contenidoMensajesBuscados%}
+
                             
 						{%block contenidoEnviados%}
 						{%endblock contenidoEnviados%}
@@ -80,9 +71,7 @@
 								<tbody>
 								{%for m in mensaje%}
 									<tr>
-										<td class="action"><input type="checkbox" /></td>
-										<td class="action"><i class="fa fa-star-o"></i></td>
-										<td class="action"><i class="fa fa-bookmark-o"></i></td>
+										
 										<td class="name"><a href="{% url 'otroPerfil' m.user.pk%}">De: {{m.user}}</a></td> <!--visitar perfil-->
 										<td class="subject"><a href="{% url 'verMensajeEspecifico' m.pk%}">{{m.mensaje}}</a></td> <!--ver mensaje especifico-->
 										<td class="time">{{m.fechaMensaje}}</td>
@@ -142,12 +131,7 @@
 	<!-- END INBOX -->
 </div>
 </div>
-   {% comment %} {%if mensaje%}
-      {%for m in mensaje%}
-         <p>{{m.user}}</p>
-         <p>{{m.mensaje}}</p>
-      {%endfor%}
-   {%endif%} {% endcomment %}
+  
 
 {% endblock ContenidoQueCambia %}
     

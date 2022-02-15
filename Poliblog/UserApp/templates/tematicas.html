@@ -6,10 +6,8 @@
     
     {% for tematica in listaTematicas  %}
         <a href="#!"><li>{{tematica.nombre}}</li></a>
-        <a class="btn btn-secondary" href="{% url 'eliminarTematicas' tematica.id %}">Eliminar</a>
-        <a class="btn btn-secondary" href="{% url 'editarTematicas' tematica.id %}">Editar</a>
+        
 
-        <!-- La idea seria que al apretar en la tematica me lleve a una pagina con los posteos de ESA tematica-->
     {% endfor %}
     <a class="navbar-brand" href="{% url 'crearTematica' %}">Crear tematica</a>
    

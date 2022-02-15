@@ -20,14 +20,11 @@
     <div class="row">
         <div class="col-lg-8">
     
-    <!-- <h2>Usuario: {{username}} </h2>
-
-    <h3>Biografia:</h3>
-        <p>{{biografia}}</p> -->
+    
         <div id="barraPerfil">  
             <nav class="menu">
                 <ul id="menuPerfil">
-                    <li><a href="{%url 'Perfil' %}">Posts</a></li>
+                    <li><a href="{%url 'Perfil' %}">Perfil</a></li>
                     <li><a href="{% url 'amigos'%}" >Amigos</a></li>
                     <li><a href="{% url 'comentarios' %}">Comentarios</a></li>
                     <li><a href="{% url 'verLikes' %}">Likes</a></li>
@@ -37,8 +34,7 @@
         </nav>   
         </div>
         <div id="posteos">
-            <!-- <h3>Tus posteos:</h3> -->
-                     <!-- <div class="col-lg-8">  -->
+            
 
                              {% if post %}
                             
@@ -63,23 +59,14 @@
                         <!-- </div> -->
         <div id="profile" style="padding: 15px;">
             <p>PERFIL</p>
-            <!--  Acá va la imagen por defecto -->
             <h2>Hola {{username}}</h2>
             <img class="rounded-circle" src= "{{request.user.perfil.imagenPerfil.url}}" alt="..."  height="100px" width="100px" />
-            <!-- <a href=" {% url 'editarPerfil' %}"><img class="rounded-circle" src= "..\..\media\PorDefecto\configuracion.png" alt="..."  height="20px" width="25px"/></a> -->
-            <!-- <i class="fa-solid fas fa-gears"></i> -->
-                                <!-- <span><i class="fa-solid fas fa-heart"></i></span> -->
-                                <!-- <span><i class="fa-solid fa fa-gear"></i></span> -->
+            
             <a class="text-muted" href="{% url 'editarPerfil' %}" > <i class="fa-solid fa fa-gear"></i></a>
-            <!-- <span> <i class="fa-solid fa-gear">ds</i></span>  -->
             <p>Nombre: {{usuario.first_name}}</p>
             <p>Apellido: {{usuario.last_name}}</p>
             <p>Email: {{email}}</p>
 
-            <!-- {{avatar}} -->
-
-            <!-- Verificar que si no tiene avatar deje el avatar por defecto y si tiene/agregó que muestre ese...-->
-            <!-- <p>{{biografia}}</p> -->
 
 
             <p>Sobre ti:</p>

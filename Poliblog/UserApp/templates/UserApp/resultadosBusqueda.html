@@ -13,21 +13,9 @@
     <div class="row">
         
         <div class="col-lg-8">
-            <div id="barraPerfil">
-                <nav class="menu">
-                    <ul id="menuPerfil">
-                        <li><a href="{%url 'Perfil' %}">Posts</a></li>
-                        <li><a href="{% url 'amigos'%}" >Amigos</a></li>
-                        <li><a href="{% url 'comentarios' %}">Comentarios</a></li>
-                        <li><a href="{% url 'verLikes' %}">Likes</a></li>
-                        <li><a href="{% url 'verPostFavoritos' %}">Guardados</a> </li>
-                        <li><a href="{% url 'busquedaPost' %}">Buscar</a> </li>
-                    </ul>
-                </nav>
-            </div>
             <article>
                 <header class="mb-4">
-                    <h1 class="fw-bolder mb-1">{{p.titulo}}</h1>
+                    <h1 class="fw-bolder mb-1"><a href="{% url 'Posteos' p.pk %}">{{p.titulo}}</a></h1>
                     <h2>{{post.titulo}} <a href="{% url 'Postfavoritos' p.pk %}"><span><i
                                     class="fa-solid fas fa-bookmark"></i></span> </a> </h2>
                     <div class="text-muted fst-italic mb-2">{{p.fecha_publicacion}}</div>
@@ -43,54 +31,15 @@
                 </section>
             </article>
 
-            <form method="POST" class="post-form">
-                {% csrf_token %}
-                {{miFormComentario.as_p}}
-            </form>
+            
         </div>
         </section>
-        <div class="col-lg-4">
-            <div class="card mb-4">
-                <div class="card-header">Search</div>
-                <div class="card-body">
-                    <div class="input-group">
-                        <input class="form-control" type="text" placeholder="Enter search term..."
-                            aria-label="Enter search term..." aria-describedby="button-search" />
-                        <button class="btn btn-secondary" id="button-search" type="button">Go!</button>
-                    </div>
-                </div>
-            </div>
-            <div class="card mb-4">
-                <div class="card-header">Tematicas</div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <ul class="list-unstyled mb-0">
-                                <li><a href="#!">Web Design</a></li>
-                                <li><a href="#!">HTML</a></li>
-                                <li><a href="#!">Freebies</a></li>
-                            </ul>
-                        </div>
-                        <div class="col-sm-6">
-                            <ul class="list-unstyled mb-0">
-                                <li><a href="#!">JavaScript</a></li>
-                                <li><a href="#!">CSS</a></li>
-                                <li><a href="#!">Tutorials</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card mb-4">
-                <div class="card-header">Side Widget</div>
-                <div class="card-body">You can put anything you want inside of these side widgets. They are easy to use,
-                    and feature the Bootstrap 5 card component!</div>
-            </div>
-        </div>
+        
     </div>
 </div>
 {% endfor %}
+{%else%}
+    {{mensajeError}}
 {% endif %}
-
+    {{respuesta}}
 {% endblock ContenidoQueCambia %}

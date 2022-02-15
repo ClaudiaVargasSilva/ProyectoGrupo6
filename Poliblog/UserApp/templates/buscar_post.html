@@ -6,12 +6,9 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'UserApp/css/styleProfile.css'%}">
 </head>
-    {% comment %} {% for p in posts %}
-        {{p.titulo}}
-    {% endfor %} {% endcomment %}
+   
 
     <div class="container">
-        {% comment %} {% if user.is_authenticated %} {% endcomment %}
         {% for p in posts %}
         <div class="row">
             <div class="col-lg-6" style="margin: 10px;">
@@ -30,15 +27,7 @@
             </div>
         </div>
         {% endfor %}
-        {% comment %} {% else %}
-        <div class="row">
-            <div ass="col-lg-6" style="margin-top: 10px">
-                <p>Debes iniciar sesion para revisar los Post</p>
-                <a class="btn btn-secondary" href="{% url 'inicioSesion'%}">Iniciar sesion</a>
-            </div>
-        </div>
         
-        {% endif %}  {% endcomment %}
         <div>
             <div class="row">
                 <div class="col-lg-6" style="margin-top: 10px">

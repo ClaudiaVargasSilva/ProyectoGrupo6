@@ -1,7 +1,7 @@
 import email
 from mimetypes import init
 from re import S
-from UserApp.models import Post, Tematica, Room,MisMensajes,ComentariosPost,Perfil
+from UserApp.models import Post, Tematica,MisMensajes,ComentariosPost,Perfil
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth.models import User
@@ -108,24 +108,7 @@ class TematicaForm(forms.ModelForm):
             )
         }
     
-class LenguajeFormulario(forms.Form):
-    nombreLenguaje= forms.CharField()
 
-class RoomForm(forms.ModelForm):
-    class Meta:
-        model=Room
-        fields=('name',)
-        label={
-            'name' : 'nombre room'
-        }
-        widgets = {
-            'name': forms.TextInput(
-                attrs={
-                    'class': 'form-control',
-                    'placeholder': 'Ingrese la habitación'
-                }
-            )
-        }
 class ComentarioForm(forms.ModelForm):
     class Meta:
         model=ComentariosPost

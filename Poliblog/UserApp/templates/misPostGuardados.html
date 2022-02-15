@@ -14,7 +14,7 @@
             <div id="barraPerfil">
                 <nav class="menu">
                     <ul id="menuPerfil">
-                        <li><a href="{%url 'Perfil' %}">Posts</a></li>
+                        <li><a href="{%url 'Perfil' %}">Perfil</a></li>
                         <li><a href="{% url 'amigos'%}" >Amigos</a></li>
                         <li><a href="{% url 'comentarios' %}">Comentarios</a></li>
                         <li><a href="{% url 'verLikes' %}">Likes</a></li>
@@ -32,7 +32,7 @@
                                 
                        {% for fav  in postFav  %}
                        <ul>
-                        <li><a href="{% url 'Posteos' fav.post.pk%}" >{{fav.post.titulo}}</a></li>   
+                        <a href="{% url 'Posteos' fav.post.pk%}" >{{fav.post.titulo}}</a>
                        </ul>
                       
                                        

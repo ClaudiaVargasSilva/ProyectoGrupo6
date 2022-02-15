@@ -1,7 +1,6 @@
 {% extends 'mensajesDirectos.html' %}
 {%load static%}
 {% block contenidoEnviados %}
-        {% comment %} {{m.mensaje}} {% endcomment %}
         <div class="table-responsive">
             <table class="table">
                 {%for m in mensajes %}
