@@ -129,6 +129,7 @@ def eliminarAmigo(req, id):
     otroUser = User.objects.get(id=id)
     user= req.user
     user.perfil.amigos.remove(otroUser)
+    otroUser.perfil.amigos.remove(user)
     return redirect(inicio)
 
 def enviarSolicitud(req, id):
