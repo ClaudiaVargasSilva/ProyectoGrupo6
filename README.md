@@ -29,6 +29,7 @@ Funciones Realizadas
 - Filtrar y buscar Posr
 - Eliminar y editar comentarios
 - Mejoras HTML y estilo
+- Pre-Entrega en : https://github.com/ClaudiaVargasSilva/ProyectoDjango
 ```
 
 :point_right: **Dario :** :no_mouth:
