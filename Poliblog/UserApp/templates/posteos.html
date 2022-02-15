@@ -20,7 +20,7 @@
                     {%endif%}
                     <div class="text-muted fst-italic mb-2">{{post.fecha_publicacion}}</div>
                     
-                    {% if tematicas %}
+                    <!-- {% if tematicas %}
                         
                         {% for tematica_post in tematicas  %}
                         <a class="badge bg-secondary text-decoration-none link-light" href="{% url 'tematicasList' %}">{{tematica_post.nombre}}</a>
@@ -29,7 +29,7 @@
 
                         <p>No recibo la lista tematicas :(</p>
     
-                    {% endif %}
+                    {% endif %} -->
                     <a class="text-muted" href="{% url 'Likes' post.pk %}" >
                         <i class="fas fa-thumbs-up fa-lg"></i>
                         {{post.get_like_count}}
