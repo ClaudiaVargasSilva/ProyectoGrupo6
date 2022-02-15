@@ -48,7 +48,7 @@
                         {% endfor %}
                     </p>
                     <p class="card-text">{{posteo.contenido}}</p>
-                    <a class="btn btn-secondary" href="{% url 'Posteos' posteo.pk %}">Leer más →</a>
+                    <a class="btn btn-secondary" style= margin:10px; href="{% url 'Posteos' posteo.pk %}">Leer más →</a>
                     {% endfor %}
                     {% else %}
                     <h2>Error, no se cargaron post</h2>

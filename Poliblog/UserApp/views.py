@@ -33,11 +33,8 @@ from django.urls import reverse_lazy
 def mantencion(req):
     return render(req, 'mantencion.html')
 
-
-
 def padre(req):
     return render(req, 'padre.html')
-
 
 def register(request):
 
@@ -94,8 +91,6 @@ def Login(request):
 def eliminarCuenta(req):
     pass
 
-
-
 def verPerfil(req):
     usuario = req.user
     perfil = Perfil.objects.filter(user=usuario)
@@ -109,7 +104,6 @@ def verPerfil(req):
     print(post)
 
     return render(req, "perfil.html", {'username':username,'email':email,'biografia':userBio, 'usuario':usuario,'post':post})
-
 
 
 def iniciarChat(req):
@@ -130,12 +124,12 @@ def verAmigos(req):
     solicitudes = SolicitudAmistad.objects.filter(to_user=req.user)
     print(amigos)
     return render(req, 'amigos.html', {'amigos':amigos, 'solicitudes':solicitudes})
+
 def eliminarAmigo(req, id):
     otroUser = User.objects.get(id=id)
     user= req.user
     user.perfil.amigos.remove(otroUser)
     return redirect(inicio)
-
 
 def enviarSolicitud(req, id):
     from_user = req.user
@@ -161,7 +155,6 @@ def rechazarSolicitud(req, id):
     solicitudAmistad.delete()
     return HttpResponse('solicitud de amistad eliminada')
 
-
 def enviarMensaje(req,id):
     destinatario = User.objects.get(id=id)
     if req.method == "POST":
@@ -179,10 +172,8 @@ def enviarMensaje(req,id):
         miForm= MensajeForm()
     return render(req, 'crearMensaje.html',{'miForm':miForm,'destinatario':destinatario})
 
-
 def crearMensaje(req): 
     return render(req, 'crearMensaje2.html')
-
 
 def crearMensaje2(req):
     destino = req.POST['destinatario']
@@ -194,7 +185,6 @@ def crearMensaje2(req):
     else:
         return HttpResponse('el usuario destino no existe!')
     
-
 def verMensajes(req):
     
     destinatario = req.user
@@ -203,6 +193,7 @@ def verMensajes(req):
         'mensaje':mensaje
         
     })
+
 def verMensajesEnviados(req):
     mensajes= MisMensajes.objects.filter(user=req.user)
     return render(req, 'mensajesEnviados.html', {'mensajes':mensajes})
@@ -233,11 +224,6 @@ def buscarMensaje(req):
         respuesta = "No hay datos"
         return render(req, 'mensajesBuscados.html',{'respuesta':respuesta} )
 
-    
-
-
-    
-
 def editarUsuario(req):
     usuario = req.user
     perfil = req.user.perfil
@@ -262,18 +248,12 @@ def editarUsuario(req):
         miPerfil = PerfilForm(instance=perfil)
         return render(req, 'editarPerfil.html',{'miForm':miForm, 'miPerfil': miPerfil,'usuario':usuario})
 
-
 def mensajes(req):
     return render(req,'mensajesDirectos.html')
-
-
 
 def idPost(id):
     return Post.objects.get(id=id)
     
-
-
-
 def inicio(request):
     post=Post.objects.all()
     listaTematicas=Tematica.objects.all() 
@@ -294,10 +274,6 @@ def inicio(request):
         return render(request, 'inicio.html', contexto)
     else:
         return render(request, 'inicio.html', contexto)
-
-
-    
-
 
 def verPosteos(req,id):
     post=Post.objects.get(id=id)
@@ -366,7 +342,6 @@ def CrearPost(req):
         miForm= PostForm()
     return render(req, 'crearPost.html',{'miForm':miForm})
 
-
 def busquedaPost(req):
     return render(req, "UserApp/busquedaPost.html")
 
@@ -383,13 +358,13 @@ def buscar(request):
         respuesta = "No hay datos"
         return render(request, 'UserApp/resultadosBusqueda.html',{'respuesta':respuesta} )
 
-
 def verTematicas(req):
     listaTematicas= Tematica.objects.all()
     return render(req,'tematicas.html',{"listaTematicas": listaTematicas})
 
 class TematicaCreate(CreateView):
     model=Tematica
+
 class TematicaList(ListView):
     model= Tematica
     template_name= "tematicas_List.html"
@@ -402,10 +377,12 @@ class TematicaUpdate(UpdateView):
     model=Tematica
     success_url= 'UserApp/tematicasList'
     fields= ['nombre']
+
 class TematicaDelete(DeleteView):
     model= Tematica
     success_url=  reverse_lazy('tematicasList') 
     template_name= "tematica_delete.html"
+
 def postRelacionados(req, pk):
     
     post= Post.objects.filter(tematica__id=pk)
@@ -425,7 +402,6 @@ def CrearTematica(req):
         miForm=TematicaForm()
     
     return render(req, 'crearTematica.html',{'miForm': miForm})
-
 
 def buscarTematicas(req):
     if req.GET['tematica']:
@@ -456,7 +432,6 @@ def editarTematicas(req, id_tematica):
         miForm= TematicaForm(initial={'nombre':tematica.nombre})
     return render(req, 'editarTematicas.html',{'miForm':miForm})
 
-
 def verComentarios(req):
     comentario= ComentariosPost.objects.filter(comentarista=req.user)
    
@@ -486,18 +461,12 @@ def editarComentario(req, id_comentario):
         
     return render(req, "editarComentario.html", {"miFormulario":miFormComentario, "id_comentario":id_comentario})
     
-
-
-
-
 # @login_required
 # def leerposts(req):
 #     post = Post.objects.all()
 #     contexto = {"post": post}
 
 #     return render(req, 'buscar_post.html', contexto)
-
-
 
 class listaPost(LoginRequiredMixin,ListView):
     model = Post
@@ -510,7 +479,6 @@ class listaPost(LoginRequiredMixin,ListView):
 class detallePost(DetailView):
     model = Post
     template_name = "detalle_post.html"
-
 
 class actualizaPost(UpdateView):
     model = Post

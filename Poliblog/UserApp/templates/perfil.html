@@ -39,7 +39,7 @@
                              {% if post %}
                             
                                 {% for posteo  in post  %}
-                                    <h1><a href="{% url 'Posteos' posteo.id%}">{{posteo.titulo}}</a></h1> 
+                                    <h4 style="word-wrap:break-word"><a href="{% url 'Posteos' posteo.id%}">{{posteo.titulo}}</a></h4> 
                                     <div class="text-muted fst-italic mb-2">{{posteo.fecha_publicacion}}</div>
 
                                     <div class="col-8">
