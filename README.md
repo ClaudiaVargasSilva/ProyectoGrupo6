@@ -1,10 +1,14 @@
 # ProyectoGrupo6
-#Carga el inicio con un usuario, cerrar sesion, probar el registro
-#iniciar sesion
-#Apretar en "Leer mas" para ver el posteo en cuestion
-#Comentarlo
-#crear post*
-#buscar tematicas en la barra lateral
+Daniel:
+-PreEntrega(crear post, ver post, crear comentario, crear tematica, buscar tematica)
+-register, login ,logout con sus templates
+-Perfiles(ver perfil de usuario actual y otros usuarios, editar mi perfil) con sus templates
+-Mensajes(ver mensaje, enviar mensaje, eliminar mensaje, buscar mensaje) con sus templates
+-Amigos(enviar,aceptar,rechazar solicitudes)
+-Likear, guardar post 
 
+Dario:
+-xD
 
+Carla:
 
