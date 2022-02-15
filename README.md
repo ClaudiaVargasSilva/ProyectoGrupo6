@@ -1,4 +1,9 @@
 # ProyectoGrupo6
+
+Video Resumen: 
+[![Alt text](https://youtu.be/rZ84U6VKkHs)](https://youtu.be/rZ84U6VKkHs)
+
+
 Daniel:
 -PreEntrega(crear post, ver post, crear comentario, crear tematica, buscar tematica)
 -register, login ,logout con sus templates
