@@ -31,6 +31,6 @@ Funciones Realizadas
 - Mejoras HTML y estilo
 ```
 
-:no_mouth: Dario:
+:point_right: **Dario :** :no_mouth:
 -xD
 
