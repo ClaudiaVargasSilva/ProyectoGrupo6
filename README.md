@@ -16,9 +16,9 @@ Dario:
 -xD
 
 **Claudia :**
-- 📫  Puden buscarme en: 
+📫  Puden buscarme en: 
 https://www.linkedin.com/in/claudiavargassilva/
-- :computer: Mi Github:
+:computer: Mi Github:
 https://github.com/ClaudiaVargasSilva
 
 * * Funciones Realizadas **
