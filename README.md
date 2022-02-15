@@ -20,9 +20,11 @@
 -xD
 
 :point_right: **Claudia :**
-📫  Puden buscarme en: 
+📫  Puden buscarme en:
+
 - https://www.linkedin.com/in/claudiavargassilva/
 :computer: Mi Github:
+
 - https://github.com/ClaudiaVargasSilva
 
 * * Funciones Realizadas * *
