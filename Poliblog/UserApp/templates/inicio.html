@@ -6,7 +6,7 @@
     <div class="container">
         <div class="text-center my-5">
             <h1 class="fw-bolder">Bienvenidos a Poliblog!</h1>
-            {% if messages %}
+            {% comment %} {% if messages %}
             <ul class="messages">
                 {% for message in messages %}
                 <li class="{{ message.tags }}"> {{ message }} </h2>
@@ -21,7 +21,7 @@
                 </button>
                 {{ message }}
             </div>
-            {% endfor %}
+            {% endfor %} {% endcomment %}
             <!-- <h3> {{mensaje}}</h3> -->
 
 
@@ -87,7 +87,7 @@
         </div>
         <div class="col-lg-4">
             <div class="card mb-4">
-                <div class="card-header">Buscar</div>
+                {% comment %} <div class="card-header">Buscar</div>
                 <div class="card-body">
                     <div class="input-group">
                         <form action="buscarTematicas" method="GET">
@@ -98,8 +98,8 @@
                                 type="submit">
                         </form>
 
-                    </div>
-                </div>
+                    </div> {% endcomment %}
+                {% comment %} </div> {% endcomment %}
                 <!--SLIDE WIDGETS-->
                 <div class="card mb-4">
                     <div class="card-header">Tematicas</div>
@@ -141,23 +141,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="card mb-4">
-                    <div class="card-header">Side Widget</div>
-                    <div class="card-body">You can put anything you want inside of these side widgets. They are easy
-                        to use, and feature the Bootstrap 5 card component!</div>
-                </div>
+               
             </div>
         </div>
         {% if posteos.has_next %}
         <a class="infinite-more-link" href="?page={{ posteos.next_page_number }}">More</a>
         {% endif %}
-        <!-- <div class="d-flex justify-content-center" style="display:none;">
-            <div class="spinner-border" role="status">
-                <span class="sr-only">Loading...</span>
-            </div>
-        </div> -->
-        <!-- </div> -->
-        <!-- Side widgets-->
+        
     </div>
     <script>
         var infinite = new Waypoint.Infinite({

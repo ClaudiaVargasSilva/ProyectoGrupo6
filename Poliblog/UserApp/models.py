@@ -1,12 +1,8 @@
-# from asyncio.windows_events import NULL
-
 from itertools import count
-
 from django.utils import timezone
 from tkinter import CASCADE
 from django.db import models
 from django.conf import Settings,settings
-#from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.models import User
 import uuid
 
@@ -34,8 +30,6 @@ class Tematica(models.Model):
 
     def __str__(self):
         return f'{self.nombre}'
-    # def get_tematica_count(self):
-    #     return self.tematica_set.all().count()
 
 class Lenguaje(models.Model):
     nombreLenguaje=models.CharField(max_length=50)

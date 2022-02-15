@@ -2,8 +2,7 @@
 {%load static%}
 {% block ContenidoQueCambia %}
 <head>
-	<title>Login Page</title>
-   <!--Made with love by Mutiullah Samim -->
+	<title>otro perfil</title>
    {% load static  %}
 
 	<!--Bootsrap 4 CDN-->
@@ -48,48 +47,29 @@
              
         </div>
         </div> 
-        {% comment %} <div id="barraPerfil">  
-            <nav class="menu">
-                <ul id="menuPerfil">
-                    <li><a href="{%url 'Perfil' %}">Posts</a></li>
-                    <li><a href="{% url 'amigos'%}" >Amigos</a></li>
-                    <li><a href="{% url 'comentarios' %}">Comentarios</a></li>
-                    <li><a href="{% url 'verLikes' %}">Likes</a></li>
-                    <li><a href="{% url 'verPostFavoritos' %}" >Guardados</a> </li>
-                    <li><a href="{% url 'busquedaPost' %}" >Buscar</a> </li>
-                </ul>
-        </nav>    {% endcomment %}
+
         <div class="col-lg-4">
                         <!-- </div> -->
         <div id="profile" style="padding: 15px;">
             <p>PERFIL</p>
             <!--  Acá va la imagen por defecto -->
-                {%if otroUser not in request.user.perfil.amigos.all%}
+            {%if request.user.is_authenticated%}
+                {%if otroUser not in request.user.perfil.amigos.all %}
                     <a href="{% url 'enviarSolicitud' otroUser.id %}">Enviar solicitud de amistad</a>
                 {%else%}
                     <p>Son amigos :)</p>
-                    <a href="{% url 'enviarMensaje' otroUser.id%}">Enviale un mensaje!</a> <!--{% url 'enviarMensaje' otroUser.id%}-->
+                    <a href="{% url 'enviarMensaje' otroUser.id%}">Enviale un mensaje!</a> 
                 {%endif%}
+            {%endif%}
 
             <h2>{{perfil.user}}</h2>
             
             <img class="rounded-circle" src= "{{perfil.imagenPerfil.url}}" alt="..."  height="100px" width="100px" />
             
-            <!-- <a href=" {% url 'editarPerfil' %}"><img class="rounded-circle" src= "..\..\media\PorDefecto\configuracion.png" alt="..."  height="20px" width="25px"/></a> -->
-            <!-- <i class="fa-solid fas fa-gears"></i> -->
-                                <!-- <span><i class="fa-solid fas fa-heart"></i></span> -->
-                                <!-- <span><i class="fa-solid fa fa-gear"></i></span> -->
-            {% comment %} <a class="text-muted" href="{% url 'editarPerfil' %}" > <i class="fa-solid fa fa-gear"></i></a> {% endcomment %}
-            <!-- <span> <i class="fa-solid fa-gear">ds</i></span>  -->
+           
             <p>Nombre: {{perfil.user.first_name}}</p>
             <p>Apellido: {{perfil.user.last_name}}</p>
             <p>Email: {{perfil.user.email}}</p>
-
-            <!-- {{avatar}} -->
-
-            <!-- Verificar que si no tiene avatar deje el avatar por defecto y si tiene/agregó que muestre ese...-->
-            <!-- <p>{{biografia}}</p> -->
-
 
             <p>Sobre ti:</p>
             <p>{{perfil.biografia}}</p>

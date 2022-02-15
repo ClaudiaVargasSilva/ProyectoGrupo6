@@ -6,7 +6,6 @@ urlpatterns = [
     path('', views.inicio, name="inicio"),
     path('nosotros', views.mantencion, name="nosotros"),
 
-   # path('padre', views.padre, name="padre"),
     path('login', views.Login, name="inicioSesion"),
     path('registro', views.register, name="registro"),
     path('logout', LogoutView.as_view(next_page="inicioSesion"), name="Logout"),
@@ -19,8 +18,7 @@ urlpatterns = [
     path('rechazarSolicitud/<id>', views.rechazarSolicitud, name= "rechazarSolicitud"),
     path('amigos', views.verAmigos, name="amigos"),
 
-    path('agregarAvatar', views.agregarAvatar, name="agregarAvatar"),
-    #path('login2', views.Login2, name="login2"),
+    # path('agregarAvatar', views.agregarAvatar, name="agregarAvatar"),
     path('mensajes', views.verMensajes, name="misMensajes"),  
     path('enviarMensaje/<id>',views.enviarMensaje, name="enviarMensaje"),
     path('crearMensaje', views.crearMensaje, name="crearMensaje"),
@@ -31,12 +29,7 @@ urlpatterns = [
 
     path('Posteos/<id>', views.verPosteos, name="Posteos"),
     path('comentarios', views.verComentarios, name="comentarios"),
-    # path('chat', views.iniciarChat, name="chat"),
- 
-    # path('<str:room>/', views.room, name='room'),
-    # path('checkview', views.checkview, name='checkview'),
-    # path('<str:room>/send', views.send, name='send'),
-    # path('<str:room>/getMessages/<id>', views.getMessages, name='getMessages'),
+    
    
 
     path('busquedaPost/', views.busquedaPost, name="busquedaPost"),
@@ -50,7 +43,6 @@ urlpatterns = [
     path('guardados/<id>', views.postFavoritos, name="Postfavoritos"),
     path('misPostsGuardados', views.verPostFavoritos, name="verPostFavoritos"),
 
-    #path('eliminarComentarios/<id>', views.eliminarComentarios, name="eliminarComentarios"),
 
     path('crearPost',views.CrearPost, name ="crearPost"),
 
@@ -73,7 +65,6 @@ urlpatterns = [
     path('editarTematicas/<id_tematica>',views.editarTematicas, name= 'editarTematicas'),
     
     path('crearLenguajes', views.LenguajeCreate.as_view(), name='New'),
-    #path('PostView', views.CantViewPost.as_view(), name="VistasPost")
 ]
 urlpatterns += [
     path('accounts/', include('django.contrib.auth.urls')),

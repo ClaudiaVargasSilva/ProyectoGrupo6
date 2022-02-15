@@ -17,7 +17,6 @@ class ComentFormulario(forms.Form):
     contenido_comentario = forms.CharField(max_length=100)
 
 class UserRegisterForm(UserCreationForm):
-    #Por qué no ponemos username=forms.text...?
     email= forms.EmailField()
     password1= forms.CharField(label = 'Contraseña', widget= forms.PasswordInput)
     password2=forms.CharField(label = 'Repetir contraseña', widget= forms.PasswordInput)
@@ -47,9 +46,6 @@ class PerfilForm(forms.ModelForm):
         model = Perfil
         fields = ['imagenPerfil', 'biografia']
 class PostForm(forms.ModelForm):
-    # def __init__(self,*args, **kwargs):
-    #     super(PostForm, self).__init__(*args, **kwargs)
-    #     self.fields['imagenPost'].required=False
     class Meta:  
         model=Post
         fields = ('titulo', 'subtitulo', 'contenido','tematica','imagenPost')
@@ -87,18 +83,13 @@ class PostForm(forms.ModelForm):
             'imagenPost': forms.FileInput(
                 attrs={
                     'required':False
-                    # 'class': 'form-control'
                 }
             )
-            # 'imagen' : forms.ImageField(
-            #     attrs={
-            #         'class' : 'form-control'
-            #     }
-            # )
+           
             
             }
  
-#me muestra las tematicas disponibles cuando creo el Post, sin embargo no lo veo reflejado en la base de datossss
+
 
 
 class TematicaForm(forms.ModelForm):
@@ -150,11 +141,6 @@ class ComentarioForm(forms.ModelForm):
                 }
             )
         }
-class AvatarFormulario(forms.Form):
-
-    #Especificar los campos
-    
-    imagen = forms.ImageField(required=False)
 
 class MensajeForm(forms.ModelForm):
     class Meta:
@@ -164,32 +150,6 @@ class MensajeForm(forms.ModelForm):
             'mensaje': 'Mensaje'
         }
         widgets = {
-            'mensaje':forms.Textarea(
-                attrs={
-                    'class':'form-control',
-                    'placeholder':'Escriba su mensaje aqui'
-                }
-            )
-        }
-class MensajeForm2(forms.ModelForm):
-    class Meta:
-        model = MisMensajes
-        fields=('destinatario','mensaje',)
-        label={
-            'destinatario': 'Destinatario',
-            'mensaje': 'Mensaje'
-            
-        
-        }
-        widgets = {
-            'destinatario': forms.TextInput(
-                attrs={
-                    'class': 'form-control',
-                    'placeholder':'Escriba el email del destinatario',
-                    'name': 'destinatario'
-
-                }
-            ),
             'mensaje':forms.Textarea(
                 attrs={
                     'class':'form-control',

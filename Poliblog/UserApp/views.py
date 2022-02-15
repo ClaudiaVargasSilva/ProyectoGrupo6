@@ -3,13 +3,13 @@ from collections import UserDict
 from genericpath import exists
 import numbers
 from this import d
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator,EmptyPage, PageNotAnInteger
 from email.policy import default
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse
 from urllib import request
 from venv import create
 from django.contrib.auth.models import User
-
 from dataclasses import fields
 from django.shortcuts import get_object_or_404, render, get_list_or_404
 from django.views import View
@@ -21,18 +21,14 @@ from django.views.generic.edit import CreateView
 from django.views.generic.detail import DetailView
 import random
 from django.views.generic.edit import UpdateView, DeleteView
-from UserApp.forms import PostForm, MensajeForm,MensajeForm2,RoomForm,PerfilForm,MensajeForm,TematicaForm, UserRegisterForm, UserEditForm,ComentarioForm, AvatarFormulario, ComentFormulario
+from UserApp.forms import PostForm,PerfilForm,MensajeForm,TematicaForm, UserRegisterForm, UserEditForm,ComentarioForm, ComentFormulario
 from UserApp.models import Avatar,SolicitudAmistad,Room,MisMensajes , PostFavoritos,Likes,Post,Perfil, Tematica, ComentariosPost, Lenguaje
-
 from django.db.models import Q
 from django.views.generic.detail import DetailView
 from django.contrib.auth.decorators import login_required
-
 from django.shortcuts import redirect
 from django.contrib import messages
 from django.urls import reverse_lazy
-
-# Create your views here.
 
 def mantencion(req):
     return render(req, 'mantencion.html')
@@ -40,9 +36,6 @@ def mantencion(req):
 def enviarMensajeAdmin(req):
     pass
 
-
-# def login2(req):
-#     return render(req, 'login2.html')
 
 def padre(req):
     return render(req, 'padre.html')
@@ -65,11 +58,9 @@ def register(request):
 
 
                 bio = form.cleaned_data['biografia']
-                #  avatar= Avatar(user=request.user)
-                #  perfil=Perfil(user=request.user , avatar = avatar)
+                
                 avatar = Avatar.objects.create(
                     user = user,
-                #  imagen = None
                 )
                 Perfil.objects.create(
                     user = user,
@@ -95,22 +86,15 @@ def Login(request):
             if form.is_valid():
                   usuario = form.cleaned_data.get('username')
                   contra = form.cleaned_data.get('password')
-                #username y password son las keys del form de django para el login?
-                #osea a usuario y contra asiganamos el valor del formulario
                   user = authenticate(username=usuario, password=contra)
-                  #con la sentencia de arriba comparamos si los campos coinciden con los campos de
-                  #del modelo User, siempre y cuando tengamos usuarios registrados
                   if user is not None:
                     login(request, user) #
                     messages.success(request,'Bienvenido!' )
-                    #return render(request,"inicio.html",  {"mensaje":f"Bienvenido {usuario}", "post":post, "lista":listaTematicas} )
                     return redirect(inicio)
                   else:
-                    # return render(request,"inicio.html", {"mensaje":"Error, datos incorrectos","post":post, "lista":listaTematicas} )
                     return render(request, "loginError.html",{'mensaje': "Error! Datos erróneos"})
 
             else:
-                # return render(request,"inicio.html" ,  {"mensaje":"Error, formulario erroneo","post":post, "lista":listaTematicas})
                 return render(request, "loginError.html",{'mensaje': "Error! Datos erróneos"})
     form = AuthenticationForm()
     return render(request,"login.html", {'form':form} )
@@ -138,39 +122,36 @@ def verPerfil(req):
 def perfil2(req):
     return render(req, "perfil2.html")
 
-def agregarAvatar(request):
-      if request.method == 'POST':
+# def agregarAvatar(request):
+#       if request.method == 'POST':
 
-            miFormulario = AvatarFormulario(request.POST, request.FILES)
+#             miFormulario = AvatarFormulario(request.POST, request.FILES)
 
-            if miFormulario.is_valid():
+#             if miFormulario.is_valid():
 
 
-                #   u = User.objects.get(username=request.user)
-                  user= request.user
-                  imagen=miFormulario.cleaned_data['imagen']
-                  avatar = Avatar (user=user, imagen=imagen) 
-                #   imagenNueva= Perfil
+#                 #   u = User.objects.get(username=request.user)
+#                   user= request.user
+#                   imagen=miFormulario.cleaned_data['imagen']
+#                   avatar = Avatar (user=user, imagen=imagen) 
+#                 #   imagenNueva= Perfil
       
-                  avatar.save()
+#                   avatar.save()
 
-                  return render(request, "perfil.html", {'avatar':avatar.imagen.url}) 
+#                   return render(request, "perfil.html", {'avatar':avatar.imagen.url}) 
 
-      else: 
+#       else: 
 
-            miFormulario= AvatarFormulario() 
+#             miFormulario= AvatarFormulario() 
 
-      return render(request, "agregarAvatar.html", {"miFormulario":miFormulario})
+#       return render(request, "agregarAvatar.html", {"miFormulario":miFormulario})
 
-
-def actualizarAvatar(request):
-    pass
 
 def iniciarChat(req):
     return render(req, 'chat.html')
 
 def otroPerfil(req, id):
-    otroUser = User.objects.get(id=id) #recuperar la id del otro perfil
+    otroUser = User.objects.get(id=id)
     postsDelOtroUser= Post.objects.filter(posteador=otroUser)
     print(otroUser)
     print(postsDelOtroUser)
@@ -204,19 +185,18 @@ def aceptarSolicitud(req, id):
         solicitudAmistad.to_user.perfil.amigos.add(solicitudAmistad.from_user)
         solicitudAmistad.from_user.perfil.amigos.add(solicitudAmistad.to_user)
         solicitudAmistad.delete()
-        return HttpResponse('solicitud de amistad aceptada') #la idea seria utilizar django.messages o un modal
+        return HttpResponse('solicitud de amistad aceptada')
    
 def rechazarSolicitud(req, id):
     solicitudAmistad = SolicitudAmistad.objects.get(id= id)
     solicitudAmistad.delete()
-    return HttpResponse('solicitud de amistad eliminada') #la idea seria utilizar django.messages o un modal
+    return HttpResponse('solicitud de amistad eliminada')
 
 
 def enviarMensaje(req,id):
     destinatario = User.objects.get(id=id)
     if req.method == "POST":
         miForm=MensajeForm(req.POST)
-        # print(req.FILES['imagenPost'])
         if miForm.is_valid:
             mensaje=miForm.save(commit=False)
             mensaje.user=req.user
@@ -238,7 +218,6 @@ def crearMensaje(req):
 def crearMensaje2(req):
     destino = req.POST['destinatario']
     mensaje = req.POST['mensaje']
-    # destinoFinal = User.objects.get(username=destino)
     if User.objects.filter(username=destino).exists():
         destinoFinal = User.objects.get(username=destino)
         MisMensajes.objects.create(user=req.user, mensaje=mensaje, destinatario=destinoFinal)
@@ -250,9 +229,6 @@ def crearMensaje2(req):
 def verMensajes(req):
     
     destinatario = req.user
-    # perfil =Perfil.objects.get(user= usuario)
-    # print(perfil)
-    # mensaje = MisMensajes.objects.filter(destinatario = perfil)
     mensaje = MisMensajes.objects.filter(destinatario=destinatario)
     return render(req, 'mensajesDirectos.html', {
         'mensaje':mensaje
@@ -267,9 +243,8 @@ def verMensajeEspecifico(req,id):
     return render(req, 'mensajeEspecifico.html', {'mensajeEsp':mensajeEsp})
 
 def eliminarMensaje(req,id):
-    mensajeEliminar=MisMensajes.objects.get(id=id)
-    #faltaria un template o MODAL que diga si estoy seguro y asi
-    #faltaria que si borro un mensaje que ENVIÉ que se borre de ambas partes pero si elimino un mensaje que RECIBI que se me borre a mi pero no a la otra persona...
+    mensajeEliminar = MisMensajes.objects.get(id=id)
+   
     mensajeEliminar.delete()
     return redirect(inicio)
 
@@ -283,7 +258,6 @@ def buscarMensaje(req):
 def editarUsuario(req):
     usuario = req.user
     perfil = req.user.perfil
-    # perfil = Perfil.objects.filter(user=usuario)
     if req.method == 'POST':
         miForm = UserEditForm(req.POST, instance = usuario)
         miPerfil= PerfilForm(req.POST, req.FILES, instance=perfil)
@@ -295,11 +269,10 @@ def editarUsuario(req):
             usuario.last_name= info['last_name']
             new_password = info['password1']
             usuario.set_password(new_password)
-            perfil.imagenPerfil= perfil1['imagenPerfil'] #esto no me actualiza
+            perfil.imagenPerfil= perfil1['imagenPerfil'] 
             perfil.biografia = perfil1['biografia']
             miPerfil.save()
             usuario.save()
-            # miPerfil.save_m2m()
             return redirect(inicio)
     else:
         miForm = UserEditForm(initial={'email': usuario.email,'first_name':usuario.first_name ,'last_name': usuario.last_name,'password':usuario.password})
@@ -312,15 +285,15 @@ def mensajes(req):
 
 
 
-def idPost(id): #devuelve la id de cada POST
+def idPost(id):
     return Post.objects.get(id=id)
     
 
 
 
 def inicio(request):
-    post=Post.objects.all() #devuelve una lista de posteos
-    listaTematicas=Tematica.objects.all() #devuelve una lista
+    post=Post.objects.all()
+    listaTematicas=Tematica.objects.all() 
     page=request.GET.get('page',1)
     paginator = Paginator(post,4)
     try:
@@ -345,26 +318,27 @@ def inicio(request):
 
 def verPosteos(req,id):
     post=Post.objects.get(id=id)
-    comentario= ComentariosPost.objects.filter(post__id=id) #si uso GET devuelve una lista? No, no devuelve una lista
-    #entonces uso filter :D
-    tematicas=Tematica.objects.filter(post__id=id) #tematicas asociadas al Post solicitado
+    comentario= ComentariosPost.objects.filter(post__id=id)
+    tematicas=Tematica.objects.filter(post__id=id) 
     lista= Tematica.objects.all()
 
     if req.method=="POST":
         miFormComentario=ComentarioForm(req.POST)
-        
-        if miFormComentario.is_valid:
-            comentarioNuevo= miFormComentario.save(commit=False)
-            comentarioNuevo.comentarista= req.user
-            comentarioNuevo.post=post
-            comentarioNuevo.save()
+        if req.user.is_authenticated:
+            if miFormComentario.is_valid:
+                comentarioNuevo= miFormComentario.save(commit=False)
+                comentarioNuevo.comentarista= req.user
+                comentarioNuevo.post=post
+                comentarioNuevo.save()
+            else:
+                return HttpResponse("Error, comentario no enviado :( envienos un mensaje en la sección sobre nosotros")
         else:
-            return HttpResponse("No funcionaaaaaaa")
+            return HttpResponse("Necesitar iniciar sesión para comentar!")
     else:
         miFormComentario=ComentarioForm()
     return render(req,'posteos.html', {'post':post, 'tematicas':tematicas, 'comentario':comentario, 'miFormComentario': miFormComentario, 'lista':lista})
 
-
+@login_required
 def darLike(req,id):
     post = get_object_or_404(Post, id=id)
     likes = Likes.objects.filter(usuario=req.user, post=post)
@@ -378,7 +352,7 @@ def verLikes(req):
     likes = Likes.objects.filter(usuario=req.user)
     
     return render(req, "misLikes.html", {'likes':likes})
-
+@login_required
 def postFavoritos(req, id):
     post= get_object_or_404(Post, id=id)
     postFav= PostFavoritos.objects.filter(user=req.user, post=post)
@@ -428,10 +402,6 @@ def buscar(request):
     return HttpResponse(respuesta)
 
 
-
-
-
-####SECCION TEMATICAS####
 def verTematicas(req):
     listaTematicas= Tematica.objects.all()
     return render(req,'tematicas.html',{"listaTematicas": listaTematicas})
@@ -452,7 +422,7 @@ class TematicaUpdate(UpdateView):
     fields= ['nombre']
 class TematicaDelete(DeleteView):
     model= Tematica
-    success_url=  reverse_lazy('tematicasList') #Ver por qué no me lleva a la url correspondiente...
+    success_url=  reverse_lazy('tematicasList') 
     template_name= "tematica_delete.html"
 def postRelacionados(req, pk):
     
@@ -479,7 +449,6 @@ def buscarTematicas(req):
     if req.GET['tematica']:
         tematica=req.GET['tematica']
         nombreTematica=Tematica.objects.filter(nombre__icontains=tematica)
-        #No me está armando la lista... 
         return render(req, "resultados.html", {'tematicas':nombreTematica})
     else:
         respuesta="No enviaste datos"
@@ -490,7 +459,6 @@ def eliminarTematicas(req, id_tematica):
     tematica.delete()
     listaTematicas= Tematica.objects.all()
     return render(req, 'tematicas.html',{'listaTematicas': listaTematicas})
-    # return redirect(tematicas)
 
 def editarTematicas(req, id_tematica):
     tematica= Tematica.objects.get(id=id_tematica)
@@ -506,7 +474,6 @@ def editarTematicas(req, id_tematica):
         miForm= TematicaForm(initial={'nombre':tematica.nombre})
     return render(req, 'editarTematicas.html',{'miForm':miForm})
 
-###SECCION COMENTARIOS###
 
 def verComentarios(req):
     comentario= ComentariosPost.objects.filter(comentarista=req.user)
@@ -545,7 +512,6 @@ class LenguajeCreate(CreateView):
     template_name = "lenguaje_form.html"
 
 
-###SECCION CRUD###
 @login_required
 def leerposts(req):
     post = Post.objects.all()
@@ -555,19 +521,14 @@ def leerposts(req):
 
 
 
-class listaPost(ListView):
+class listaPost(LoginRequiredMixin,ListView):
     model = Post
     template_name = "buscar_post.html"
     def get_context_data(self,*args, **kwargs):
         context = super(listaPost, self).get_context_data(*args,**kwargs)
         context['posts'] = Post.objects.filter(posteador=self.request.user)
         return context
-    # def get(self,req):
-    #     context:{}
-
-    #     post= Post.objects.filter(posteador=req.user)
-    #     return context:{'post':post}
-    #filtrar pero por los posteos del, que no aparezcan todos
+    
 class detallePost(DetailView):
     model = Post
     template_name = "detalle_post.html"
