@@ -1,7 +1,7 @@
 # ProyectoGrupo6
 
-Video Resumen: 
-[![Link al Video](https://youtu.be/rZ84U6VKkHs)](https://youtu.be/rZ84U6VKkHs)
+## Video Resumen: 
+:tv: [![Link al Video] (https://youtu.be/rZ84U6VKkHs)](https://youtu.be/rZ84U6VKkHs)
 
 
 Daniel:
