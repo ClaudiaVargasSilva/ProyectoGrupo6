@@ -15,5 +15,8 @@ Daniel:
 Dario:
 -xD
 
-Carla:
-
+Claudia :
+- 📫  Puden buscarme en: 
+https://www.linkedin.com/in/claudiavargassilva/
+- :computer: Mi Github:
+https://github.com/ClaudiaVargasSilva
