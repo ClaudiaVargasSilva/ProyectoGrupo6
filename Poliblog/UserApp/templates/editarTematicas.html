@@ -6,11 +6,16 @@
     <title>Document</title>
 </head>
 <body>
+    {% if perms.app.action_model %}
     <h2>¿Desea EDITAR una tematica?</h2>
     <form method="POST" class="post-form">
         {% csrf_token %}
         {{miForm.as_p}}
         <button type="submit" class="save btn btn-default">Guardar tematica</button>
     </form>
+    {% else%}
+    <h2>No tienes el persimos para realizar esta operacion</h2>
+    <a href="{% url 'tematicasList' %}">Volver</a>
+    {% endif %}
 </body>
 </html>

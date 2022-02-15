@@ -36,6 +36,7 @@ ul#menuPerfil{
     list-style-type: none;
     background-color: black;
     height: 30px;
+    width: 545px;
 
 }
 li a {

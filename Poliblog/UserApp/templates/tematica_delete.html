@@ -6,9 +6,15 @@
     <title>Borrar tematica</title>
 </head>
 <body>
+    {% if perms.app.action_model %}
     <form method="post">{% csrf_token %}
         ¿Estas seguro que quieres borrar la tematica "{{object}}"?
         <input type="submit" value="Submit">
     </form>
+    {% else%}
+    <h2>No tienes el persimos para realizar esta operacion</h2>
+    <a href="{% url 'tematicasList' %}">Volver</a>
+    {% endif %}
+
 </body>
 </html>
