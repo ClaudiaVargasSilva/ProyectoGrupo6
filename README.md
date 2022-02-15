@@ -36,7 +36,7 @@ Funciones Realizadas
 
 Funciones Realizadas
 ```
-:no_mouth:
+
 ```
 
 
