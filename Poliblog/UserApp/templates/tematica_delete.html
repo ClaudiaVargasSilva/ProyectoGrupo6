@@ -12,7 +12,8 @@
         <input type="submit" value="Submit">
     </form>
     {% else%}
-    <p>No tienes el persimos para realizar esta operacion</p>
+    <h2>No tienes el persimos para realizar esta operacion</h2>
+    <a href="{% url 'tematicasList' %}">Volver</a>
     {% endif %}
 
 </body>
