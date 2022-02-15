@@ -40,7 +40,7 @@ class UserEditForm(UserCreationForm):
         model = User
         fields = ['email','password1', 'password2','first_name', 'last_name']
 class PerfilForm(forms.ModelForm):
-    imagenPerfil= forms.ImageField(required=False)
+    imagenPerfil= forms.ImageField(required=False, widget=forms.FileInput)
     biografia= forms.CharField()
     class Meta:
         model = Perfil

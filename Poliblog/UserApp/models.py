@@ -11,7 +11,7 @@ import uuid
 
 class Perfil(models.Model):
     user = models.OneToOneField(User, on_delete= models.CASCADE)
-    imagenPerfil =models.ImageField(upload_to= 'avatares', null=True, blank=True, default = 'PorDefecto/profileImageDefault.jpg' )
+    imagenPerfil =models.ImageField(upload_to= 'avatares', null=True, default = 'PorDefecto/profileImageDefault.jpg' )
     amigos = models.ManyToManyField(User, blank = True, related_name="Amigos")
     
     biografia = models.TextField(max_length=500, null=True, blank=True)
