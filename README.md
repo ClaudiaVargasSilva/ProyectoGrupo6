@@ -7,7 +7,7 @@
 
 :point_right: **Daniel :**
 
-* * Funciones Realizadas * *
+Funciones Realizadas
 ```
 -PreEntrega(crear post, ver post, crear comentario, crear tematica, buscar tematica)
 -register, login ,logout con sus templates
@@ -21,7 +21,7 @@
 - 📫  Puden buscarme en: https://www.linkedin.com/in/claudiavargassilva/
 - :computer: Mi Github: https://github.com/ClaudiaVargasSilva
 
-* * Funciones Realizadas * *
+Funciones Realizadas
 ```
 - Creacion de grupos y permisos (Usuario / Administrador)
 - Accesos a funcionalidades dependiendo del permiso
