@@ -22,10 +22,13 @@ https://www.linkedin.com/in/claudiavargassilva/
 https://github.com/ClaudiaVargasSilva
 
 * * Funciones Realizadas **
+```
 - Creacion de grupos y permisos (Usuario / Administrador)
 - Accesos a funcionalidades dependiendo del permiso
 - Edición, eliminación, actualización y editar imagenes de Post 
 - Filtrar y buscar Posr
 - Eliminar y editar comentarios
-- Mejoras HTML y estilo 
+- Mejoras HTML y estilo
+```
+
 
