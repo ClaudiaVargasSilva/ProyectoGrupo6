@@ -55,21 +55,28 @@ def register(request):
            #form = UserCreationForm(request.POST)
            form = UserRegisterForm(request.POST)
            if form.is_valid():
-                 username = form.cleaned_data['username']
-                 user = form.save()
-                 bio = form.cleaned_data['biografia']
+                print(form.cleaned_data['groups'])
+                username = form.cleaned_data['username']
+                user = form.save()
+
+                for g in form.cleaned_data['groups']:
+                    print(g.name)
+                    user.groups.add(g)
+
+
+                bio = form.cleaned_data['biografia']
                 #  avatar= Avatar(user=request.user)
                 #  perfil=Perfil(user=request.user , avatar = avatar)
-                 avatar = Avatar.objects.create(
-                     user = user,
-                    #  imagen = None
-                 )
-                 Perfil.objects.create(
-                     user = user,
-                     biografia = form.cleaned_data['biografia']
-                 )
-                 
-                 return render(request,"usuarioCreado.html" ,  {"mensaje":"Usuario Creado :)"})
+                avatar = Avatar.objects.create(
+                    user = user,
+                #  imagen = None
+                )
+                Perfil.objects.create(
+                    user = user,
+                    biografia = form.cleaned_data['biografia']
+                )
+                
+                return render(request,"usuarioCreado.html" ,  {"mensaje":"Usuario Creado :)"})
 
     else:
             #form = UserCreationForm()       
