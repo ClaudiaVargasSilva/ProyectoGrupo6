@@ -33,9 +33,10 @@ Funciones Realizadas
 ```
 
 :point_right: **Dario :** 
+
 Funciones Realizadas
 ```
-- :no_mouth:
+:no_mouth:
 ```
--xD
+
 
