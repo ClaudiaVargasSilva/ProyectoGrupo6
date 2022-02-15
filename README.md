@@ -3,6 +3,7 @@
 ## Video Resumen: 
 :tv: [link video](https://youtu.be/rZ84U6VKkHs)
 
+## :steam_locomotive: Nuestro Equipo 
 
 :point_right: **Daniel :**
 
@@ -16,16 +17,9 @@
 -Likear, guardar post
 ```
 
-:no_mouth: Dario:
--xD
-
 :point_right: **Claudia :**
-📫  Puden buscarme en:
-
-- https://www.linkedin.com/in/claudiavargassilva/
-:computer: Mi Github:
-
-- https://github.com/ClaudiaVargasSilva
+- 📫  Puden buscarme en: https://www.linkedin.com/in/claudiavargassilva/
+- :computer: Mi Github: https://github.com/ClaudiaVargasSilva
 
 * * Funciones Realizadas * *
 ```
@@ -37,4 +31,6 @@
 - Mejoras HTML y estilo
 ```
 
+:no_mouth: Dario:
+-xD
 
